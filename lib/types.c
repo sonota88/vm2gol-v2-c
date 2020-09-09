@@ -125,7 +125,7 @@ void NodeList_add_item(NodeList* self, NodeItem* item) {
 void NodeList_add_all(NodeList* self, NodeList* list) {
   NodeItem* item;
   for (int i = 0; i < list->len; i++) {
-    item = list->items[i];
+    item = NodeList_get(list, i);
     NodeList_add_item(self, item);
   }
 }
@@ -154,7 +154,7 @@ void NodeList_add_list_item(NodeList* self, NodeList* list) {
 }
 
 NodeItem* NodeList_head(NodeList* self) {
-  return self->items[0];
+  return NodeList_get(self, 0);
 }
 
 NodeList* NodeList_rest(NodeList* self) {
@@ -162,7 +162,7 @@ NodeList* NodeList_rest(NodeList* self) {
   NodeItem* item;
 
   for (int i = 1; i < self->len; i++) {
-    item = self->items[i];
+    item = NodeList_get(self, i);
     NodeList_add_item(new_list, item);
   }
 
@@ -184,7 +184,7 @@ void NodeList_dump(NodeList* self) {
     fprintf(stderr, "  | len: %d\n", self->len);
 
     for (int i = 0; i < self->len; i++) {
-      item = self->items[i];
+      item = NodeList_get(self, i);
       fprintf(stderr, "  | (%d) (%p):", i, item);
       if (item != NULL) {
         fprintf(stderr, "  k(%d:%s)",
@@ -275,7 +275,7 @@ void Names_add(Names* self, char* str) {
 Names* Names_from_node_list(NodeList* list) {
   Names* names = Names_new();
   for (int i = 0; i < list->len; i++) {
-    Names_add(names, list->items[i]->str_val);
+    Names_add(names, NodeList_get(list, i)->str_val);
   }
   return names;
 }

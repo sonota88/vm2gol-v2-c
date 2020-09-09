@@ -235,7 +235,7 @@ void codegen_call(
 
   // NodeList_dump(fn_args);
   for (int i = fn_args->len - 1; i >= 0; i--) {
-    fn_arg = fn_args->items[i];
+    fn_arg = NodeList_get(fn_args, i);
     codegen_call_push_fn_arg(fn_arg_names, lvar_names, fn_arg);
   }
 
@@ -266,7 +266,7 @@ void codegen_call_set(
   fn_args = NodeList_rest(fn_temp);
 
   for (int i = fn_args->len - 1; i >= 0; i--) {
-    fn_arg = fn_args->items[i];
+    fn_arg = NodeList_get(fn_args, i);
     codegen_call_push_fn_arg(fn_arg_names, lvar_names, fn_arg);
   }
 
@@ -314,8 +314,8 @@ void codegen_set(
   Names* lvar_names,
   NodeList* rest
 ) {
-  NodeItem* dest = rest->items[0];
-  NodeItem* expr = rest->items[1];
+  NodeItem* dest = NodeList_get(rest, 0);
+  NodeItem* expr = NodeList_get(rest, 1);
   char src_val[64];
   char dest_str[64];
   char ref[16];
@@ -599,7 +599,7 @@ void codegen_stmts(
   puts_fn("-->> codegen_stmts");
 
   for (int i = 0; i < stmts->len; i++) {
-    stmt = stmts->items[i]->list;
+    stmt = NodeList_get(stmts, i)->list;
     codegen_stmt(fn_arg_names, lvar_names, stmt);
   }
 }
@@ -615,9 +615,9 @@ void codegen_func_def(NodeList* rest) {
 
   puts_fn("-->> codegen_func_def");
 
-  fn_name = rest->items[0]->str_val;
-  fn_arg_names = Names_from_node_list(rest->items[1]->list);
-  body = rest->items[2]->list;
+  fn_name = NodeList_get(rest, 0)->str_val;
+  fn_arg_names = Names_from_node_list(NodeList_get(rest, 1)->list);
+  body = NodeList_get(rest, 2)->list;
 
   if (g_is_debug) {
     fprintf(stderr, "fn_name (%s)", fn_name);
@@ -634,7 +634,7 @@ void codegen_func_def(NodeList* rest) {
   lvar_names = Names_new();
 
   for (int i = 0; i < body->len; i++) {
-    stmt = body->items[i]->list;
+    stmt = NodeList_get(body, i)->list;
 
     stmt_rest = NodeList_rest(stmt);
 
@@ -664,7 +664,7 @@ void codegen_top_stmts(NodeList* list) {
   NodeList* stmt_rest;
 
   for (int i = 0; i < list->len; i++) {
-    item = list->items[i];
+    item = NodeList_get(list, i);
 
     stmt_head = NodeList_head(item->list);
     stmt_rest = NodeList_rest(item->list);

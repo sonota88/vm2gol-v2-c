@@ -104,7 +104,7 @@ void _print_as_json(NodeList* list, int lv) {
   print_indent(lv);
   printf("[\n");
   for (int i = 0; i < list->len; i++) {
-    item = list->items[i];
+    item = NodeList_get(list, i);
 
     if (item->kind == NODE_INT) {
       print_indent(lv);
@@ -143,7 +143,7 @@ void list_to_json_line (char* dest, NodeList* list) {
   i++;
 
   for (int li = 0; li < list->len; li++) {
-    item = list->items[li];
+    item = NodeList_get(list, li);
 
     if (1 <= li) {
       dest[i] = ',';
