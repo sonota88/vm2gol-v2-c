@@ -1,7 +1,5 @@
 require "rake/clean"
 
-# task :default => "bin/vgtokenizer"
-
 ENV["LANG"] = "C"
 
 CC = "gcc -Wall"
@@ -14,6 +12,8 @@ CLEAN.include "bin/vgtokenizer"
 SRC_UTILS = "lib/utils.c"
 SRC_TYPES = "lib/types.c"
 SRC_JSON  = "lib/json.c"
+
+task :default => :build
 
 task :build => [
        "bin/vgtokenizer",
