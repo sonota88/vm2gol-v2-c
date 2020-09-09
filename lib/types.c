@@ -23,11 +23,6 @@ char* NodeKind_to_s(NodeKind kind) {
   }
 }
 
-NodeItem* NodeItem_new() {
-  NodeItem* self = (NodeItem*) malloc(sizeof(NodeItem) * 1);
-  return self;
-}
-
 NodeItem* NodeItem_new_v2(NodeKind kind) {
   NodeItem* self = (NodeItem*) malloc(sizeof(NodeItem) * 1);
   self->kind = kind;

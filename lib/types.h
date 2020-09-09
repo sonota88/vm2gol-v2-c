@@ -40,7 +40,6 @@ typedef struct NodeList_tag {
   struct NodeItem_tag* items[64];
 } NodeList;
 
-NodeItem* NodeItem_new();
 NodeItem* NodeItem_new_v2(NodeKind kind);
 NodeItem* NodeItem_new_int(int n);
 NodeItem* NodeItem_new_str(char* str);
