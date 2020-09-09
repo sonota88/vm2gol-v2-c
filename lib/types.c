@@ -124,7 +124,7 @@ void NodeList_add_item(NodeList* self, NodeItem* item) {
 
 void NodeList_add_all(NodeList* self, NodeList* list) {
   NodeItem* item;
-  for (int i=0; i<list->len; i++) {
+  for (int i = 0; i < list->len; i++) {
     item = list->items[i];
     NodeList_add_item(self, item);
   }
@@ -161,7 +161,7 @@ NodeList* NodeList_rest(NodeList* self) {
   NodeList* new_list = NodeList_new();
   NodeItem* item;
 
-  for (int i=1; i<self->len; i++) {
+  for (int i = 1; i < self->len; i++) {
     item = self->items[i];
     NodeList_add_item(new_list, item);
   }
@@ -183,7 +183,7 @@ void NodeList_dump(NodeList* self) {
   if (self != NULL) {
     fprintf(stderr, "  | len: %d\n", self->len);
 
-    for (int i=0; i<self->len; i++) {
+    for (int i = 0; i < self->len; i++) {
       item = self->items[i];
       fprintf(stderr, "  | (%d) (%p):", i, item);
       if (item != NULL) {
