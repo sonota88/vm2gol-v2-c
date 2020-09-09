@@ -15,6 +15,7 @@ SRC_JSON  = "lib/json.c"
 
 task :default => :build
 
+desc "Build executable files"
 task :build => [
        "bin/vgtokenizer",
        "bin/vgparser",
