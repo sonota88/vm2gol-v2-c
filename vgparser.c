@@ -658,7 +658,7 @@ NodeList* parse_stmts() {
       break;
     }
 
-    NodeItem* list_wrapper = NodeItem_new_v2(NODE_LIST);
+    NodeItem* list_wrapper = NodeItem_new(NODE_LIST);
     list_wrapper->list = stmt;
     NodeList_add_item(stmts, list_wrapper);
   }
@@ -667,7 +667,7 @@ NodeList* parse_stmts() {
 }
 
 NodeItem* parse_top_stmts() {
-  NodeItem* root_item = NodeItem_new_v2(NODE_LIST);
+  NodeItem* root_item = NodeItem_new(NODE_LIST);
   NodeList* stmts = NodeList_new();
 
   NodeList_add_str_item(stmts, "stmts");
@@ -704,7 +704,7 @@ NodeItem* parse() {
     NodeList_add_item(list, stmts->items[i]);
   }
 
-  list_wrapper = NodeItem_new_v2(NODE_LIST);
+  list_wrapper = NodeItem_new(NODE_LIST);
   list_wrapper->list = list;
   return list_wrapper;
 }

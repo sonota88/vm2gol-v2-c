@@ -23,26 +23,26 @@ char* NodeKind_to_s(NodeKind kind) {
   }
 }
 
-NodeItem* NodeItem_new_v2(NodeKind kind) {
+NodeItem* NodeItem_new(NodeKind kind) {
   NodeItem* self = (NodeItem*) malloc(sizeof(NodeItem) * 1);
   self->kind = kind;
   return self;
 }
 
 NodeItem* NodeItem_new_int(int n) {
-  NodeItem* self = NodeItem_new_v2(NODE_INT);
+  NodeItem* self = NodeItem_new(NODE_INT);
   NodeItem_set_int_val(self, n);
   return self;
 }
 
 NodeItem* NodeItem_new_str(char* str) {
-  NodeItem* self = NodeItem_new_v2(NODE_STR);
+  NodeItem* self = NodeItem_new(NODE_STR);
   NodeItem_set_str_val(self, str);
   return self;
 }
 
 NodeItem* NodeItem_new_list(NodeList* list) {
-  NodeItem* self = NodeItem_new_v2(NODE_LIST);
+  NodeItem* self = NodeItem_new(NODE_LIST);
   NodeItem_set_list(self, list);
   return self;
 }
@@ -147,7 +147,7 @@ void NodeList_add_str_item(NodeList* self, char* str) {
 }
 
 void NodeList_add_list_item(NodeList* self, NodeList* list) {
-  NodeItem* item = NodeItem_new_v2(NODE_LIST);
+  NodeItem* item = NodeItem_new(NODE_LIST);
   NodeItem_set_list(item, list);
 
   NodeList_add_item(self, item);
