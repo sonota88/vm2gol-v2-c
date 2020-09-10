@@ -116,6 +116,10 @@ NodeList* NodeList_empty() {
   return NodeList_new();
 }
 
+int NodeList_len(NodeList* self) {
+  return self->len;
+}
+
 void NodeList_add_item(NodeList* self, NodeItem* item) {
   int i = self->len;
   self->items[i] = item;

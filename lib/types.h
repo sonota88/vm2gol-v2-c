@@ -58,6 +58,7 @@ void NodeItem_dump(NodeItem* self);
 
 NodeList* NodeList_new();
 NodeList* NodeList_empty();
+int NodeList_len(NodeList* self);
 void NodeList_add_item(NodeList* self, NodeItem* item);
 void NodeList_add_all(NodeList* self, NodeList* list);
 void NodeList_add_int_item(NodeList* self, int n);
