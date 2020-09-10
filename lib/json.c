@@ -103,7 +103,7 @@ void _print_as_json(NodeList* list, int lv) {
 
   print_indent(lv);
   printf("[\n");
-  for (int i = 0; i < list->len; i++) {
+  for (int i = 0; i < NodeList_len(list); i++) {
     item = NodeList_get(list, i);
 
     if (item->kind == NODE_INT) {
@@ -118,12 +118,12 @@ void _print_as_json(NodeList* list, int lv) {
       must_not_happen("Invalid node kind", __LINE__);
       exit(1);
     }
-    if (i < (list->len - 1)) {
+    if (i < (NodeList_len(list) - 1)) {
       printf(",");
     }
     printf("\n");
   }
-  if (list->len == 0) {
+  if (NodeList_len(list) == 0) {
     printf("\n");
   }
   print_indent(lv);
@@ -142,7 +142,7 @@ void list_to_json_line (char* dest, NodeList* list) {
   dest[i] = '[';
   i++;
 
-  for (int li = 0; li < list->len; li++) {
+  for (int li = 0; li < NodeList_len(list); li++) {
     item = NodeList_get(list, li);
 
     if (1 <= li) {

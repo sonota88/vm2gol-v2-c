@@ -121,14 +121,14 @@ int NodeList_len(NodeList* self) {
 }
 
 void NodeList_add_item(NodeList* self, NodeItem* item) {
-  int i = self->len;
+  int i = NodeList_len(self);
   self->items[i] = item;
   self->len++;
 }
 
 void NodeList_add_all(NodeList* self, NodeList* list) {
   NodeItem* item;
-  for (int i = 0; i < list->len; i++) {
+  for (int i = 0; i < NodeList_len(list); i++) {
     item = NodeList_get(list, i);
     NodeList_add_item(self, item);
   }
@@ -165,7 +165,7 @@ NodeList* NodeList_rest(NodeList* self) {
   NodeList* new_list = NodeList_new();
   NodeItem* item;
 
-  for (int i = 1; i < self->len; i++) {
+  for (int i = 1; i < NodeList_len(self); i++) {
     item = NodeList_get(self, i);
     NodeList_add_item(new_list, item);
   }
@@ -185,9 +185,9 @@ void NodeList_dump(NodeList* self) {
   fprintf(stderr, "  | p: %p\n", self);
 
   if (self != NULL) {
-    fprintf(stderr, "  | len: %d\n", self->len);
+    fprintf(stderr, "  | len: %d\n", NodeList_len(self));
 
-    for (int i = 0; i < self->len; i++) {
+    for (int i = 0; i < NodeList_len(self); i++) {
       item = NodeList_get(self, i);
       fprintf(stderr, "  | (%d) (%p):", i, item);
       if (item != NULL) {
@@ -200,7 +200,7 @@ void NodeList_dump(NodeList* self) {
         } else if (item->kind == NODE_STR) {
           fprintf(stderr, " str(%s):", item->str_val);
         } else if (item->kind == NODE_LIST) {
-          fprintf(stderr, " len(%d):", item->list->len);
+          fprintf(stderr, " len(%d):", NodeList_len(item->list));
         }
       }
       fprintf(stderr, "\n");
@@ -278,7 +278,7 @@ void Names_add(Names* self, char* str) {
 
 Names* Names_from_node_list(NodeList* list) {
   Names* names = Names_new();
-  for (int i = 0; i < list->len; i++) {
+  for (int i = 0; i < NodeList_len(list); i++) {
     Names_add(names, NodeList_get(list, i)->str_val);
   }
   return names;

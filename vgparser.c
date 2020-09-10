@@ -700,7 +700,7 @@ NodeItem* parse() {
 
   list = NodeList_new();
   NodeList_add_str_item(list, "stmts");
-  for (int i = 0; i < stmts->len; i++) {
+  for (int i = 0; i < NodeList_len(stmts); i++) {
     NodeList_add_item(list, NodeList_get(stmts, i));
   }
 

@@ -66,7 +66,7 @@ void codegen_var(
 ) {
   printf("  sub_sp 1\n");
 
-  if (stmt_rest->len == 2) {
+  if (NodeList_len(stmt_rest) == 2) {
     codegen_set(fn_arg_names, lvar_names, stmt_rest);
   }
 }
@@ -234,7 +234,7 @@ void codegen_call(
   fn_args = NodeList_rest(stmt_rest);
 
   // NodeList_dump(fn_args);
-  for (int i = fn_args->len - 1; i >= 0; i--) {
+  for (int i = NodeList_len(fn_args) - 1; i >= 0; i--) {
     fn_arg = NodeList_get(fn_args, i);
     codegen_call_push_fn_arg(fn_arg_names, lvar_names, fn_arg);
   }
@@ -243,7 +243,7 @@ void codegen_call(
   codegen_vm_comment(vm_comment);
   printf("  call %s\n", fn_name);
 
-  printf("  add_sp %d\n", fn_args->len);
+  printf("  add_sp %d\n", NodeList_len(fn_args));
 }
 
 void codegen_call_set(
@@ -265,7 +265,7 @@ void codegen_call_set(
   strcpy(fn_name, NodeList_head(fn_temp)->str_val);
   fn_args = NodeList_rest(fn_temp);
 
-  for (int i = fn_args->len - 1; i >= 0; i--) {
+  for (int i = NodeList_len(fn_args) - 1; i >= 0; i--) {
     fn_arg = NodeList_get(fn_args, i);
     codegen_call_push_fn_arg(fn_arg_names, lvar_names, fn_arg);
   }
@@ -273,7 +273,7 @@ void codegen_call_set(
   sprintf(vm_comment, "call_set  %s", fn_name);
   codegen_vm_comment(vm_comment);
   printf("  call %s\n", fn_name);
-  printf("  add_sp %d\n", fn_args->len);
+  printf("  add_sp %d\n", NodeList_len(fn_args));
 
   to_lvar_ref(ref, lvar_names, lvar_name);
   printf("  cp reg_a %s\n", ref);
@@ -515,7 +515,7 @@ void codegen_case(
   printf("\n");
   printf("  # -->> case_%d\n", label_id);
 
-  for (int i = 0; i < when_blocks->len; i++) {
+  for (int i = 0; i < NodeList_len(when_blocks); i++) {
     when_block = NodeList_get(when_blocks, i)->list;
     when_idx++;
 
@@ -598,7 +598,7 @@ void codegen_stmts(
 
   puts_fn("-->> codegen_stmts");
 
-  for (int i = 0; i < stmts->len; i++) {
+  for (int i = 0; i < NodeList_len(stmts); i++) {
     stmt = NodeList_get(stmts, i)->list;
     codegen_stmt(fn_arg_names, lvar_names, stmt);
   }
@@ -633,7 +633,7 @@ void codegen_func_def(NodeList* rest) {
 
   lvar_names = Names_new();
 
-  for (int i = 0; i < body->len; i++) {
+  for (int i = 0; i < NodeList_len(body); i++) {
     stmt = NodeList_get(body, i)->list;
 
     stmt_rest = NodeList_rest(stmt);
@@ -663,7 +663,7 @@ void codegen_top_stmts(NodeList* list) {
   NodeItem* stmt_head;
   NodeList* stmt_rest;
 
-  for (int i = 0; i < list->len; i++) {
+  for (int i = 0; i < NodeList_len(list); i++) {
     item = NodeList_get(list, i);
 
     stmt_head = NodeList_head(item->list);
