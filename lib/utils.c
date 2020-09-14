@@ -61,6 +61,10 @@ void substring(char* dest, char* src, int index_start, int index_end) {
   int i;
   int size = index_end - index_start;
   for (i = 0; i < size; i++) {
+    if (src[index_start + i] == '\0') {
+      size = i;
+      break;
+    }
     dest[i] = src[index_start + i];
   }
   dest[size] = '\0';
