@@ -60,16 +60,16 @@ fi
 
 export DO_BUILD=0
 
-ns=
+ids=
 
 if [ $# -eq 1 ]; then
-  ns="$1"
+  ids="$1"
 else
-  ns="$(seq 1 ${MAX_ID})"
+  ids="$(seq 1 ${MAX_ID})"
 fi
 
-for n in $ns; do
-  test_nn $(printf "%02d" $n)
+for id in $ids; do
+  test_nn $(printf "%02d" $id)
 done
 
 if [ "$ERRS" = "" ]; then
