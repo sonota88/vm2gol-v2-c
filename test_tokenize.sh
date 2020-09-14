@@ -17,10 +17,9 @@ ERRS=""
 test_nn() {
   local nn="$1"; shift
 
-  local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
-
   echo "test_${nn}"
 
+  local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
   local exp_tokens_file="${TEST_DIR}/tokenize_exp_${nn}.txt"
 
   cat ${TEST_DIR}/tokenize_${nn}.vg.txt \

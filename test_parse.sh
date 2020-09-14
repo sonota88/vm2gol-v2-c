@@ -17,13 +17,12 @@ ERRS=""
 test_nn() {
   local nn="$1"; shift
 
-  local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
-  local temp_vgt_file="${TEMP_DIR}/test.vgt.json"
-  local local_errs=""
-
   echo "test_${nn}"
 
+  local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
+  local temp_vgt_file="${TEMP_DIR}/test.vgt.json"
   local exp_vga_file="${TEST_DIR}/parse_exp_${nn}.vgt.json"
+  local local_errs=""
 
   echo "  tok" >&2
   cat ${TEST_DIR}/${nn}.vg.txt | bin/vgtokenizer > $temp_tokens_file

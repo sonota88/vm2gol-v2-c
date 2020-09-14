@@ -17,12 +17,11 @@ ERRS=""
 test_nn() {
   local nn="$1"; shift
 
+  echo "test_${nn}"
+
   local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
   local temp_vgt_file="${TEMP_DIR}/test.vgt.json"
   local temp_vga_file="${TEMP_DIR}/test.vga.txt"
-
-  echo "test_${nn}"
-
   local exp_vga_file="${TEST_DIR}/exp_${nn}.vga.txt"
 
   echo "  tok" >&2
