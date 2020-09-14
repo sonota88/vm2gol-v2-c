@@ -1,13 +1,5 @@
 #!/bin/bash
 
-print_this_dir() {
-  local real_path="$(readlink --canonicalize "$0")"
-  (
-    cd "$(dirname "$real_path")"
-    pwd
-  )
-}
-
 ERRS=""
 
 test_all() {

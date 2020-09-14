@@ -1,11 +1,7 @@
 #!/bin/bash
 
 print_project_dir() {
-  local real_path="$(readlink --canonicalize "$0")"
-  (
-    cd "$(dirname "$real_path")"
-    pwd
-  )
+  (cd "$(dirname "$0")"; pwd)
 }
 
 export PROJECT_DIR="$(print_project_dir)"
