@@ -16,7 +16,6 @@ ERRS=""
 
 test_nn() {
   local nn="$1"; shift
-  nn="${nn}"
 
   local temp_json_file="${TEMP_DIR}/test.json"
 
