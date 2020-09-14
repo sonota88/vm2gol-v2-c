@@ -8,6 +8,7 @@ export PROJECT_DIR="$(print_project_dir)"
 export TEST_DIR="${PROJECT_DIR}/test"
 export TEMP_DIR="${PROJECT_DIR}/z_tmp"
 
+MAX_ID=1
 ERRS=""
 
 test_nn() {
@@ -64,7 +65,7 @@ ns=
 if [ $# -eq 1 ]; then
   ns="$1"
 else
-  ns="$(seq 1 1)"
+  ns="$(seq 1 ${MAX_ID})"
 fi
 
 for n in $ns; do
