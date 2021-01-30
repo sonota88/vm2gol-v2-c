@@ -20,6 +20,8 @@ int Token_str_eq(Token* self, char* str);
 
 // --------------------------------
 
+#define NODE_ITEM__STR_VAL_SIZE_MAX 64
+
 typedef enum {
   NODE_INT,
   NODE_STR,
@@ -31,7 +33,7 @@ char* NodeKind_to_s(NodeKind kind);
 typedef struct NodeItem_tag {
   NodeKind kind;
   int int_val;
-  char str_val[64];
+  char str_val[NODE_ITEM__STR_VAL_SIZE_MAX];
   struct NodeList_tag* list;
 } NodeItem;
 
