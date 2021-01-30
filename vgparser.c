@@ -13,7 +13,9 @@ int g_num_tokens;
 int g_pos = 0;
 static int g_is_debug = 0;
 
+NodeList* parse_var();
 NodeItem* parse_expr();
+NodeList* parse_stmt();
 NodeList* parse_stmts();
 
 // --------------------------------
@@ -241,7 +243,21 @@ NodeList* parse_func() {
   consume_sym(")");
 
   consume_sym("{");
-  stmts = parse_stmts();
+
+  stmts = NodeList_new();
+  for (;;) {
+    t = peek(0);
+    if (Token_str_eq(t, "}")) {
+      break;
+    }
+
+    if (Token_str_eq(t, "var")) {
+      NodeList_add_list_item(stmts, parse_var());
+    } else {
+      NodeList_add_list_item(stmts, parse_stmt());
+    }
+  }
+
   consume_sym("}");
 
   list = NodeList_new();
@@ -621,8 +637,6 @@ NodeList* parse_stmt() {
 
   if (Token_str_eq(t, "func")) {
     return parse_func();
-  } else if (Token_str_eq(t, "var")) {
-    return parse_var();
   } else if (Token_str_eq(t, "set")) {
     return parse_set();
   } else if (Token_str_eq(t, "call")) {
