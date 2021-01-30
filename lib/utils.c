@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+void _err_exit(char* msg, char* filename, int lineno) {
+  fprintf(stderr, "ERROR %s: %d: ", filename, lineno);
+  fprintf(stderr, "%s\n", msg);
+  exit(1);
+}
+
 void puts_e(char* str){
   fprintf(stderr, "%s", str);
   fprintf(stderr, "\n");
@@ -91,10 +97,4 @@ int match_any_char(char *chars, char ch) {
   } else {
     return 0;
   }
-}
-
-void _err_exit(char* msg, char* filename, int lineno) {
-  fprintf(stderr, "ERROR %s: %d: ", filename, lineno);
-  fprintf(stderr, "%s\n", msg);
-  exit(1);
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+void _err_exit(char* msg, char* filename, int lineno);
+
 void puts_e(char* str);
 
 void read_stdin_all(char* dest);
@@ -11,5 +13,4 @@ int match_any_char(char *chars, char ch);
 int is_numeric(char ch);
 int find_non_numeric_index(char* str);
 
-void _err_exit(char* msg, char* filename, int lineno);
 void _todo(char* msg, char* filename, int lineno);
