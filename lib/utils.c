@@ -8,6 +8,15 @@ void _err_exit(char* msg, char* filename, int lineno) {
   exit(1);
 }
 
+void _assert(int exp, int act, int id) {
+  char msg[100];
+
+  if (exp != act) {
+    sprintf(msg, "assertion failed (%d): exp(%d) act(%d)", id, exp, act);
+    _err_exit(msg, __FILE__, __LINE__);
+  }
+}
+
 void puts_e(char* str){
   fprintf(stderr, "%s", str);
   fprintf(stderr, "\n");

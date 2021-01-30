@@ -1,6 +1,7 @@
 #pragma once
 
 void _err_exit(char* msg, char* filename, int lineno);
+void _assert(int exp, int act, int id);
 
 void puts_e(char* str);
 
