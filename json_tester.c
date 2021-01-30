@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "utils.h"
-#include "types.h"
-#include "json.h"
+#include "lib/utils.h"
+#include "lib/types.h"
+#include "lib/json.h"
 
 #define INPUT_SIZE (1024 * 20)
 

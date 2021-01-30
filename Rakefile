@@ -8,7 +8,7 @@ ENV["LANG"] = "C"
 
 CC = "gcc -Wall"
 
-CLEAN.include "bin/test_json"
+CLEAN.include "bin/json_tester"
 CLEAN.include "bin/vgcg"
 CLEAN.include "bin/vgparser"
 CLEAN.include "bin/vgtokenizer"
@@ -27,7 +27,7 @@ desc "Build executable files"
 task :build => [
        "bin/vgtokenizer",
        "bin/vgparser",
-       "bin/test_json",
+       "bin/json_tester",
        "bin/vgcg"
      ]
 
@@ -49,8 +49,8 @@ file "bin/vgparser" => [
   sh %(#{CC} #{src_files} -o #{t.name})
 end
 
-file "bin/test_json" => [
-       "lib/test_json.c",
+file "bin/json_tester" => [
+       "json_tester.c",
        SRC_UTILS, SRC_TYPES, SRC_JSON,
        H_UTILS,   H_TYPES,   H_JSON
      ] do |t|
