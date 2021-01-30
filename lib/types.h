@@ -20,7 +20,7 @@ int Token_str_eq(Token* self, char* str);
 
 // --------------------------------
 
-#define NODE_ITEM__STR_VAL_SIZE_MAX 64
+#define NODE_ITEM__STR_VAL_SIZE_MAX 48
 
 typedef enum {
   NODE_INT,
