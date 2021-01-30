@@ -22,12 +22,16 @@ void puts_e(char* str){
   fprintf(stderr, "\n");
 }
 
-void read_stdin_all(char* dest) {
+void read_stdin_all(char* dest, int size_max) {
   int ch;
   int i = -1;
 
   for (;;) {
     i++;
+    if (size_max <= i) {
+      _err_exit("too large input", __FILE__, __LINE__);
+    }
+
     ch = getchar();
     if (ch == EOF) {
       break;

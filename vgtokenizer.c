@@ -156,7 +156,7 @@ int main(void) {
   char temp[256];
   int size;
 
-  read_stdin_all(input);
+  read_stdin_all(input, INPUT_SIZE);
 
   src_len = strlen(input);
 

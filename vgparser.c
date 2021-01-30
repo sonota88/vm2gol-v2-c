@@ -722,7 +722,7 @@ int main(void) {
   NodeItem* tree;
   Token t;
 
-  read_stdin_all(input);
+  read_stdin_all(input, INPUT_SIZE);
 
   read_tokens(input);
 

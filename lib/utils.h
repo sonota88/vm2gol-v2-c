@@ -5,7 +5,7 @@ void _assert(int exp, int act, int id);
 
 void puts_e(char* str);
 
-void read_stdin_all(char* dest);
+void read_stdin_all(char* dest, int size_max);
 int find_index(char* str, char ch, int from);
 void substring(char* dest, char* src, int index_start, int index_end);
 int s_to_i(char* str);

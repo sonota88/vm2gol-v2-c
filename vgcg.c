@@ -680,7 +680,7 @@ void codegen_top_stmts(NodeList* list) {
 int main(void) {
   char input[INPUT_SIZE];
 
-  read_stdin_all(input);
+  read_stdin_all(input, INPUT_SIZE);
 
   NodeList* tree = parse_json(input);
 
