@@ -61,6 +61,19 @@ void NodeItem_kind_to_str(NodeItem* self, char* dest) {
 }
 
 void NodeItem_set_str_val(NodeItem* self, char* str) {
+  /*
+  if (strlen(str) < NODE_ITEM__STR_VAL_SIZE_MAX) {
+    fprintf(stderr, "  max %d\n", NODE_ITEM__STR_VAL_SIZE_MAX);
+    fprintf(stderr, "  strlen %zu\n", strlen(str));
+    fprintf(stderr, "  str (%s)\n", str);
+  }
+  */
+  _assert(
+    /* true */ 1,
+    strlen(str) < NODE_ITEM__STR_VAL_SIZE_MAX,
+    74
+  );
+
   strcpy(self->str_val, str);
 }
 
