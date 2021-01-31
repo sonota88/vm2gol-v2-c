@@ -635,10 +635,6 @@ NodeList* parse_vm_comment() {
 NodeList* parse_stmt() {
   Token* t = peek(0);
 
-  if (Token_is(t, TOKEN_SYM, "}")) {
-    return NULL;
-  }
-
   if (Token_str_eq(t, "set")) {
     return parse_set();
   } else if (Token_str_eq(t, "call")) {
@@ -665,14 +661,11 @@ NodeList* parse_stmts() {
   puts_fn("-->> parse_stmts");
 
   while (1) {
-    if (is_end()) {
+    if (Token_str_eq(peek(0), "}")) {
       break;
     }
 
     NodeList* stmt = parse_stmt();
-    if (stmt == NULL) {
-      break;
-    }
 
     NodeItem* list_wrapper = NodeItem_new(NODE_LIST);
     list_wrapper->list = stmt;
