@@ -700,7 +700,7 @@ NodeList* parse_top_stmt() {
 NodeList* parse_top_stmts() {
   NodeList* top_stmts = NodeList_new();
 
-  NodeList_add_str_item(top_stmts, "stmts");
+  NodeList_add_str_item(top_stmts, "top_stmts");
 
   for (;;) {
     if (is_end()) {
