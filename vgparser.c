@@ -256,9 +256,9 @@ NodeList* parse_func() {
     }
 
     if (Token_str_eq(t, "var")) {
-      NodeList_add_list_item(stmts, parse_var());
+      NodeList_add_list(stmts, parse_var());
     } else {
-      NodeList_add_list_item(stmts, parse_stmt());
+      NodeList_add_list(stmts, parse_stmt());
     }
   }
 
@@ -267,8 +267,8 @@ NodeList* parse_func() {
   list = NodeList_new();
   NodeList_add_str(list, "func");
   NodeList_add_str(list, fn_name);
-  NodeList_add_list_item(list, args);
-  NodeList_add_list_item(list, stmts);
+  NodeList_add_list(list, args);
+  NodeList_add_list(list, stmts);
 
   return list;
 }
@@ -516,7 +516,7 @@ NodeList* parse_call_set() {
   list = NodeList_new();
   NodeList_add_str(list, "call_set");
   NodeList_add_str(list, var_name);
-  NodeList_add_list_item(list, funcall);
+  NodeList_add_list(list, funcall);
   return list;
 }
 
@@ -554,7 +554,7 @@ NodeList* parse_while() {
   list = NodeList_new();
   NodeList_add_str(list, "while");
   NodeList_add_item(list, expr);
-  NodeList_add_list_item(list, stmts);
+  NodeList_add_list(list, stmts);
   return list;
 }
 
@@ -600,7 +600,7 @@ NodeList* parse_case() {
       break;
     }
 
-    NodeList_add_list_item(when_clauses, when_clause);
+    NodeList_add_list(when_clauses, when_clause);
   }
 
   consume_sym("}");
@@ -700,7 +700,7 @@ NodeList* parse_top_stmts() {
       break;
     }
 
-    NodeList_add_list_item(top_stmts, parse_top_stmt());
+    NodeList_add_list(top_stmts, parse_top_stmt());
   }
 
   return top_stmts;

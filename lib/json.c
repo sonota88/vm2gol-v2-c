@@ -40,7 +40,7 @@ ParseRetval* parse_array(char* rest) {
 
     if (temp[0] == '[') {
       pr = parse_array(temp);
-      NodeList_add_list_item(list, pr->list);
+      NodeList_add_list(list, pr->list);
       pos += pr->size;
 
     } else if (temp[0] == ']') {

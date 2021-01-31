@@ -65,7 +65,7 @@ void NodeList_add_item(NodeList* self, NodeItem* item);
 void NodeList_add_all(NodeList* self, NodeList* list);
 void NodeList_add_int(NodeList* self, int n);
 void NodeList_add_str(NodeList* self, char* str);
-void NodeList_add_list_item(NodeList* self, NodeList* list);
+void NodeList_add_list(NodeList* self, NodeList* list);
 
 NodeItem* NodeList_head(NodeList* self);
 NodeList* NodeList_rest(NodeList* self);
