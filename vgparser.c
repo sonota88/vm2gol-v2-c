@@ -699,8 +699,7 @@ NodeList* parse_top_stmt() {
   return NULL;
 }
 
-NodeItem* parse_top_stmts() {
-  NodeItem* root_item = NodeItem_new(NODE_LIST);
+NodeList* parse_top_stmts() {
   NodeList* stmts = NodeList_new();
 
   NodeList_add_str_item(stmts, "stmts");
@@ -713,13 +712,11 @@ NodeItem* parse_top_stmts() {
     NodeList_add_list_item(stmts, parse_top_stmt());
   }
 
-  NodeItem_set_list(root_item, stmts);
-
-  return root_item;
+  return stmts;
 }
 
 NodeItem* parse() {
-  return parse_top_stmts();
+  return NodeItem_new_list(parse_top_stmts());
 }
 
 void print_node_item(NodeItem* item, int lv);
