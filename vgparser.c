@@ -28,6 +28,10 @@ static void parse_error(char* msg, int ln) {
   _err_exit(msg, __FILE__, ln);
 }
 
+static void must_not_happen(char* msg, int ln) {
+  _err_exit(msg, __FILE__, ln);
+}
+
 // --------------------------------
 
 void puts_fn(char* s) {
