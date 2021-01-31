@@ -719,21 +719,7 @@ NodeItem* parse_top_stmts() {
 }
 
 NodeItem* parse() {
-  NodeItem* list_wrapper;
-  NodeList* list;
-  NodeList* stmts;
-
-  stmts = parse_stmts();
-
-  list = NodeList_new();
-  NodeList_add_str_item(list, "stmts");
-  for (int i = 0; i < NodeList_len(stmts); i++) {
-    NodeList_add_item(list, NodeList_get(stmts, i));
-  }
-
-  list_wrapper = NodeItem_new(NODE_LIST);
-  list_wrapper->list = list;
-  return list_wrapper;
+  return parse_top_stmts();
 }
 
 void print_node_item(NodeItem* item, int lv);
