@@ -265,8 +265,8 @@ NodeList* parse_func() {
   consume_sym("}");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "func");
-  NodeList_add_str_item(list, fn_name);
+  NodeList_add_str(list, "func");
+  NodeList_add_str(list, fn_name);
   NodeList_add_list_item(list, args);
   NodeList_add_list_item(list, stmts);
 
@@ -287,8 +287,8 @@ NodeList* parse_var_declare() {
   consume_sym(";");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "var");
-  NodeList_add_str_item(list, var_name);
+  NodeList_add_str(list, "var");
+  NodeList_add_str(list, var_name);
   return list;
 }
 
@@ -311,8 +311,8 @@ NodeList* parse_var_init() {
   consume_sym(";");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "var");
-  NodeList_add_str_item(list, var_name);
+  NodeList_add_str(list, "var");
+  NodeList_add_str(list, var_name);
   NodeList_add_item(list, expr);
   return list;
 }
@@ -352,7 +352,7 @@ NodeItem* parse_expr_right(NodeItem* expr_l) {
     consume_sym("+");
     expr_r = parse_expr();
     expr_els = NodeList_new();
-    NodeList_add_str_item(expr_els, "+");
+    NodeList_add_str(expr_els, "+");
     NodeList_add_item(expr_els, expr_l);
     NodeList_add_item(expr_els, expr_r);
 
@@ -360,7 +360,7 @@ NodeItem* parse_expr_right(NodeItem* expr_l) {
     consume_sym("*");
     expr_r = parse_expr();
     expr_els = NodeList_new();
-    NodeList_add_str_item(expr_els, "*");
+    NodeList_add_str(expr_els, "*");
     NodeList_add_item(expr_els, expr_l);
     NodeList_add_item(expr_els, expr_r);
 
@@ -368,7 +368,7 @@ NodeItem* parse_expr_right(NodeItem* expr_l) {
     consume_sym("==");
     expr_r = parse_expr();
     expr_els = NodeList_new();
-    NodeList_add_str_item(expr_els, "eq");
+    NodeList_add_str(expr_els, "eq");
     NodeList_add_item(expr_els, expr_l);
     NodeList_add_item(expr_els, expr_r);
 
@@ -376,7 +376,7 @@ NodeItem* parse_expr_right(NodeItem* expr_l) {
     consume_sym("!=");
     expr_r = parse_expr();
     expr_els = NodeList_new();
-    NodeList_add_str_item(expr_els, "neq");
+    NodeList_add_str(expr_els, "neq");
     NodeList_add_item(expr_els, expr_l);
     NodeList_add_item(expr_els, expr_r);
 
@@ -448,8 +448,8 @@ NodeList* parse_set() {
   consume_sym(";");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "set");
-  NodeList_add_str_item(list, var_name);
+  NodeList_add_str(list, "set");
+  NodeList_add_str(list, var_name);
   NodeList_add_item(list, expr);
   return list;
 }
@@ -472,7 +472,7 @@ NodeList* parse_funcall() {
   args = parse_args();
   consume_sym(")");
 
-  NodeList_add_str_item(list, fn_name);
+  NodeList_add_str(list, fn_name);
   NodeList_add_all(list, args);
   return list;
 }
@@ -490,7 +490,7 @@ NodeList* parse_call() {
   consume_sym(";");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "call");
+  NodeList_add_str(list, "call");
   NodeList_add_all(list, funcall);
   return list;
 }
@@ -514,8 +514,8 @@ NodeList* parse_call_set() {
   consume_sym(";");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "call_set");
-  NodeList_add_str_item(list, var_name);
+  NodeList_add_str(list, "call_set");
+  NodeList_add_str(list, var_name);
   NodeList_add_list_item(list, funcall);
   return list;
 }
@@ -531,7 +531,7 @@ NodeList* parse_return() {
   consume_sym(";");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "return");
+  NodeList_add_str(list, "return");
   NodeList_add_item(list, expr);
   return list;
 }
@@ -552,7 +552,7 @@ NodeList* parse_while() {
   consume_sym("}");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "while");
+  NodeList_add_str(list, "while");
   NodeList_add_item(list, expr);
   NodeList_add_list_item(list, stmts);
   return list;
@@ -606,7 +606,7 @@ NodeList* parse_case() {
   consume_sym("}");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "case");
+  NodeList_add_str(list, "case");
   NodeList_add_all(list, when_clauses);
   return list;
 }
@@ -627,8 +627,8 @@ NodeList* parse_vm_comment() {
   consume_sym(";");
 
   list = NodeList_new();
-  NodeList_add_str_item(list, "_cmt");
-  NodeList_add_str_item(list, comment);
+  NodeList_add_str(list, "_cmt");
+  NodeList_add_str(list, comment);
   return list;
 }
 
@@ -693,7 +693,7 @@ NodeList* parse_top_stmt() {
 NodeList* parse_top_stmts() {
   NodeList* top_stmts = NodeList_new();
 
-  NodeList_add_str_item(top_stmts, "top_stmts");
+  NodeList_add_str(top_stmts, "top_stmts");
 
   for (;;) {
     if (is_end()) {

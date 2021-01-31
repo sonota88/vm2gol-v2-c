@@ -63,7 +63,7 @@ ParseRetval* parse_array(char* rest) {
     } else if (temp[0] == '"') {
       idx = find_index(temp, '"', 1);
       substring(temp_str, temp, 1, idx);
-      NodeList_add_str_item(list, temp_str);
+      NodeList_add_str(list, temp_str);
       pos += strlen(temp_str) + 2;
 
     } else if (temp[0] == '\0') {
