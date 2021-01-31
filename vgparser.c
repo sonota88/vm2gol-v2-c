@@ -684,6 +684,21 @@ NodeList* parse_stmts() {
   return stmts;
 }
 
+NodeList* parse_top_stmt() {
+  Token* t;
+
+  t = peek(0);
+
+  if (Token_str_eq(t, "func")) {
+    return parse_func();
+  } else {
+    parse_error("Unexpected token", __LINE__);
+  }
+
+  must_not_happen("", __LINE__);
+  return NULL;
+}
+
 NodeItem* parse_top_stmts() {
   NodeItem* root_item = NodeItem_new(NODE_LIST);
   NodeList* stmts = NodeList_new();
