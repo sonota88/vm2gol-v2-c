@@ -705,18 +705,12 @@ NodeItem* parse_top_stmts() {
 
   NodeList_add_str_item(stmts, "stmts");
 
-  {
-    NodeList* main_fn;
+  for (;;) {
+    if (is_end()) {
+      break;
+    }
 
-    main_fn = NodeList_new();
-
-    NodeList_add_str_item(main_fn, "func");
-    NodeList_add_str_item(main_fn, "main");
-
-    NodeList_add_list_item(main_fn, NodeList_empty());
-    NodeList_add_list_item(main_fn, NodeList_empty());
-
-    NodeList_add_list_item(stmts, main_fn);
+    NodeList_add_list_item(stmts, parse_top_stmt());
   }
 
   NodeItem_set_list(root_item, stmts);
