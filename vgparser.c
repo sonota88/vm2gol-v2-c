@@ -639,9 +639,7 @@ NodeList* parse_stmt() {
     return NULL;
   }
 
-  if (Token_str_eq(t, "func")) {
-    return parse_func();
-  } else if (Token_str_eq(t, "set")) {
+  if (Token_str_eq(t, "set")) {
     return parse_set();
   } else if (Token_str_eq(t, "call")) {
     return parse_call();
