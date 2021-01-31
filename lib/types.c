@@ -147,7 +147,7 @@ void NodeList_add_all(NodeList* self, NodeList* list) {
   }
 }
 
-void NodeList_add_int_item(NodeList* self, int n) {
+void NodeList_add_int(NodeList* self, int n) {
   NodeItem* item = (NodeItem*) malloc(sizeof(NodeItem) * 1);
   item->kind = NODE_INT;
   NodeItem_set_int_val(item, n);
