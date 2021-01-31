@@ -715,8 +715,8 @@ NodeList* parse_top_stmts() {
   return stmts;
 }
 
-NodeItem* parse() {
-  return NodeItem_new_list(parse_top_stmts());
+NodeList* parse() {
+  return parse_top_stmts();
 }
 
 void print_node_item(NodeItem* item, int lv);
@@ -729,7 +729,7 @@ void print_indent_space(int lv) {
 
 int main(void) {
   char input[INPUT_SIZE];
-  NodeItem* tree;
+  NodeList* tree;
   Token t;
 
   read_stdin_all(input, INPUT_SIZE);
@@ -750,7 +750,7 @@ int main(void) {
 
   tree = parse();
 
-  print_as_json(tree->list);
+  print_as_json(tree);
 
   return 0;
 }
