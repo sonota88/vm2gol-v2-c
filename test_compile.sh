@@ -76,7 +76,7 @@ for id in $ids; do
 done
 
 if [ "$ERRS" = "" ]; then
-  echo "step: ok"
+  echo "compile: ok"
 else
   echo "----"
   echo "FAILED: ${ERRS}"
