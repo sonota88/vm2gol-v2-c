@@ -14,7 +14,7 @@ static int g_is_debug = 0;
 void codegen_vm_comment(char* comment);
 void codegen_set(  Names* fn_arg_names, Names* lvar_names, NodeList* rest );
 void codegen_stmts(Names* fn_arg_names, Names* lvar_names, NodeList* stmts);
-void codegen_expr( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
+void _codegen_expr_binary( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
 
 // --------------------------------
 
@@ -93,7 +93,7 @@ void codegen_expr_push(
     }
 
   } else if (val->kind == NODE_LIST) {
-    codegen_expr(fn_arg_names, lvar_names, val);
+    _codegen_expr_binary(fn_arg_names, lvar_names, val);
     strcpy(push_arg, "reg_a");
   }
 
@@ -160,7 +160,7 @@ void codegen_expr_neq() {
   printf("label %s\n", end_label);
 }
 
-void codegen_expr(
+void _codegen_expr_binary(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeItem* expr
@@ -170,7 +170,7 @@ void codegen_expr(
   NodeItem* term_l;
   NodeItem* term_r;
 
-  puts_fn("-->> codegen_expr");
+  puts_fn("-->> _codegen_expr_binary");
 
   operator = NodeList_head(expr->list);
   args     = NodeList_rest(expr->list);
@@ -190,7 +190,7 @@ void codegen_expr(
   } else if (NodeItem_str_eq(operator, "neq")) {
     codegen_expr_neq();
   } else {
-    not_yet_impl("codegen_expr", __LINE__);
+    not_yet_impl("_codegen_expr_binary", __LINE__);
   }
 }
 
@@ -364,7 +364,7 @@ void codegen_set(
 
   } else if (expr->kind == NODE_LIST) {
 
-    codegen_expr(fn_arg_names, lvar_names, expr);
+    _codegen_expr_binary(fn_arg_names, lvar_names, expr);
     strcpy(src_val, "reg_a");
 
   } else {
@@ -480,7 +480,7 @@ void codegen_while(
 
   printf("label while_%d\n", label_id);
 
-  codegen_expr(fn_arg_names, lvar_names, cond_expr);
+  _codegen_expr_binary(fn_arg_names, lvar_names, cond_expr);
   printf("  set_reg_b 1\n");
   printf("  compare\n");
 
@@ -531,7 +531,7 @@ void codegen_case(
 
     if (NodeItem_str_eq(cond_head, "eq")) {
       printf("  # -->> expr\n");
-      codegen_expr(fn_arg_names, lvar_names, cond);
+      _codegen_expr_binary(fn_arg_names, lvar_names, cond);
       printf("  # <<-- expr\n");
       printf("  set_reg_b 1\n");
 
