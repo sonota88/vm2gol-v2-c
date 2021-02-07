@@ -46,7 +46,7 @@ void to_fn_arg_ref(char* dest, Names* names, char* name) {
     fprintf(stderr, "name (%s)\n", name);
     codegen_error("to_fn_arg_ref", __LINE__);
   }
-  sprintf(dest, "[bp+%d]", i + 2);
+  sprintf(dest, "[bp:%d]", i + 2);
 }
 
 void to_lvar_ref(char* dest, Names* names, char* name) {
@@ -56,7 +56,7 @@ void to_lvar_ref(char* dest, Names* names, char* name) {
     fprintf(stderr, "name (%s)\n", name);
     codegen_error("to_lvar_ref", __LINE__);
   }
-  sprintf(dest, "[bp-%d]", i + 1);
+  sprintf(dest, "[bp:-%d]", i + 1);
 }
 
 void codegen_var(
