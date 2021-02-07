@@ -196,6 +196,37 @@ void _codegen_expr_binary(
   }
 }
 
+void codegen_expr(
+  Names* fn_arg_names,
+  Names* lvar_names,
+  NodeItem* val
+) {
+  char push_arg[16];
+
+  puts_fn("-->> codegen_expr");
+
+  if (val->kind == NODE_INT) {
+    printf("  cp %d reg_a\n", val->int_val);
+  } else if (val->kind == NODE_STR) {
+
+    if (Names_contains(fn_arg_names, val->str_val)) {
+      to_fn_arg_ref(push_arg, fn_arg_names, val->str_val);
+    } else if (Names_contains(lvar_names, val->str_val)) {
+      to_lvar_ref(push_arg, lvar_names, val->str_val);
+    } else {
+      not_yet_impl("codegen_expr", __LINE__);
+    }
+
+    printf("  cp %s reg_a\n", push_arg);
+
+  } else if (val->kind == NODE_LIST) {
+    _codegen_expr_binary(fn_arg_names, lvar_names, val);
+    strcpy(push_arg, "reg_a");
+  } else {
+    not_yet_impl("codegen_expr", __LINE__);
+  }
+}
+
 void codegen_call_push_fn_arg(
   Names* fn_arg_names,
   Names* lvar_names,
