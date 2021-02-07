@@ -16,7 +16,6 @@ void codegen_set(  Names* fn_arg_names, Names* lvar_names, NodeList* rest );
 void codegen_stmts(Names* fn_arg_names, Names* lvar_names, NodeList* stmts);
 void _codegen_expr_binary( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
 void codegen_expr( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
-int is_number(char* str); // TODO move
 
 // --------------------------------
 
@@ -76,6 +75,18 @@ int match_vram(char* dest, char* str) {
   to_i = find_index(str, ']', 5);
   substring(dest, str, 5, to_i);
 
+  return 1;
+}
+
+int is_number(char* str) {
+  int len = strlen(str);
+  for (int i = 0; i < len; i++) {
+    if ( '0' <= str[i] && str[i] <= '9' ) {
+      ;
+    } else {
+      return 0;
+    }
+  }
   return 1;
 }
 
@@ -300,18 +311,6 @@ void codegen_call_set(
 
   to_lvar_ref(ref, lvar_names, lvar_name);
   printf("  cp reg_a %s\n", ref);
-}
-
-int is_number(char* str) {
-  int len = strlen(str);
-  for (int i = 0; i < len; i++) {
-    if ( '0' <= str[i] && str[i] <= '9' ) {
-      ;
-    } else {
-      return 0;
-    }
-  }
-  return 1;
 }
 
 void codegen_set(
