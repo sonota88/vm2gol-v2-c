@@ -16,6 +16,8 @@ void codegen_set(  Names* fn_arg_names, Names* lvar_names, NodeList* rest );
 void codegen_stmts(Names* fn_arg_names, Names* lvar_names, NodeList* stmts);
 void _codegen_expr_binary( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
 void codegen_expr( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
+int match_vram(char* dest, char* str); // TODO move
+int is_number(char* str); // TODO move
 
 // --------------------------------
 
@@ -174,6 +176,8 @@ void codegen_expr(
   NodeItem* val
 ) {
   char push_arg[16];
+  char ref[16];
+  char vram_ref[16];
 
   puts_fn("-->> codegen_expr");
 
@@ -183,13 +187,32 @@ void codegen_expr(
 
     if (Names_contains(fn_arg_names, val->str_val)) {
       to_fn_arg_ref(push_arg, fn_arg_names, val->str_val);
+      printf("  cp %s reg_a\n", push_arg);
+
     } else if (Names_contains(lvar_names, val->str_val)) {
       to_lvar_ref(push_arg, lvar_names, val->str_val);
+      printf("  cp %s reg_a\n", push_arg);
+
+    } else if (match_vram(vram_ref, val->str_val)) {
+
+      if (g_is_debug) {
+        fprintf(stderr, "vram (%s)\n", vram_ref);
+      }
+
+      if (is_number(vram_ref)) {
+        printf("  get_vram %s reg_a\n", vram_ref);
+      } else {
+        if ( Names_contains(lvar_names, vram_ref) ) {
+          to_lvar_ref(ref, lvar_names, vram_ref);
+          printf("  get_vram %s reg_a\n", ref);
+        } else {
+          not_yet_impl("codegen_set", __LINE__);
+        }
+      }
+
     } else {
       not_yet_impl("codegen_expr", __LINE__);
     }
-
-    printf("  cp %s reg_a\n", push_arg);
 
   } else if (val->kind == NODE_LIST) {
     _codegen_expr_binary(fn_arg_names, lvar_names, val);
@@ -297,7 +320,6 @@ void codegen_set(
 ) {
   NodeItem* dest = NodeList_get(rest, 0);
   NodeItem* expr = NodeList_get(rest, 1);
-  char src_val[64];
   char dest_str[64];
   char ref[16];
   char vram_ref[16];
@@ -309,59 +331,18 @@ void codegen_set(
 
   // Names_dump(lvar_names);
 
-  if (expr->kind == NODE_INT) {
-    sprintf(src_val, "%d", expr->int_val);
-
-  } else if (expr->kind == NODE_STR) {
-
-    if (Names_contains(fn_arg_names, expr->str_val)) {
-      to_fn_arg_ref(src_val, fn_arg_names, expr->str_val);
-    } else if (Names_contains(lvar_names, expr->str_val)) {
-      to_lvar_ref(src_val, lvar_names, expr->str_val);
-
-    } else if (match_vram(vram_ref, expr->str_val)) {
-
-      if (g_is_debug) {
-        fprintf(stderr, "vram (%s)\n", vram_ref);
-      }
-
-      if (is_number(vram_ref)) {
-        printf("  get_vram %s reg_a\n", vram_ref);
-        strcpy(src_val, "reg_a");
-      } else {
-
-        if ( Names_contains(lvar_names, vram_ref) ) {
-          to_lvar_ref(ref, lvar_names, vram_ref);
-          printf("  get_vram %s reg_a\n", ref);
-        } else {
-          not_yet_impl("codegen_set", __LINE__);
-        }
-
-        strcpy(src_val, "reg_a");
-      }
-    } else {
-      not_yet_impl("codegen_set", __LINE__);
-    }
-
-  } else if (expr->kind == NODE_LIST) {
-
-    _codegen_expr_binary(fn_arg_names, lvar_names, expr);
-    strcpy(src_val, "reg_a");
-
-  } else {
-    not_yet_impl("codegen_set", __LINE__);
-  }
+  codegen_expr(fn_arg_names, lvar_names, expr);
 
   strcpy(dest_str, dest->str_val);
 
   if (match_vram(vram_ref, dest_str)) {
     if (is_number(vram_ref)) {
-      printf("  set_vram %s %s\n", vram_ref, src_val);
+      printf("  set_vram %s reg_a\n", vram_ref);
     } else {
 
       if ( Names_contains(lvar_names, vram_ref) ) {
         to_lvar_ref(ref, lvar_names, vram_ref);
-        printf("  set_vram %s %s\n", ref, src_val);
+        printf("  set_vram %s reg_a\n", ref);
 
       } else {
         not_yet_impl("codegen_set", __LINE__);
@@ -371,7 +352,7 @@ void codegen_set(
 
   } else if (Names_contains(lvar_names, dest_str)) {
     to_lvar_ref(ref, lvar_names, dest_str);
-    printf("  cp %s %s\n", src_val, ref);
+    printf("  cp reg_a %s\n", ref);
 
   } else {
     not_yet_impl("codegen_set", __LINE__);
