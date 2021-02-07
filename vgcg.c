@@ -365,45 +365,8 @@ void codegen_return(
   NodeList* stmt_rest
 ) {
   NodeItem* retval = NodeList_head(stmt_rest);
-  char retval_str[64];
-  char ref[64];
-  char vram_ref[32];
 
-  if (retval->kind == NODE_INT) {
-    printf("  set_reg_a %d\n", retval->int_val);
-
-  } else if (retval->kind == NODE_STR) {
-    strcpy(retval_str, retval->str_val);
-
-    if (match_vram(vram_ref, retval_str)) {
-
-      if (is_number(vram_ref)) {
-        not_yet_impl("codegen_return", __LINE__);
-      } else {
-
-        if (Names_contains(lvar_names, vram_ref)) {
-          to_lvar_ref(ref, lvar_names, vram_ref);
-          printf("  get_vram %s reg_a\n", ref);
-        } else {
-          not_yet_impl("codegen_return", __LINE__);
-        }
-
-      }
-
-    } else if (Names_contains(lvar_names, retval_str)) {
-      to_lvar_ref(ref, lvar_names, retval_str);
-      printf("  cp %s reg_a\n", ref);
-
-    } else {
-      not_yet_impl("codegen_return", __LINE__);
-    }
-
-  } else if (retval->kind == NODE_LIST) {
-    not_yet_impl("codegen_return", __LINE__);
-
-  } else {
-    not_yet_impl("must not happen", __LINE__);
-  }
+  codegen_expr(fn_arg_names, lvar_names, retval);
 }
 
 void codegen_vm_comment(
