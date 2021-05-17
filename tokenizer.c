@@ -41,65 +41,18 @@ int match_str(char* rest) {
   return find_index(rest, '"', 1) - 1;
 }
 
-int is_kw_char(char ch) {
+int is_kw(char* str) {
   return (
-       ('a' <= ch && ch <= 'z')
-    || ch == '_'
+       strcmp(str, "set") == 0
+    || strcmp(str, "call") == 0
+    || strcmp(str, "call_set") == 0
+    || strcmp(str, "return") == 0
+    || strcmp(str, "while") == 0
+    || strcmp(str, "case") == 0
+    || strcmp(str, "var") == 0
+    || strcmp(str, "func") == 0
+    || strcmp(str, "_cmt") == 0
   );
-}
-
-int match_kw(char* rest) {
-  int size;
-
-  size = 8;
-  if (
-       strncmp(rest, "call_set", size) == 0
-    && !(is_kw_char(rest[size]))
-  ) {
-    return size;
-  }
-
-  size = 6;
-  if (
-       strncmp(rest, "return", size) == 0
-    && !(is_kw_char(rest[size]))
-  ) {
-    return size;
-  }
-
-  size = 5;
-  if (
-       strncmp(rest, "while", size) == 0
-    && !(is_kw_char(rest[size]))
-  ) {
-    return size;
-  }
-
-  size = 4;
-  if (
-       (
-            strncmp(rest, "func", size) == 0
-         || strncmp(rest, "call", size) == 0
-         || strncmp(rest, "case", size) == 0
-         || strncmp(rest, "_cmt", size) == 0
-       )
-    && !(is_kw_char(rest[size]))
-  ) {
-    return size;
-  }
-
-  size = 3;
-  if (
-       (
-            strncmp(rest, "var", size) == 0
-         || strncmp(rest, "set", size) == 0
-       )
-    && !(is_kw_char(rest[size]))
-  ) {
-    return size;
-  }
-
-  return 0;
 }
 
 int match_int(char* rest) {
@@ -183,14 +136,6 @@ int main(void) {
       continue;
     }
 
-    size = match_kw(rest);
-    if (0 < size) {
-      substring(temp, rest, 0, size);
-      printf("kw:%s\n", temp);
-      pos += size;
-      continue;
-    }
-
     size = match_int(rest);
     if (0 < size) {
       substring(temp, rest, 0, size);
@@ -210,7 +155,11 @@ int main(void) {
     size = match_ident(rest);
     if (0 < size) {
       substring(temp, rest, 0, size);
-      printf("ident:%s\n", temp);
+      if (is_kw(temp)) {
+        printf("kw:%s\n", temp);
+      } else {
+        printf("ident:%s\n", temp);
+      }
       pos += size;
       continue;
     }
