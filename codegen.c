@@ -72,6 +72,11 @@ int is_number(char* str) {
   return 1;
 }
 
+void asm_prologue() {
+  printf("  push bp\n");
+  printf("  cp sp bp\n");
+}
+
 // --------------------------------
 
 void gen_expr_add() {
@@ -481,8 +486,7 @@ void gen_func_def(NodeList* rest) {
 
   printf("\n");
   printf("label %s\n", fn_name);
-  printf("  push bp\n");
-  printf("  cp sp bp\n");
+  asm_prologue();
 
   printf("\n");
   printf("  # 関数の処理本体\n");
@@ -536,8 +540,7 @@ void gen_top_stmts(NodeList* list) {
 void gen_builtin_set_vram() {
   printf("\n");
   printf("label set_vram\n");
-  printf("  push bp\n");
-  printf("  cp sp bp\n");
+  asm_prologue();
 
   printf("  set_vram [bp:2] [bp:3]\n"); // vram_addr value
 
@@ -549,8 +552,7 @@ void gen_builtin_set_vram() {
 void gen_builtin_get_vram() {
   printf("\n");
   printf("label get_vram\n");
-  printf("  push bp\n");
-  printf("  cp sp bp\n");
+  asm_prologue();
 
   printf("  get_vram [bp:2] reg_a\n"); // vram_addr dest
 
