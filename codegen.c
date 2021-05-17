@@ -11,11 +11,11 @@
 static int g_label_id = 0;
 static int g_is_debug = 0;
 
-void codegen_vm_comment(char* comment);
-void codegen_set(  Names* fn_arg_names, Names* lvar_names, NodeList* rest );
-void codegen_stmts(Names* fn_arg_names, Names* lvar_names, NodeList* stmts);
-void _codegen_expr_binary( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
-void codegen_expr( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
+void gen_vm_comment(char* comment);
+void gen_set(  Names* fn_arg_names, Names* lvar_names, NodeList* rest );
+void gen_stmts(Names* fn_arg_names, Names* lvar_names, NodeList* stmts);
+void _gen_expr_binary( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
+void gen_expr( Names* fn_arg_names, Names* lvar_names, NodeItem* expr );
 
 // --------------------------------
 
@@ -23,7 +23,7 @@ static void not_yet_impl(char* msg, int ln) {
   _err_exit(msg, __FILE__, ln);
 }
 
-static void codegen_error(char* msg, int ln) {
+static void gen_error(char* msg, int ln) {
   _err_exit(msg, __FILE__, ln);
 }
 
@@ -45,7 +45,7 @@ void to_fn_arg_ref(char* dest, Names* names, char* name) {
   if (i < 0) {
     Names_dump(names);
     fprintf(stderr, "name (%s)\n", name);
-    codegen_error("to_fn_arg_ref", __LINE__);
+    gen_error("to_fn_arg_ref", __LINE__);
   }
   sprintf(dest, "[bp:%d]", i + 2);
 }
@@ -55,7 +55,7 @@ void to_lvar_ref(char* dest, Names* names, char* name) {
   if (i < 0) {
     Names_dump(names);
     fprintf(stderr, "name (%s)\n", name);
-    codegen_error("to_lvar_ref", __LINE__);
+    gen_error("to_lvar_ref", __LINE__);
   }
   sprintf(dest, "[bp:-%d]", i + 1);
 }
@@ -74,7 +74,7 @@ int is_number(char* str) {
 
 // --------------------------------
 
-void codegen_var(
+void gen_var(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* stmt_rest
@@ -82,23 +82,23 @@ void codegen_var(
   printf("  sub_sp 1\n");
 
   if (NodeList_len(stmt_rest) == 2) {
-    codegen_set(fn_arg_names, lvar_names, stmt_rest);
+    gen_set(fn_arg_names, lvar_names, stmt_rest);
   }
 }
 
-void codegen_expr_add() {
+void gen_expr_add() {
   printf("  pop reg_b\n");
   printf("  pop reg_a\n");
   printf("  add_ab\n");
 }
 
-void codegen_expr_mult() {
+void gen_expr_mult() {
   printf("  pop reg_b\n");
   printf("  pop reg_a\n");
   printf("  mult_ab\n");
 }
 
-void codegen_expr_eq() {
+void gen_expr_eq() {
   int label_id;
   char then_label[16];
   char end_label[16];
@@ -122,7 +122,7 @@ void codegen_expr_eq() {
   printf("label %s\n", end_label);
 }
 
-void codegen_expr_neq() {
+void gen_expr_neq() {
   int label_id;
   char then_label[16];
   char end_label[16];
@@ -146,7 +146,7 @@ void codegen_expr_neq() {
   printf("label %s\n", end_label);
 }
 
-void _codegen_expr_binary(
+void _gen_expr_binary(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeItem* expr
@@ -156,7 +156,7 @@ void _codegen_expr_binary(
   NodeItem* term_l;
   NodeItem* term_r;
 
-  puts_fn("-->> _codegen_expr_binary");
+  puts_fn("-->> _gen_expr_binary");
 
   operator = NodeList_head(expr->list);
   args     = NodeList_rest(expr->list);
@@ -164,32 +164,32 @@ void _codegen_expr_binary(
   term_l = NodeList_get(args, 0);
   term_r = NodeList_get(args, 1);
 
-  codegen_expr(fn_arg_names, lvar_names, term_l);
+  gen_expr(fn_arg_names, lvar_names, term_l);
   printf("  push reg_a\n");
-  codegen_expr(fn_arg_names, lvar_names, term_r);
+  gen_expr(fn_arg_names, lvar_names, term_r);
   printf("  push reg_a\n");
 
   if (NodeItem_str_eq(operator, "+")) {
-    codegen_expr_add();
+    gen_expr_add();
   } else if (NodeItem_str_eq(operator, "*")) {
-    codegen_expr_mult();
+    gen_expr_mult();
   } else if (NodeItem_str_eq(operator, "eq")) {
-    codegen_expr_eq();
+    gen_expr_eq();
   } else if (NodeItem_str_eq(operator, "neq")) {
-    codegen_expr_neq();
+    gen_expr_neq();
   } else {
-    not_yet_impl("_codegen_expr_binary", __LINE__);
+    not_yet_impl("_gen_expr_binary", __LINE__);
   }
 }
 
-void codegen_expr(
+void gen_expr(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeItem* val
 ) {
   char push_arg[16];
 
-  puts_fn("-->> codegen_expr");
+  puts_fn("-->> gen_expr");
 
   if (val->kind == NODE_INT) {
     printf("  cp %d reg_a\n", val->int_val);
@@ -204,18 +204,18 @@ void codegen_expr(
       printf("  cp %s reg_a\n", push_arg);
 
     } else {
-      not_yet_impl("codegen_expr", __LINE__);
+      not_yet_impl("gen_expr", __LINE__);
     }
 
   } else if (val->kind == NODE_LIST) {
-    _codegen_expr_binary(fn_arg_names, lvar_names, val);
+    _gen_expr_binary(fn_arg_names, lvar_names, val);
     strcpy(push_arg, "reg_a");
   } else {
-    not_yet_impl("codegen_expr", __LINE__);
+    not_yet_impl("gen_expr", __LINE__);
   }
 }
 
-void codegen_call(
+void gen_call(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* stmt_rest
@@ -231,18 +231,18 @@ void codegen_call(
   // NodeList_dump(fn_args);
   for (int i = NodeList_len(fn_args) - 1; i >= 0; i--) {
     fn_arg = NodeList_get(fn_args, i);
-    codegen_expr(fn_arg_names, lvar_names, fn_arg);
+    gen_expr(fn_arg_names, lvar_names, fn_arg);
     printf("  push reg_a\n");
   }
 
   sprintf(vm_comment, "call  %s", fn_name);
-  codegen_vm_comment(vm_comment);
+  gen_vm_comment(vm_comment);
   printf("  call %s\n", fn_name);
 
   printf("  add_sp %d\n", NodeList_len(fn_args));
 }
 
-void codegen_call_set(
+void gen_call_set(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* stmt_rest
@@ -254,13 +254,13 @@ void codegen_call_set(
   strcpy(lvar_name, NodeList_head(stmt_rest)->str_val);
   funcall = NodeList_get(stmt_rest, 1)->list ;
 
-  codegen_call(fn_arg_names, lvar_names, funcall);
+  gen_call(fn_arg_names, lvar_names, funcall);
 
   to_lvar_ref(ref, lvar_names, lvar_name);
   printf("  cp reg_a %s\n", ref);
 }
 
-void codegen_set(
+void gen_set(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* rest
@@ -272,12 +272,12 @@ void codegen_set(
 
   // NodeList_dump(rest);
 
-  puts_fn("-->> codegen_set");
+  puts_fn("-->> gen_set");
   // NodeItem_dump(expr);
 
   // Names_dump(lvar_names);
 
-  codegen_expr(fn_arg_names, lvar_names, expr);
+  gen_expr(fn_arg_names, lvar_names, expr);
 
   strcpy(dest_str, dest->str_val);
 
@@ -285,21 +285,21 @@ void codegen_set(
     to_lvar_ref(ref, lvar_names, dest_str);
     printf("  cp reg_a %s\n", ref);
   } else {
-    not_yet_impl("codegen_set", __LINE__);
+    not_yet_impl("gen_set", __LINE__);
   }
 }
 
-void codegen_return(
+void gen_return(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* stmt_rest
 ) {
   NodeItem* retval = NodeList_head(stmt_rest);
 
-  codegen_expr(fn_arg_names, lvar_names, retval);
+  gen_expr(fn_arg_names, lvar_names, retval);
 }
 
-void codegen_vm_comment(
+void gen_vm_comment(
   char* comment
 ) {
   char temp[256];
@@ -315,7 +315,7 @@ void codegen_vm_comment(
   printf("  _cmt %s\n", temp);
 }
 
-void codegen_while(
+void gen_while(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* stmt_rest
@@ -324,7 +324,7 @@ void codegen_while(
   NodeList* body;
   int label_id;
 
-  puts_fn("-->> codegen_while");
+  puts_fn("-->> gen_while");
 
   cond_expr = NodeList_head(stmt_rest);
   body = NodeList_get(stmt_rest, 1)->list;
@@ -335,7 +335,7 @@ void codegen_while(
 
   printf("label while_%d\n", label_id);
 
-  codegen_expr(fn_arg_names, lvar_names, cond_expr);
+  gen_expr(fn_arg_names, lvar_names, cond_expr);
   printf("  cp 1 reg_b\n");
   printf("  compare\n");
 
@@ -344,7 +344,7 @@ void codegen_while(
   printf("  jump end_while_%d\n", label_id);
 
   printf("label true_%d\n", label_id);
-  codegen_stmts(fn_arg_names, lvar_names, body);
+  gen_stmts(fn_arg_names, lvar_names, body);
 
   printf("  jump while_%d\n", label_id);
 
@@ -352,7 +352,7 @@ void codegen_while(
   printf("\n");
 }
 
-void codegen_case(
+void gen_case(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* when_clauses
@@ -386,7 +386,7 @@ void codegen_case(
 
     if (NodeItem_str_eq(cond_head, "eq")) {
       printf("  # -->> expr\n");
-      codegen_expr(fn_arg_names, lvar_names, cond);
+      gen_expr(fn_arg_names, lvar_names, cond);
       printf("  # <<-- expr\n");
       printf("  cp 1 reg_b\n");
 
@@ -396,7 +396,7 @@ void codegen_case(
 
       // 真の場合ここにジャンプ
       printf("label when_%d_%d\n", label_id, when_idx);
-      codegen_stmts(fn_arg_names, lvar_names, rest);      
+      gen_stmts(fn_arg_names, lvar_names, rest);      
 
       printf("  jump end_case_%d\n", label_id);
 
@@ -404,7 +404,7 @@ void codegen_case(
       printf("label end_when_%d_%d\n", label_id, when_idx);
 
     } else {
-      not_yet_impl("codegen_case", __LINE__);
+      not_yet_impl("gen_case", __LINE__);
     }
   }
 
@@ -413,7 +413,7 @@ void codegen_case(
   printf("\n");
 }
 
-void codegen_stmt(
+void gen_stmt(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* stmt
@@ -422,44 +422,44 @@ void codegen_stmt(
   NodeList* stmt_rest = NodeList_rest(stmt);
 
   if (g_is_debug) {
-    fprintf(stderr, "-->> codegen_stmt (%s)\n", stmt_head->str_val);
+    fprintf(stderr, "-->> gen_stmt (%s)\n", stmt_head->str_val);
   }
 
   if (str_eq(stmt_head->str_val, "set")) {
-    codegen_set(fn_arg_names, lvar_names, stmt_rest);
+    gen_set(fn_arg_names, lvar_names, stmt_rest);
   } else if (str_eq(stmt_head->str_val, "call")) {
-    codegen_call(fn_arg_names, lvar_names, stmt_rest);
+    gen_call(fn_arg_names, lvar_names, stmt_rest);
   } else if (str_eq(stmt_head->str_val, "call_set")) {
-    codegen_call_set(fn_arg_names, lvar_names, stmt_rest);
+    gen_call_set(fn_arg_names, lvar_names, stmt_rest);
   } else if (str_eq(stmt_head->str_val, "return")) {
-    codegen_return(fn_arg_names, lvar_names, stmt_rest);
+    gen_return(fn_arg_names, lvar_names, stmt_rest);
   } else if (str_eq(stmt_head->str_val, "while")) {
-    codegen_while(fn_arg_names, lvar_names, stmt_rest);
+    gen_while(fn_arg_names, lvar_names, stmt_rest);
   } else if (str_eq(stmt_head->str_val, "case")) {
-    codegen_case(fn_arg_names, lvar_names, stmt_rest);
+    gen_case(fn_arg_names, lvar_names, stmt_rest);
   } else if (str_eq(stmt_head->str_val, "_cmt")) {
-    codegen_vm_comment(NodeList_head(stmt_rest)->str_val);
+    gen_vm_comment(NodeList_head(stmt_rest)->str_val);
   } else {
-    not_yet_impl("codegen_stmt", __LINE__);
+    not_yet_impl("gen_stmt", __LINE__);
   }
 }
 
-void codegen_stmts(
+void gen_stmts(
   Names* fn_arg_names,
   Names* lvar_names,
   NodeList* stmts
 ) {
   NodeList* stmt;
 
-  puts_fn("-->> codegen_stmts");
+  puts_fn("-->> gen_stmts");
 
   for (int i = 0; i < NodeList_len(stmts); i++) {
     stmt = NodeList_get(stmts, i)->list;
-    codegen_stmt(fn_arg_names, lvar_names, stmt);
+    gen_stmt(fn_arg_names, lvar_names, stmt);
   }
 }
 
-void codegen_func_def(NodeList* rest) {
+void gen_func_def(NodeList* rest) {
   char* fn_name;
   Names* fn_arg_names;
   NodeList* body;
@@ -468,7 +468,7 @@ void codegen_func_def(NodeList* rest) {
   NodeList* stmt_rest;
   NodeItem* var_name;
 
-  puts_fn("-->> codegen_func_def");
+  puts_fn("-->> gen_func_def");
 
   fn_name = NodeList_get(rest, 0)->str_val;
   fn_arg_names = Names_from_node_list(NodeList_get(rest, 1)->list);
@@ -501,9 +501,9 @@ void codegen_func_def(NodeList* rest) {
     ) {
       var_name = NodeList_head(stmt_rest);
       Names_add(lvar_names, var_name->str_val);
-      codegen_var(fn_arg_names, lvar_names, stmt_rest);
+      gen_var(fn_arg_names, lvar_names, stmt_rest);
     } else {
-      codegen_stmt(fn_arg_names, lvar_names, stmt);
+      gen_stmt(fn_arg_names, lvar_names, stmt);
     }
   }
 
@@ -513,7 +513,7 @@ void codegen_func_def(NodeList* rest) {
   printf("  ret\n");
 }
 
-void codegen_top_stmts(NodeList* list) {
+void gen_top_stmts(NodeList* list) {
   NodeItem* item;
   NodeItem* stmt_head;
   NodeList* stmt_rest;
@@ -525,14 +525,14 @@ void codegen_top_stmts(NodeList* list) {
     stmt_rest = NodeList_rest(item->list);
 
     if (str_eq(stmt_head->str_val, "func")) {
-      codegen_func_def(stmt_rest);
+      gen_func_def(stmt_rest);
     } else {
-      not_yet_impl("codegen_top_stmts", __LINE__);
+      not_yet_impl("gen_top_stmts", __LINE__);
     }
   }
 }
 
-void codegen_builtin_set_vram() {
+void gen_builtin_set_vram() {
   printf("\n");
   printf("label set_vram\n");
   printf("  push bp\n");
@@ -545,7 +545,7 @@ void codegen_builtin_set_vram() {
   printf("  ret\n");
 }
 
-void codegen_builtin_get_vram() {
+void gen_builtin_get_vram() {
   printf("\n");
   printf("label get_vram\n");
   printf("  push bp\n");
@@ -569,11 +569,11 @@ int main(void) {
   printf("  exit\n");
 
   NodeList* top_stmts = NodeList_rest(tree);
-  codegen_top_stmts(top_stmts);
+  gen_top_stmts(top_stmts);
 
   printf("#>builtins\n");
-  codegen_builtin_set_vram();
-  codegen_builtin_get_vram();
+  gen_builtin_set_vram();
+  gen_builtin_get_vram();
   printf("#<builtins\n");
 
   return 0;
