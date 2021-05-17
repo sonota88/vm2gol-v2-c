@@ -22,7 +22,7 @@ test_nn() {
   local exp_vga_file="${TEST_DIR}/exp_${nn}.vga.txt"
 
   echo "  tok" >&2
-  cat ${TEST_DIR}/${nn}.vg.txt | bin/vgtokenizer > $temp_tokens_file
+  cat ${TEST_DIR}/${nn}.vg.txt | bin/tokenizer > $temp_tokens_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_tokenize"
     return

@@ -20,7 +20,7 @@ test_nn() {
   local exp_tokens_file="${TEST_DIR}/tokenize_exp_${nn}.txt"
 
   cat ${TEST_DIR}/tokenize_${nn}.vg.txt \
-    | bin/vgtokenizer \
+    | bin/tokenizer \
     > $temp_tokens_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_tokenize"

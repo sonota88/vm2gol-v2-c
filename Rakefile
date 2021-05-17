@@ -11,7 +11,7 @@ CC = "gcc -Wall"
 CLEAN.include "bin/json_tester"
 CLEAN.include "bin/vgcg"
 CLEAN.include "bin/vgparser"
-CLEAN.include "bin/vgtokenizer"
+CLEAN.include "bin/tokenizer"
 
 SRC_UTILS = "lib/utils.c"
 SRC_TYPES = "lib/types.c"
@@ -25,14 +25,14 @@ task :default => :build
 
 desc "Build executable files"
 task :build => [
-       "bin/vgtokenizer",
+       "bin/tokenizer",
        "bin/vgparser",
        "bin/json_tester",
        "bin/vgcg"
      ]
 
-file "bin/vgtokenizer" => [
-       "vgtokenizer.c",
+file "bin/tokenizer" => [
+       "tokenizer.c",
        SRC_UTILS,
        H_UTILS,
      ] do |t|
