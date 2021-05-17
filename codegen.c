@@ -599,6 +599,19 @@ void codegen_builtin_set_vram() {
   printf("  ret\n");
 }
 
+void codegen_builtin_get_vram() {
+  printf("\n");
+  printf("label get_vram\n");
+  printf("  push bp\n");
+  printf("  cp sp bp\n");
+
+  printf("  get_vram [bp:2] reg_a\n"); // vram_addr dest
+
+  printf("  cp bp sp\n");
+  printf("  pop bp\n");
+  printf("  ret\n");
+}
+
 int main(void) {
   char input[INPUT_SIZE];
 
@@ -614,6 +627,7 @@ int main(void) {
 
   printf("#>builtins\n");
   codegen_builtin_set_vram();
+  codegen_builtin_get_vram();
   printf("#<builtins\n");
 
   return 0;
