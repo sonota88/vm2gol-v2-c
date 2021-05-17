@@ -30,7 +30,7 @@ test_nn() {
   fi
 
   echo "  parse" >&2
-  cat $temp_tokens_file | bin/vgparser > $temp_vgt_file
+  cat $temp_tokens_file | bin/parser > $temp_vgt_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_parse"
     local_errs="${local_errs},${nn}_parse"
