@@ -38,7 +38,7 @@ test_nn() {
   fi
 
   if [ "$local_errs" = "" ]; then
-    ruby test/diff.rb $exp_vga_file $temp_vgt_file
+    ruby test/diff.rb json $exp_vga_file $temp_vgt_file
     if [ $? -ne 0 ]; then
       # meld $exp_vga_file $temp_vga_file &
 
