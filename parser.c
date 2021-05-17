@@ -383,23 +383,6 @@ NodeItem* parse_expr() {
 
   tl = peek(0);
 
-  if (Token_is(tl, TOKEN_SYM, "(")) {
-    consume_sym("(");
-    expr_l = parse_expr();
-    consume_sym(")");
-
-    tail = parse_expr_right();
-    if (NodeList_len(tail) == 0) {
-      return expr_l;
-    }
-
-    binop = NodeList_new();
-    NodeList_add_item(binop, NodeList_get(tail, 0));
-    NodeList_add_item(binop, expr_l);
-    NodeList_add_item(binop, NodeList_get(tail, 1));
-    return NodeItem_new_list(binop);
-  }
-
   if (tl->kind == TOKEN_INT) {
     g_pos++;
     n = s_to_i(tl->str);
@@ -421,6 +404,22 @@ NodeItem* parse_expr() {
     g_pos++;
 
     expr_l = NodeItem_new_str(tl->str);
+
+    tail = parse_expr_right();
+    if (NodeList_len(tail) == 0) {
+      return expr_l;
+    }
+
+    binop = NodeList_new();
+    NodeList_add_item(binop, NodeList_get(tail, 0));
+    NodeList_add_item(binop, expr_l);
+    NodeList_add_item(binop, NodeList_get(tail, 1));
+    return NodeItem_new_list(binop);
+
+  } else if (tl->kind == TOKEN_SYM) {
+    consume_sym("(");
+    expr_l = parse_expr();
+    consume_sym(")");
 
     tail = parse_expr_right();
     if (NodeList_len(tail) == 0) {
