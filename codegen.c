@@ -50,14 +50,14 @@ int to_fn_arg_disp(Names* names, char* name) {
   return i + 2;
 }
 
-void to_lvar_ref(char* dest, Names* names, char* name) {
+int to_lvar_disp(Names* names, char* name) {
   int i = Names_index(names, name);
   if (i < 0) {
     Names_dump(names);
     fprintf(stderr, "name (%s)\n", name);
-    gen_error("to_lvar_ref", __LINE__);
+    gen_error("to_lvar_disp", __LINE__);
   }
-  sprintf(dest, "[bp:-%d]", i + 1);
+  return -(i + 1);
 }
 
 int is_number(char* str) {
@@ -201,8 +201,8 @@ void gen_expr(
       printf("  cp [bp:%d] reg_a\n", disp);
 
     } else if (Names_contains(lvar_names, val->str_val)) {
-      to_lvar_ref(push_arg, lvar_names, val->str_val);
-      printf("  cp %s reg_a\n", push_arg);
+      disp = to_lvar_disp(lvar_names, val->str_val);
+      printf("  cp [bp:%d] reg_a\n", disp);
 
     } else {
       not_yet_impl("gen_expr", __LINE__);
@@ -250,15 +250,15 @@ void gen_call_set(
 ) {
   char lvar_name[64];
   NodeList* funcall;
-  char ref[32];
+  int disp;
   
   strcpy(lvar_name, NodeList_head(stmt_rest)->str_val);
   funcall = NodeList_get(stmt_rest, 1)->list ;
 
   gen_call(fn_arg_names, lvar_names, funcall);
 
-  to_lvar_ref(ref, lvar_names, lvar_name);
-  printf("  cp reg_a %s\n", ref);
+  disp = to_lvar_disp(lvar_names, lvar_name);
+  printf("  cp reg_a [bp:%d]\n", disp);
 }
 
 void gen_set(
@@ -269,7 +269,7 @@ void gen_set(
   NodeItem* dest = NodeList_get(rest, 0);
   NodeItem* expr = NodeList_get(rest, 1);
   char dest_str[64];
-  char ref[16];
+  int disp;
 
   // NodeList_dump(rest);
 
@@ -283,8 +283,8 @@ void gen_set(
   strcpy(dest_str, dest->str_val);
 
   if (Names_contains(lvar_names, dest_str)) {
-    to_lvar_ref(ref, lvar_names, dest_str);
-    printf("  cp reg_a %s\n", ref);
+    disp = to_lvar_disp(lvar_names, dest_str);
+    printf("  cp reg_a [bp:%d]\n", disp);
   } else {
     not_yet_impl("gen_set", __LINE__);
   }
