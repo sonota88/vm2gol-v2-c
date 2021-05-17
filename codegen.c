@@ -248,13 +248,13 @@ void codegen_call_set(
   NodeList* stmt_rest
 ) {
   char lvar_name[64];
-  NodeList* fn_temp;
+  NodeList* funcall;
   char ref[32];
   
   strcpy(lvar_name, NodeList_head(stmt_rest)->str_val);
-  fn_temp = NodeList_get(stmt_rest, 1)->list ;
+  funcall = NodeList_get(stmt_rest, 1)->list ;
 
-  codegen_call(fn_arg_names, lvar_names, fn_temp);
+  codegen_call(fn_arg_names, lvar_names, funcall);
 
   to_lvar_ref(ref, lvar_names, lvar_name);
   printf("  cp reg_a %s\n", ref);
