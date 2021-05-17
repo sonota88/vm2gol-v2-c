@@ -77,6 +77,11 @@ void asm_prologue() {
   printf("  cp sp bp\n");
 }
 
+void asm_epilogue() {
+  printf("  cp bp sp\n");
+  printf("  pop bp\n");
+}
+
 // --------------------------------
 
 void gen_expr_add() {
@@ -513,8 +518,7 @@ void gen_func_def(NodeList* rest) {
   }
 
   printf("\n");
-  printf("  cp bp sp\n");
-  printf("  pop bp\n");
+  asm_epilogue();
   printf("  ret\n");
 }
 
@@ -544,8 +548,7 @@ void gen_builtin_set_vram() {
 
   printf("  set_vram [bp:2] [bp:3]\n"); // vram_addr value
 
-  printf("  cp bp sp\n");
-  printf("  pop bp\n");
+  asm_epilogue();
   printf("  ret\n");
 }
 
@@ -556,8 +559,7 @@ void gen_builtin_get_vram() {
 
   printf("  get_vram [bp:2] reg_a\n"); // vram_addr dest
 
-  printf("  cp bp sp\n");
-  printf("  pop bp\n");
+  asm_epilogue();
   printf("  ret\n");
 }
 
