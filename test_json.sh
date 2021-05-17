@@ -17,9 +17,9 @@ test_nn() {
   echo "test_${nn}"
 
   local temp_json_file="${TEMP_DIR}/test.json"
-  local exp_tokens_file="${TEST_DIR}/json_${nn}.json"
+  local exp_tokens_file="${TEST_DIR}/json/${nn}.json"
 
-  cat ${TEST_DIR}/json_${nn}.json \
+  cat ${TEST_DIR}/json/${nn}.json \
     | bin/json_tester \
     > $temp_json_file
   if [ $? -ne 0 ]; then
