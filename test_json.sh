@@ -59,6 +59,6 @@ if [ "$ERRS" = "" ]; then
   echo "ok"
 else
   echo "----"
-  echo "FAILED: ${ERRS}"
+  echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
   exit 1
 fi
