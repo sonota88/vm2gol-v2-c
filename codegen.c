@@ -132,11 +132,11 @@ void codegen_expr_eq() {
   printf("  compare\n");
   printf("  jump_eq %s\n", then_label);
 
-  printf("  set_reg_a 0\n");
+  printf("  cp 0 reg_a\n");
   printf("  jump %s\n", end_label);
 
   printf("label %s\n", then_label);
-  printf("  set_reg_a 1\n");
+  printf("  cp 1 reg_a\n");
   printf("label %s\n", end_label);
 }
 
@@ -156,11 +156,11 @@ void codegen_expr_neq() {
   printf("  compare\n");
   printf("  jump_eq %s\n", then_label);
 
-  printf("  set_reg_a 1\n");
+  printf("  cp 1 reg_a\n");
   printf("  jump %s\n", end_label);
 
   printf("label %s\n", then_label);
-  printf("  set_reg_a 0\n");
+  printf("  cp 0 reg_a\n");
   printf("label %s\n", end_label);
 }
 
@@ -406,7 +406,7 @@ void codegen_while(
   printf("label while_%d\n", label_id);
 
   codegen_expr(fn_arg_names, lvar_names, cond_expr);
-  printf("  set_reg_b 1\n");
+  printf("  cp 1 reg_b\n");
   printf("  compare\n");
 
   printf("  jump_eq true_%d\n", label_id);
@@ -458,7 +458,7 @@ void codegen_case(
       printf("  # -->> expr\n");
       codegen_expr(fn_arg_names, lvar_names, cond);
       printf("  # <<-- expr\n");
-      printf("  set_reg_b 1\n");
+      printf("  cp 1 reg_b\n");
 
       printf("  compare\n");
       printf("  jump_eq when_%d_%d\n", label_id, when_idx);
