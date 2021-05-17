@@ -19,10 +19,10 @@ test_nn() {
   local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
   local temp_vgt_file="${TEMP_DIR}/test.vgt.json"
   local temp_vga_file="${TEMP_DIR}/test.vga.txt"
-  local exp_vga_file="${TEST_DIR}/exp_${nn}.vga.txt"
+  local exp_vga_file="${TEST_DIR}/compile/exp_${nn}.vga.txt"
 
   echo "  tok" >&2
-  cat ${TEST_DIR}/${nn}.vg.txt | bin/tokenizer > $temp_tokens_file
+  cat ${TEST_DIR}/compile/${nn}.vg.txt | bin/tokenizer > $temp_tokens_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_tokenize"
     return
