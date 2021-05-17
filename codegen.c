@@ -74,18 +74,6 @@ int is_number(char* str) {
 
 // --------------------------------
 
-void gen_var(
-  Names* fn_arg_names,
-  Names* lvar_names,
-  NodeList* stmt_rest
-) {
-  printf("  sub_sp 1\n");
-
-  if (NodeList_len(stmt_rest) == 2) {
-    gen_set(fn_arg_names, lvar_names, stmt_rest);
-  }
-}
-
 void gen_expr_add() {
   printf("  pop reg_b\n");
   printf("  pop reg_a\n");
@@ -457,6 +445,18 @@ void gen_stmts(
   for (int i = 0; i < NodeList_len(stmts); i++) {
     stmt = NodeList_get(stmts, i)->list;
     gen_stmt(fn_arg_names, lvar_names, stmt);
+  }
+}
+
+void gen_var(
+  Names* fn_arg_names,
+  Names* lvar_names,
+  NodeList* stmt_rest
+) {
+  printf("  sub_sp 1\n");
+
+  if (NodeList_len(stmt_rest) == 2) {
+    gen_set(fn_arg_names, lvar_names, stmt_rest);
   }
 }
 
