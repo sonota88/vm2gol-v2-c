@@ -169,57 +169,25 @@ NodeItem* parse_arg() {
   }
 }
 
-NodeItem* parse_args_first() {
-  Token* t;
-
-  puts_fn("-->> parse_args_first");
-
-  t = peek(0);
-
-  if (Token_is(t, TOKEN_SYM, ")")) {
-    return NULL;
-  }
-
-  return parse_arg();
-}
-
-NodeItem* parse_args_rest() {
-  Token* t;
-
-  puts_fn("-->> parse_args_rest");
-
-  t = peek(0);
-
-  if (Token_is(t, TOKEN_SYM, ")")) {
-    return NULL;
-  }
-
-  consume_sym(",");
-
-  return parse_arg();
-}
-
 NodeList* parse_args() {
+  Token* t;
   NodeList* args;
-  NodeItem* first_arg;
-  NodeItem* rest_arg;
 
   puts_fn("-->> parse_args");
 
   args = NodeList_new();
 
-  first_arg = parse_args_first();
-  if (first_arg == NULL) {
+  t = peek(0);
+
+  if (Token_is(t, TOKEN_SYM, ")")) {
     return args;
   }
-  NodeList_add_item(args, first_arg);
 
-  while (1) {
-    rest_arg = parse_args_rest();
-    if (rest_arg == NULL) {
-      break;
-    }
-    NodeList_add_item(args, rest_arg);
+  NodeList_add_item(args, parse_arg());
+
+  while (Token_is(peek(0), TOKEN_SYM, ",")) {
+    consume_sym(",");
+    NodeList_add_item(args, parse_arg());
   }
 
   return args;
