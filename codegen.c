@@ -286,28 +286,12 @@ void codegen_call_set(
 ) {
   char lvar_name[64];
   NodeList* fn_temp;
-  char fn_name[64];
-  NodeList* fn_args;
-  NodeItem* fn_arg;
-  char vm_comment[256];
   char ref[32];
   
   strcpy(lvar_name, NodeList_head(stmt_rest)->str_val);
   fn_temp = NodeList_get(stmt_rest, 1)->list ;
 
-  strcpy(fn_name, NodeList_head(fn_temp)->str_val);
-  fn_args = NodeList_rest(fn_temp);
-
-  for (int i = NodeList_len(fn_args) - 1; i >= 0; i--) {
-    fn_arg = NodeList_get(fn_args, i);
-    codegen_expr(fn_arg_names, lvar_names, fn_arg);
-    printf("  push reg_a\n");
-  }
-
-  sprintf(vm_comment, "call_set  %s", fn_name);
-  codegen_vm_comment(vm_comment);
-  printf("  call %s\n", fn_name);
-  printf("  add_sp %d\n", NodeList_len(fn_args));
+  codegen_call(fn_arg_names, lvar_names, fn_temp);
 
   to_lvar_ref(ref, lvar_names, lvar_name);
   printf("  cp reg_a %s\n", ref);
