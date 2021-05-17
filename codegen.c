@@ -355,11 +355,11 @@ void codegen_while(
 void codegen_case(
   Names* fn_arg_names,
   Names* lvar_names,
-  NodeList* when_blocks
+  NodeList* when_clauses
 ) {
   int label_id;
   int when_idx = -1;
-  NodeList* when_block;
+  NodeList* when_clause;
   NodeItem* cond;
   NodeList* rest;
   NodeItem* cond_head;
@@ -370,12 +370,12 @@ void codegen_case(
   printf("\n");
   printf("  # -->> case_%d\n", label_id);
 
-  for (int i = 0; i < NodeList_len(when_blocks); i++) {
-    when_block = NodeList_get(when_blocks, i)->list;
+  for (int i = 0; i < NodeList_len(when_clauses); i++) {
+    when_clause = NodeList_get(when_clauses, i)->list;
     when_idx++;
 
-    cond = NodeList_head(when_block);
-    rest = NodeList_rest(when_block);
+    cond = NodeList_head(when_clause);
+    rest = NodeList_rest(when_clause);
 
     cond_head = NodeList_head(cond->list);
 
