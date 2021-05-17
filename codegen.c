@@ -586,6 +586,19 @@ void codegen_top_stmts(NodeList* list) {
   }
 }
 
+void codegen_builtin_set_vram() {
+  printf("\n");
+  printf("label set_vram\n");
+  printf("  push bp\n");
+  printf("  cp sp bp\n");
+
+  printf("  set_vram [bp:2] [bp:3]\n"); // vram_addr value
+
+  printf("  cp bp sp\n");
+  printf("  pop bp\n");
+  printf("  ret\n");
+}
+
 int main(void) {
   char input[INPUT_SIZE];
 
@@ -598,6 +611,10 @@ int main(void) {
 
   NodeList* top_stmts = NodeList_rest(tree);
   codegen_top_stmts(top_stmts);
+
+  printf("#>builtins\n");
+  codegen_builtin_set_vram();
+  printf("#<builtins\n");
 
   return 0;
 }
