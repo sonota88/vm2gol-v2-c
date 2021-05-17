@@ -9,7 +9,7 @@ ENV["LANG"] = "C"
 CC = "gcc -Wall"
 
 CLEAN.include "bin/json_tester"
-CLEAN.include "bin/vgcg"
+CLEAN.include "bin/codegen"
 CLEAN.include "bin/parser"
 CLEAN.include "bin/tokenizer"
 
@@ -28,7 +28,7 @@ task :build => [
        "bin/tokenizer",
        "bin/parser",
        "bin/json_tester",
-       "bin/vgcg"
+       "bin/codegen"
      ]
 
 file "bin/tokenizer" => [
@@ -58,8 +58,8 @@ file "bin/json_tester" => [
   sh %(#{CC} #{src_files} -o #{t.name})
 end
 
-file "bin/vgcg" => [
-       "vgcg.c",
+file "bin/codegen" => [
+       "codegen.c",
        SRC_UTILS, SRC_TYPES, SRC_JSON,
        H_UTILS,   H_TYPES,   H_JSON
      ] do |t|

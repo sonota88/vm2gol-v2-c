@@ -36,7 +36,7 @@ test_nn() {
   fi
 
   echo "  cg" >&2
-  cat $temp_vgt_file | bin/vgcg > $temp_vga_file
+  cat $temp_vgt_file | bin/codegen > $temp_vga_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_codegen"
     return
