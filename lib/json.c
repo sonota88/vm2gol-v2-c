@@ -107,11 +107,11 @@ void _print_as_json(NodeList* list, int lv) {
     item = NodeList_get(list, i);
 
     if (item->kind == NODE_INT) {
-      print_indent(lv);
-      printf("  %d", item->int_val);
+      print_indent(lv + 1);
+      printf("%d", item->int_val);
     } else if (item->kind == NODE_STR) {
-      print_indent(lv);
-      printf("  \"%s\"", item->str_val);
+      print_indent(lv + 1);
+      printf("\"%s\"", item->str_val);
     } else if (item->kind == NODE_LIST) {
       _print_as_json(item->list, lv + 1);
     } else {
