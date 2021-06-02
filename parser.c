@@ -694,7 +694,7 @@ int main(void) {
 
   tree = parse();
 
-  print_as_json(tree);
+  print_as_json(tree, 1);
 
   return 0;
 }
