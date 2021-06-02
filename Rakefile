@@ -33,8 +33,8 @@ task :build => [
 
 file "bin/tokenizer" => [
        "tokenizer.c",
-       SRC_UTILS,
-       H_UTILS,
+       SRC_UTILS, SRC_TYPES, SRC_JSON,
+       H_UTILS,   H_TYPES,   H_JSON
      ] do |t|
   src_files = reject_h_files(t.prerequisites).join(" ")
   sh %(#{CC} #{src_files} -o #{t.name})

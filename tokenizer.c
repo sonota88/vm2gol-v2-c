@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lib/utils.h"
+#include "lib/types.h"
+#include "lib/json.h"
 
 #define INPUT_SIZE 8192
 #define HEAD_SIZE 1024
@@ -102,7 +104,10 @@ int match_ident(char* rest) {
 }
 
 void print_token(char* kind, char* value) {
-  printf("%s:%s\n", kind, value);
+  NodeList* token = NodeList_new();
+  NodeList_add_str(token, kind);
+  NodeList_add_str(token, value);
+  print_as_json(token, 0);
 }
 
 int main(void) {

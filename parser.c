@@ -68,10 +68,8 @@ void read_tokens(char* input) {
   int pos = 0;
   int line_size;
   char line[256];
-  char kind_str[8];
-  char str[64];
   int ti = 0;
-  int sep_i;
+  NodeList* token;
 
   src_len = strlen(input);
 
@@ -81,12 +79,10 @@ void read_tokens(char* input) {
 
     chomp(line);
 
-    sep_i = find_index(line, ':', 0);
-    substring(kind_str, line, 0, sep_i);
-    substring(str, line, sep_i + 1, line_size);
+    token = parse_json(line);
 
-    g_tokens[ti].kind = TokenKind_from_str(kind_str);
-    strcpy(g_tokens[ti].str, str);
+    g_tokens[ti].kind = TokenKind_from_str(NodeList_get(token, 0)->str_val);
+    strcpy(g_tokens[ti].str, NodeList_get(token, 1)->str_val);
 
     ti++;
     if (NUM_TOKENS <= ti) {
