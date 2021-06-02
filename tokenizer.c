@@ -45,15 +45,15 @@ int match_str(char* rest) {
 
 int is_kw(char* str) {
   return (
-       strcmp(str, "set") == 0
-    || strcmp(str, "call") == 0
-    || strcmp(str, "call_set") == 0
-    || strcmp(str, "return") == 0
-    || strcmp(str, "while") == 0
-    || strcmp(str, "case") == 0
-    || strcmp(str, "var") == 0
-    || strcmp(str, "func") == 0
-    || strcmp(str, "_cmt") == 0
+       str_eq(str, "set")
+    || str_eq(str, "call")
+    || str_eq(str, "call_set")
+    || str_eq(str, "return")
+    || str_eq(str, "while")
+    || str_eq(str, "case")
+    || str_eq(str, "var")
+    || str_eq(str, "func")
+    || str_eq(str, "_cmt")
   );
 }
 
