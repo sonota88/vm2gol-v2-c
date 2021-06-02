@@ -670,23 +670,10 @@ void print_indent_space(int lv) {
 int main(void) {
   char input[INPUT_SIZE];
   NodeList* tree;
-  Token t;
 
   read_stdin_all(input, INPUT_SIZE);
 
   read_tokens(input);
-
-  if (0) {
-    for (int i = 0; i < g_num_tokens; i++) {
-      t = g_tokens[i];
-      fprintf(
-        stderr,
-        "  kind(%s) str<%s>\n",
-        TokenKind_to_str(t.kind),
-        t.str
-      );
-    }
-  }
 
   tree = parse();
 
