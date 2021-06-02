@@ -101,6 +101,10 @@ int match_ident(char* rest) {
   return i;
 }
 
+void print_token(char* kind, char* value) {
+  printf("%s:%s\n", kind, value);
+}
+
 int main(void) {
   char input[INPUT_SIZE];
   int pos = 0;
@@ -131,7 +135,7 @@ int main(void) {
     size = match_str(rest);
     if (0 < size) {
       substring(temp, rest, 1, size + 1);
-      printf("str:%s\n", temp);
+      print_token("str", temp);
       pos += size + 2;
       continue;
     }
@@ -139,7 +143,7 @@ int main(void) {
     size = match_int(rest);
     if (0 < size) {
       substring(temp, rest, 0, size);
-      printf("int:%s\n", temp);
+      print_token("int", temp);
       pos += size;
       continue;
     }
@@ -147,7 +151,7 @@ int main(void) {
     size = match_symbol(rest);
     if (0 < size) {
       substring(temp, rest, 0, size);
-      printf("sym:%s\n", temp);
+      print_token("sym", temp);
       pos += size;
       continue;
     }
@@ -156,9 +160,9 @@ int main(void) {
     if (0 < size) {
       substring(temp, rest, 0, size);
       if (is_kw(temp)) {
-        printf("kw:%s\n", temp);
+        print_token("kw", temp);
       } else {
-        printf("ident:%s\n", temp);
+        print_token("ident", temp);
       }
       pos += size;
       continue;
