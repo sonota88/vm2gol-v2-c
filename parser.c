@@ -353,44 +353,6 @@ NodeItem* parse_factor() {
   }
 }
 
-NodeList* parse_expr_right() {
-  Token* t;
-  NodeList* tail = NodeList_new();
-  NodeItem* expr_r;
-
-  t = peek(0);
-
-  if (Token_is(t, TOKEN_SYM, "+")) {
-    consume_sym("+");
-    expr_r = parse_expr();
-    NodeList_add_str(tail, "+");
-    NodeList_add_item(tail, expr_r);
-
-  } else if (Token_is(t, TOKEN_SYM, "*")) {
-    consume_sym("*");
-    expr_r = parse_expr();
-    NodeList_add_str(tail, "*");
-    NodeList_add_item(tail, expr_r);
-
-  } else if (Token_is(t, TOKEN_SYM, "==")) {
-    consume_sym("==");
-    expr_r = parse_expr();
-    NodeList_add_str(tail, "eq");
-    NodeList_add_item(tail, expr_r);
-
-  } else if (Token_is(t, TOKEN_SYM, "!=")) {
-    consume_sym("!=");
-    expr_r = parse_expr();
-    NodeList_add_str(tail, "neq");
-    NodeList_add_item(tail, expr_r);
-
-  } else {
-    ;
-  }
-
-  return tail;
-}
-
 NodeItem* parse_expr() {
   NodeItem* expr;
   NodeItem* factor;
