@@ -298,6 +298,37 @@ NodeList* parse_var() {
   }
 }
 
+NodeItem* parse_factor() {
+  Token* t;
+  NodeItem* expr;
+  int n;
+
+  // puts_fn("-->> parse_factor");
+
+  t = peek(0);
+
+  if (t->kind == TOKEN_INT) {
+    g_pos++;
+    n = s_to_i(t->str);
+    return NodeItem_new_int(n);
+
+  } else if (t->kind == TOKEN_IDENT) {
+    g_pos++;
+    return NodeItem_new_str(t->str);
+
+  } else if (t->kind == TOKEN_SYM) {
+    consume_sym("(");
+    expr = parse_expr();
+    consume_sym(")");
+    return expr;
+
+  } else {
+    puts_e(TokenKind_to_str(t->kind));
+    parse_error("Unexpected token kind", __LINE__);
+    exit(2);
+  }
+}
+
 NodeList* parse_expr_right() {
   Token* t;
   NodeList* tail = NodeList_new();
