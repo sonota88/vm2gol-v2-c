@@ -298,6 +298,30 @@ NodeList* parse_var() {
   }
 }
 
+int is_binary_op(Token* t) {
+  return (
+       str_eq(t->str, "+")
+    || str_eq(t->str, "*")
+    || str_eq(t->str, "==")
+    || str_eq(t->str, "!=")
+  );
+}
+
+char* convert_binary_op(char* op) {
+  if (str_eq(op, "+")) {
+    return "+";
+  } else if (str_eq(op, "*")) {
+    return "*";
+  } else if (str_eq(op, "==")) {
+    return "eq";
+  } else if (str_eq(op, "!=")) {
+    return "neq";
+  } else {
+    must_not_happen("unsupported operator", __LINE__);
+    return NULL;
+  }
+}
+
 NodeItem* parse_factor() {
   Token* t;
   NodeItem* expr;
@@ -368,24 +392,30 @@ NodeList* parse_expr_right() {
 }
 
 NodeItem* parse_expr() {
-  NodeItem* expr_l;
-  NodeList* tail;
-  NodeList* binop;
+  NodeItem* expr;
+  NodeItem* factor;
+  NodeList* new_expr;
+  char* op;
 
   puts_fn("-->> parse_expr");
 
-  expr_l = parse_factor();
+  expr = parse_factor();
 
-  tail = parse_expr_right();
-  if (NodeList_len(tail) == 0) {
-    return expr_l;
+  while (is_binary_op(peek(0))) {
+    op = convert_binary_op(peek(0)->str);
+    g_pos++;
+
+    factor = parse_factor();
+
+    new_expr = NodeList_new();
+    NodeList_add_str(new_expr, op);
+    NodeList_add_item(new_expr, expr);
+    NodeList_add_item(new_expr, factor);
+
+    expr = NodeItem_new_list(new_expr);
   }
 
-  binop = NodeList_new();
-  NodeList_add_item(binop, NodeList_get(tail, 0));
-  NodeList_add_item(binop, expr_l);
-  NodeList_add_item(binop, NodeList_get(tail, 1));
-  return NodeItem_new_list(binop);
+  return expr;
 }
 
 NodeList* parse_set() {
