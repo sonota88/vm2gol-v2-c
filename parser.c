@@ -368,32 +368,13 @@ NodeList* parse_expr_right() {
 }
 
 NodeItem* parse_expr() {
-  Token* tl;
   NodeItem* expr_l;
   NodeList* tail;
   NodeList* binop;
-  int n;
 
   puts_fn("-->> parse_expr");
 
-  tl = peek(0);
-
-  if (tl->kind == TOKEN_INT) {
-    g_pos++;
-    n = s_to_i(tl->str);
-    expr_l = NodeItem_new_int(n);
-  } else if (tl->kind == TOKEN_IDENT) {
-    g_pos++;
-    expr_l = NodeItem_new_str(tl->str);
-  } else if (tl->kind == TOKEN_SYM) {
-    consume_sym("(");
-    expr_l = parse_expr();
-    consume_sym(")");
-  } else {
-    puts_e(TokenKind_to_str(tl->kind));
-    parse_error("Unexpected token kind", __LINE__);
-    exit(2);
-  }
+  expr_l = parse_factor();
 
   tail = parse_expr_right();
   if (NodeList_len(tail) == 0) {
