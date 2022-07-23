@@ -298,82 +298,86 @@ NodeList* parse_var() {
   }
 }
 
-NodeList* parse_expr_right() {
+int is_binary_op(Token* t) {
+  return (
+       str_eq(t->str, "+")
+    || str_eq(t->str, "*")
+    || str_eq(t->str, "==")
+    || str_eq(t->str, "!=")
+  );
+}
+
+char* convert_binary_op(char* op) {
+  if (str_eq(op, "+")) {
+    return "+";
+  } else if (str_eq(op, "*")) {
+    return "*";
+  } else if (str_eq(op, "==")) {
+    return "eq";
+  } else if (str_eq(op, "!=")) {
+    return "neq";
+  } else {
+    must_not_happen("unsupported operator", __LINE__);
+    return NULL;
+  }
+}
+
+NodeItem* parse_factor() {
   Token* t;
-  NodeList* tail = NodeList_new();
-  NodeItem* expr_r;
+  NodeItem* expr;
+  int n;
+
+  // puts_fn("-->> parse_factor");
 
   t = peek(0);
 
-  if (Token_is(t, TOKEN_SYM, "+")) {
-    consume_sym("+");
-    expr_r = parse_expr();
-    NodeList_add_str(tail, "+");
-    NodeList_add_item(tail, expr_r);
-
-  } else if (Token_is(t, TOKEN_SYM, "*")) {
-    consume_sym("*");
-    expr_r = parse_expr();
-    NodeList_add_str(tail, "*");
-    NodeList_add_item(tail, expr_r);
-
-  } else if (Token_is(t, TOKEN_SYM, "==")) {
-    consume_sym("==");
-    expr_r = parse_expr();
-    NodeList_add_str(tail, "eq");
-    NodeList_add_item(tail, expr_r);
-
-  } else if (Token_is(t, TOKEN_SYM, "!=")) {
-    consume_sym("!=");
-    expr_r = parse_expr();
-    NodeList_add_str(tail, "neq");
-    NodeList_add_item(tail, expr_r);
-
-  } else {
-    ;
-  }
-
-  return tail;
-}
-
-NodeItem* parse_expr() {
-  Token* tl;
-  NodeItem* expr_l;
-  NodeList* tail;
-  NodeList* binop;
-  int n;
-
-  puts_fn("-->> parse_expr");
-
-  tl = peek(0);
-
-  if (tl->kind == TOKEN_INT) {
+  if (t->kind == TOKEN_INT) {
     g_pos++;
-    n = s_to_i(tl->str);
-    expr_l = NodeItem_new_int(n);
-  } else if (tl->kind == TOKEN_IDENT) {
+    n = s_to_i(t->str);
+    return NodeItem_new_int(n);
+
+  } else if (t->kind == TOKEN_IDENT) {
     g_pos++;
-    expr_l = NodeItem_new_str(tl->str);
-  } else if (tl->kind == TOKEN_SYM) {
+    return NodeItem_new_str(t->str);
+
+  } else if (t->kind == TOKEN_SYM) {
     consume_sym("(");
-    expr_l = parse_expr();
+    expr = parse_expr();
     consume_sym(")");
+    return expr;
+
   } else {
-    puts_e(TokenKind_to_str(tl->kind));
+    puts_e(TokenKind_to_str(t->kind));
     parse_error("Unexpected token kind", __LINE__);
     exit(2);
   }
+}
 
-  tail = parse_expr_right();
-  if (NodeList_len(tail) == 0) {
-    return expr_l;
+NodeItem* parse_expr() {
+  NodeItem* expr;
+  NodeItem* factor;
+  NodeList* new_expr;
+  char* op;
+
+  puts_fn("-->> parse_expr");
+
+  expr = parse_factor();
+
+  while (is_binary_op(peek(0))) {
+    op = convert_binary_op(peek(0)->str);
+    g_pos++;
+
+    factor = parse_factor();
+
+    new_expr = NodeList_new();
+    NodeList_add_str(new_expr, op);
+    NodeList_add_item(new_expr, expr);
+    NodeList_add_item(new_expr, factor);
+
+    expr = NodeItem_new_list(new_expr);
   }
 
-  binop = NodeList_new();
-  NodeList_add_item(binop, NodeList_get(tail, 0));
-  NodeList_add_item(binop, expr_l);
-  NodeList_add_item(binop, NodeList_get(tail, 1));
-  return NodeItem_new_list(binop);
+  return expr;
 }
 
 NodeList* parse_set() {
