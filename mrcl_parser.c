@@ -215,9 +215,7 @@ NodeList* parse_func() {
 
   stmts = NodeList_new();
   while (!Token_str_eq(peek(0), "}")) {
-    t = peek(0);
-
-    if (Token_str_eq(t, "var")) {
+    if (Token_str_eq(peek(0), "var")) {
       NodeList_add_list(stmts, parse_var());
     } else {
       NodeList_add_list(stmts, parse_stmt());
