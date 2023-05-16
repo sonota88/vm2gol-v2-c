@@ -32,7 +32,7 @@ task :build => [
      ]
 
 file "bin/tokenizer" => [
-       "tokenizer.c",
+       "mrcl_tokenizer.c",
        SRC_UTILS, SRC_TYPES, SRC_JSON,
        H_UTILS,   H_TYPES,   H_JSON
      ] do |t|
@@ -41,7 +41,7 @@ file "bin/tokenizer" => [
 end
 
 file "bin/parser" => [
-       "parser.c",
+       "mrcl_parser.c",
        SRC_UTILS, SRC_TYPES, SRC_JSON,
        H_UTILS,   H_TYPES,   H_JSON,
      ] do |t|
@@ -59,7 +59,7 @@ file "bin/json_tester" => [
 end
 
 file "bin/codegen" => [
-       "codegen.c",
+       "mrcl_codegen.c",
        SRC_UTILS, SRC_TYPES, SRC_JSON,
        H_UTILS,   H_TYPES,   H_JSON
      ] do |t|
