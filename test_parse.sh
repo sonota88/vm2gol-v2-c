@@ -22,10 +22,10 @@ test_nn() {
   local local_errs=""
 
   echo "  tok" >&2
-  cat ${TEST_DIR}/parse/${nn}.vg.txt | bin/tokenizer > $temp_tokens_file
+  cat ${TEST_DIR}/parse/${nn}.vg.txt | bin/lexer > $temp_tokens_file
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_tokenize"
-    local_errs="${local_errs},${nn}_tokenize"
+    ERRS="${ERRS},${nn}_lex"
+    local_errs="${local_errs},${nn}_lex"
     return
   fi
 
