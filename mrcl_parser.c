@@ -214,11 +214,8 @@ NodeList* parse_func() {
   consume_sym("{");
 
   stmts = NodeList_new();
-  for (;;) {
+  while (!Token_str_eq(peek(0), "}")) {
     t = peek(0);
-    if (Token_str_eq(t, "}")) {
-      break;
-    }
 
     if (Token_str_eq(t, "var")) {
       NodeList_add_list(stmts, parse_var());
@@ -548,12 +545,8 @@ NodeList* parse_case() {
 
   when_clauses = NodeList_new();
 
-  while (1) {
+  while (!Token_str_eq(peek(0), "}")) {
     when_clause = parse_when_clause();
-    if (when_clause == NULL) {
-      break;
-    }
-
     NodeList_add_list(when_clauses, when_clause);
   }
 
@@ -614,11 +607,7 @@ NodeList* parse_stmts() {
 
   puts_fn("-->> parse_stmts");
 
-  while (1) {
-    if (Token_str_eq(peek(0), "}")) {
-      break;
-    }
-
+  while (!Token_str_eq(peek(0), "}")) {
     NodeList* stmt = parse_stmt();
 
     NodeItem* list_wrapper = NodeItem_new(NODE_LIST);
