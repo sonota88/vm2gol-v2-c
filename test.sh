@@ -49,6 +49,16 @@ test_parse() {
 
 # --------------------------------
 
+test_compile() {
+  ./test_compile.sh
+  if [ $? -ne 0 ]; then
+    ERRS="${ERRS},${nn}_compile"
+    return
+  fi
+}
+
+# --------------------------------
+
 test_all() {
   echo "==== json ===="
   test_json
@@ -60,11 +70,7 @@ test_all() {
   test_parse
 
   echo "==== compile ===="
-  ./test_compile.sh
-  if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_compile"
-    return
-  fi
+  test_compile
 }
 
 # --------------------------------
@@ -84,6 +90,10 @@ main() {
   ;; parse | p* )    #task: Run parse tests
       test_parse "$@"
       postproc "parse"
+
+  ;; compile | c* )  #task: Run compile tests
+      test_compile "$@"
+      postproc "compile"
 
   ;; all | a* )     #task: Run all tests
       test_all
