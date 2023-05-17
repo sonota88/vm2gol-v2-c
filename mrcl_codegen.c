@@ -358,7 +358,6 @@ void gen_case(
   NodeList* when_clause;
   NodeItem* cond;
   NodeList* rest;
-  NodeItem* cond_head;
   char cond_json[512];
 
   label_id = get_label_id();
@@ -373,14 +372,11 @@ void gen_case(
     cond = NodeList_head(when_clause);
     rest = NodeList_rest(when_clause);
 
-    cond_head = NodeList_head(cond->list);
-
     to_json_line(cond_json, cond);
     printf("  # when_%d_%d: %s\n",
            label_id, when_idx, cond_json
            );
 
-    if (NodeItem_str_eq(cond_head, "eq")) {
       printf("  # -->> expr\n");
       gen_expr(fn_arg_names, lvar_names, cond);
       printf("  # <<-- expr\n");
@@ -395,10 +391,6 @@ void gen_case(
 
       // 偽の場合ここにジャンプ
       printf("label end_when_%d_%d\n", label_id, when_idx);
-
-    } else {
-      not_yet_impl("gen_case", __LINE__);
-    }
   }
 
   printf("label end_case_%d\n", label_id);
