@@ -29,16 +29,22 @@ test_json() {
 
 # --------------------------------
 
-test_all() {
-  echo "==== json ===="
-  test_json
-
-  echo "==== lex ===="
+test_lex() {
   ./test_lex.sh
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_lex"
     return
   fi
+}
+
+# --------------------------------
+
+test_all() {
+  echo "==== json ===="
+  test_json
+
+  echo "==== lex ===="
+  test_lex
 
   echo "==== parse ===="
   ./test_parse.sh
@@ -64,6 +70,10 @@ main() {
     json | j* )     #task: Run json tests
       test_json "$@"
       postproc "json"
+
+  ;; lex | l* )     #task: Run lex tests
+      test_lex "$@"
+      postproc "lex"
 
   ;; all | a* )     #task: Run all tests
       test_all
