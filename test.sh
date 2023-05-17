@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o nounset
+
 ERRS=""
 
 test_all() {
