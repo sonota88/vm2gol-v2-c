@@ -4,6 +4,21 @@ set -o nounset
 
 ERRS=""
 
+# --------------------------------
+
+postproc() {
+  if [ "$ERRS" = "" ]; then
+    echo "----"
+    echo "ok"
+  else
+    echo "----"
+    echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
+    exit 1
+  fi
+}
+
+# --------------------------------
+
 test_all() {
   echo "==== json ===="
   ./test_json.sh
@@ -42,15 +57,8 @@ main() {
   case $cmd in
     all | a* )     #task: Run all tests
       test_all
+      postproc "all"
 
-      if [ "$ERRS" = "" ]; then
-        echo "----"
-        echo "ok"
-      else
-        echo "----"
-        echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
-        exit 1
-      fi
   ;; * )
        echo "Tasks:"
        grep '#task: ' $0 | grep -v grep
