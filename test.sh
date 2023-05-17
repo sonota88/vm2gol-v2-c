@@ -22,7 +22,7 @@ postproc() {
 test_json() {
   ./test_json.sh
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_json"
+    ERRS="${ERRS},json"
     return
   fi
 }
@@ -32,7 +32,7 @@ test_json() {
 test_lex() {
   ./test_lex.sh
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_lex"
+    ERRS="${ERRS},lex"
     return
   fi
 }
@@ -42,7 +42,7 @@ test_lex() {
 test_parse() {
   ./test_parse.sh
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_parser"
+    ERRS="${ERRS},parser"
     return
   fi
 }
@@ -52,7 +52,7 @@ test_parse() {
 test_compile() {
   ./test_compile.sh
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_compile"
+    ERRS="${ERRS},compile"
     return
   fi
 }
