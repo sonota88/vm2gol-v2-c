@@ -34,6 +34,7 @@ test_all() {
 
 # --------------------------------
 
+main() {
 test_all
 
 if [ "$ERRS" = "" ]; then
@@ -44,3 +45,6 @@ else
   echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
   exit 1
 fi
+}
+
+main
