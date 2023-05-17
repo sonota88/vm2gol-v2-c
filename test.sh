@@ -41,16 +41,16 @@ main() {
 
   case $cmd in
     all | a* )     #task: Run all tests
-  test_all
+      test_all
 
-  if [ "$ERRS" = "" ]; then
-    echo "----"
-    echo "ok"
-  else
-    echo "----"
-    echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
-    exit 1
-  fi
+      if [ "$ERRS" = "" ]; then
+        echo "----"
+        echo "ok"
+      else
+        echo "----"
+        echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
+        exit 1
+      fi
   ;; * )
        echo "Tasks:"
        grep '#task: ' $0 | grep -v grep
