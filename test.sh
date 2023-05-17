@@ -39,6 +39,16 @@ test_lex() {
 
 # --------------------------------
 
+test_parse() {
+  ./test_parse.sh
+  if [ $? -ne 0 ]; then
+    ERRS="${ERRS},${nn}_parser"
+    return
+  fi
+}
+
+# --------------------------------
+
 test_all() {
   echo "==== json ===="
   test_json
@@ -47,11 +57,7 @@ test_all() {
   test_lex
 
   echo "==== parse ===="
-  ./test_parse.sh
-  if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_parser"
-    return
-  fi
+  test_parse
 
   echo "==== compile ===="
   ./test_compile.sh
@@ -74,6 +80,10 @@ main() {
   ;; lex | l* )     #task: Run lex tests
       test_lex "$@"
       postproc "lex"
+
+  ;; parse | p* )    #task: Run parse tests
+      test_parse "$@"
+      postproc "parse"
 
   ;; all | a* )     #task: Run all tests
       test_all
