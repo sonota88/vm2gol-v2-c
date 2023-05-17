@@ -6,6 +6,7 @@ print_project_dir() {
 
 export PROJECT_DIR="$(print_project_dir)"
 export TEST_DIR="${PROJECT_DIR}/test"
+export TEST_COMMON_DIR="${PROJECT_DIR}/test_common"
 export TEMP_DIR="${PROJECT_DIR}/z_tmp"
 
 MAX_ID=6
@@ -17,9 +18,9 @@ test_nn() {
   echo "test_${nn}"
 
   local temp_json_file="${TEMP_DIR}/test.json"
-  local exp_tokens_file="${TEST_DIR}/json/${nn}.json"
+  local exp_tokens_file="${TEST_COMMON_DIR}/json/${nn}.json"
 
-  cat ${TEST_DIR}/json/${nn}.json \
+  cat ${TEST_COMMON_DIR}/json/${nn}.json \
     | bin/json_tester \
     > $temp_json_file
   if [ $? -ne 0 ]; then
@@ -27,7 +28,7 @@ test_nn() {
     return
   fi
 
-  ruby test/diff.rb json $exp_tokens_file $temp_json_file
+  ruby ${TEST_COMMON_DIR}/diff.rb json $exp_tokens_file $temp_json_file
   if [ $? -ne 0 ]; then
     # meld $exp_tokens_file $temp_json_file &
 

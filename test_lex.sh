@@ -6,6 +6,7 @@ print_project_dir() {
 
 export PROJECT_DIR="$(print_project_dir)"
 export TEST_DIR="${PROJECT_DIR}/test"
+export TEST_COMMON_DIR="${PROJECT_DIR}/test_common"
 export TEMP_DIR="${PROJECT_DIR}/z_tmp"
 
 MAX_ID=2
@@ -17,9 +18,9 @@ test_nn() {
   echo "test_${nn}"
 
   local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
-  local exp_tokens_file="${TEST_DIR}/lex/exp_${nn}.txt"
+  local exp_tokens_file="${TEST_COMMON_DIR}/lex/exp_${nn}.txt"
 
-  cat ${TEST_DIR}/lex/${nn}.vg.txt \
+  cat ${TEST_COMMON_DIR}/lex/${nn}.vg.txt \
     | bin/lexer \
     > $temp_tokens_file
   if [ $? -ne 0 ]; then
@@ -27,7 +28,7 @@ test_nn() {
     return
   fi
 
-  ruby test/diff.rb text $exp_tokens_file $temp_tokens_file
+  ruby ${TEST_COMMON_DIR}/diff.rb text $exp_tokens_file $temp_tokens_file
   if [ $? -ne 0 ]; then
     # meld $exp_tokens_file $temp_tokens_file &
 

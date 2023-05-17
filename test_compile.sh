@@ -6,6 +6,7 @@ print_project_dir() {
 
 export PROJECT_DIR="$(print_project_dir)"
 export TEST_DIR="${PROJECT_DIR}/test"
+export TEST_COMMON_DIR="${PROJECT_DIR}/test_common"
 export TEMP_DIR="${PROJECT_DIR}/z_tmp"
 
 MAX_ID=26
@@ -36,10 +37,10 @@ test_nn() {
   local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
   local temp_vgt_file="${TEMP_DIR}/test.vgt.json"
   local temp_vga_file="${TEMP_DIR}/test.vga.txt"
-  local exp_vga_file="${TEST_DIR}/compile/exp_${nn}.vga.txt"
+  local exp_vga_file="${TEST_COMMON_DIR}/compile/exp_${nn}.vga.txt"
 
   echo "  tok" >&2
-  cat ${TEST_DIR}/compile/${nn}.vg.txt | bin/lexer > $temp_tokens_file
+  cat ${TEST_COMMON_DIR}/compile/${nn}.vg.txt | bin/lexer > $temp_tokens_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_lex"
     return
@@ -59,7 +60,7 @@ test_nn() {
     return
   fi
 
-  ruby test/diff.rb asm $exp_vga_file $temp_vga_file
+  ruby ${TEST_COMMON_DIR}/diff.rb asm $exp_vga_file $temp_vga_file
   if [ $? -ne 0 ]; then
     # meld $exp_vga_file $temp_vga_file &
 
