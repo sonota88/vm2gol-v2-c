@@ -76,14 +76,19 @@ test_all() {
 # --------------------------------
 
 main() {
-  local cmd="$1"; shift
+  local cmd=
+  if [ $# -ge 1 ]; then
+    cmd="$1"; shift
+  else
+    cmd="show_tasks"
+  fi
 
   case $cmd in
-    json | j* )     #task: Run json tests
+    json | j* )      #task: Run json tests
       test_json "$@"
       postproc "json"
 
-  ;; lex | l* )     #task: Run lex tests
+  ;; lex | l* )      #task: Run lex tests
       test_lex "$@"
       postproc "lex"
 
@@ -95,7 +100,7 @@ main() {
       test_compile "$@"
       postproc "compile"
 
-  ;; all | a* )     #task: Run all tests
+  ;; all | a* )      #task: Run all tests
       test_all
       postproc "all"
 
