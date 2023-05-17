@@ -309,7 +309,7 @@ char* convert_binary_op(char* op) {
   } else if (str_eq(op, "*")) {
     return "*";
   } else if (str_eq(op, "==")) {
-    return "eq";
+    return "==";
   } else if (str_eq(op, "!=")) {
     return "neq";
   } else {
