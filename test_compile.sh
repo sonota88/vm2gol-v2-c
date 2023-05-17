@@ -12,27 +12,10 @@ export TEMP_DIR="${PROJECT_DIR}/z_tmp"
 MAX_ID=26
 ERRS=""
 
-test_compile_do_skip() {
-  local nn="$1"; shift
-
-  for skip_nn in 23 24 25; do
-    if [ "$nn" = "$skip_nn" ]; then
-      return 0
-    fi
-  done
-
-  return 1
-}
-
 test_nn() {
   local nn="$1"; shift
 
   echo "test_${nn}"
-
-  if (test_compile_do_skip "$nn"); then
-    echo "  ... skip" >&2
-    return
-  fi
 
   local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
   local temp_vgt_file="${TEMP_DIR}/test.vgt.json"
