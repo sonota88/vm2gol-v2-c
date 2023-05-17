@@ -19,13 +19,19 @@ postproc() {
 
 # --------------------------------
 
-test_all() {
-  echo "==== json ===="
+test_json() {
   ./test_json.sh
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_json"
     return
   fi
+}
+
+# --------------------------------
+
+test_all() {
+  echo "==== json ===="
+  test_json
 
   echo "==== lex ===="
   ./test_lex.sh
@@ -55,7 +61,11 @@ main() {
   local cmd="$1"; shift
 
   case $cmd in
-    all | a* )     #task: Run all tests
+    json | j* )     #task: Run json tests
+      test_json "$@"
+      postproc "json"
+
+  ;; all | a* )     #task: Run all tests
       test_all
       postproc "all"
 
