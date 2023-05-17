@@ -377,20 +377,20 @@ void gen_case(
            label_id, when_idx, cond_json
            );
 
-      printf("  # -->> expr\n");
-      gen_expr(fn_arg_names, lvar_names, cond);
-      printf("  # <<-- expr\n");
-      printf("  cp 0 reg_b\n");
+    printf("  # -->> expr\n");
+    gen_expr(fn_arg_names, lvar_names, cond);
+    printf("  # <<-- expr\n");
+    printf("  cp 0 reg_b\n");
 
-      printf("  compare\n");
-      printf("  jump_eq end_when_%d_%d\n", label_id, when_idx);
+    printf("  compare\n");
+    printf("  jump_eq end_when_%d_%d\n", label_id, when_idx);
 
-      gen_stmts(fn_arg_names, lvar_names, rest);      
+    gen_stmts(fn_arg_names, lvar_names, rest);      
 
-      printf("  jump end_case_%d\n", label_id);
+    printf("  jump end_case_%d\n", label_id);
 
-      // 偽の場合ここにジャンプ
-      printf("label end_when_%d_%d\n", label_id, when_idx);
+    // 偽の場合ここにジャンプ
+    printf("label end_when_%d_%d\n", label_id, when_idx);
   }
 
   printf("label end_case_%d\n", label_id);
