@@ -11,6 +11,7 @@ typedef enum {
 typedef struct {
   TokenKind kind;
   char str[64];
+  int lineno;
 } Token;
 
 TokenKind TokenKind_from_str(char* str);

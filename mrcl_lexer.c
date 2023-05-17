@@ -103,8 +103,9 @@ int match_ident(char* rest) {
   return i;
 }
 
-void print_token(char* kind, char* value) {
+void print_token(char* kind, char* value, int lineno) {
   NodeList* token = NodeList_new();
+  NodeList_add_int(token, lineno);
   NodeList_add_str(token, kind);
   NodeList_add_str(token, value);
   print_as_json(token, 0);
@@ -117,6 +118,7 @@ int main(void) {
   char rest[INPUT_SIZE];
   char temp[256];
   int size;
+  int lineno = 1;
 
   read_stdin_all(input, INPUT_SIZE);
 
@@ -124,6 +126,12 @@ int main(void) {
 
   while (pos < src_len) {
     substring(rest, input, pos, INPUT_SIZE);
+
+    if (rest[0] == '\n') {
+      lineno++;
+      pos++;
+      continue;
+    }
 
     size = match_space(rest);
     if (0 < size) {
@@ -140,7 +148,7 @@ int main(void) {
     size = match_str(rest);
     if (0 < size) {
       substring(temp, rest, 1, size + 1);
-      print_token("str", temp);
+      print_token("str", temp, lineno);
       pos += size + 2;
       continue;
     }
@@ -148,7 +156,7 @@ int main(void) {
     size = match_int(rest);
     if (0 < size) {
       substring(temp, rest, 0, size);
-      print_token("int", temp);
+      print_token("int", temp, lineno);
       pos += size;
       continue;
     }
@@ -156,7 +164,7 @@ int main(void) {
     size = match_symbol(rest);
     if (0 < size) {
       substring(temp, rest, 0, size);
-      print_token("sym", temp);
+      print_token("sym", temp, lineno);
       pos += size;
       continue;
     }
@@ -165,9 +173,9 @@ int main(void) {
     if (0 < size) {
       substring(temp, rest, 0, size);
       if (is_kw(temp)) {
-        print_token("kw", temp);
+        print_token("kw", temp, lineno);
       } else {
-        print_token("ident", temp);
+        print_token("ident", temp, lineno);
       }
       pos += size;
       continue;
