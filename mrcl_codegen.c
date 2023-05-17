@@ -384,14 +384,11 @@ void gen_case(
       printf("  # -->> expr\n");
       gen_expr(fn_arg_names, lvar_names, cond);
       printf("  # <<-- expr\n");
-      printf("  cp 1 reg_b\n");
+      printf("  cp 0 reg_b\n");
 
       printf("  compare\n");
-      printf("  jump_eq when_%d_%d\n", label_id, when_idx);
-      printf("  jump end_when_%d_%d\n", label_id, when_idx);
+      printf("  jump_eq end_when_%d_%d\n", label_id, when_idx);
 
-      // 真の場合ここにジャンプ
-      printf("label when_%d_%d\n", label_id, when_idx);
       gen_stmts(fn_arg_names, lvar_names, rest);      
 
       printf("  jump end_case_%d\n", label_id);
