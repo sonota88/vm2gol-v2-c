@@ -311,7 +311,7 @@ char* convert_binary_op(char* op) {
   } else if (str_eq(op, "==")) {
     return "==";
   } else if (str_eq(op, "!=")) {
-    return "neq";
+    return "!=";
   } else {
     must_not_happen("unsupported operator", __LINE__);
     return NULL;
