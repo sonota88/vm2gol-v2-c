@@ -35,16 +35,16 @@ test_all() {
 # --------------------------------
 
 main() {
-test_all
+  test_all
 
-if [ "$ERRS" = "" ]; then
-  echo "----"
-  echo "ok"
-else
-  echo "----"
-  echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
-  exit 1
-fi
+  if [ "$ERRS" = "" ]; then
+    echo "----"
+    echo "ok"
+  else
+    echo "----"
+    echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
+    exit 1
+  fi
 }
 
 main
