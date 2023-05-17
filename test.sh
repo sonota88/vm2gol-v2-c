@@ -37,6 +37,10 @@ test_all() {
 # --------------------------------
 
 main() {
+  local cmd="$1"; shift
+
+  case $cmd in
+    all | a* )     #task: Run all tests
   test_all
 
   if [ "$ERRS" = "" ]; then
@@ -47,6 +51,11 @@ main() {
     echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
     exit 1
   fi
+  ;; * )
+       echo "Tasks:"
+       grep '#task: ' $0 | grep -v grep
+       ;;
+  esac
 }
 
-main
+main "$@"
