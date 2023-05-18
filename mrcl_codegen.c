@@ -214,6 +214,33 @@ void gen_expr(
   }
 }
 
+void _gen_funcall(
+  Names* fn_arg_names,
+  Names* lvar_names,
+  NodeList* funcall
+) {
+  char* fn_name;
+  NodeList* fn_args;
+  char vm_comment[256];
+  NodeItem* fn_arg;
+
+  fn_name = NodeList_head(funcall)->str_val;
+  fn_args = NodeList_rest(funcall);
+
+  // NodeList_dump(fn_args);
+  for (int i = NodeList_len(fn_args) - 1; i >= 0; i--) {
+    fn_arg = NodeList_get(fn_args, i);
+    gen_expr(fn_arg_names, lvar_names, fn_arg);
+    printf("  push reg_a\n");
+  }
+
+  sprintf(vm_comment, "call  %s", fn_name);
+  gen_vm_comment(vm_comment);
+  printf("  call %s\n", fn_name);
+
+  printf("  add_sp %d\n", NodeList_len(fn_args));
+}
+
 void gen_call(
   Names* fn_arg_names,
   Names* lvar_names,
