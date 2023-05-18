@@ -303,21 +303,6 @@ int is_binary_op(Token* t) {
   );
 }
 
-char* convert_binary_op(char* op) {
-  if (str_eq(op, "+")) {
-    return "+";
-  } else if (str_eq(op, "*")) {
-    return "*";
-  } else if (str_eq(op, "==")) {
-    return "==";
-  } else if (str_eq(op, "!=")) {
-    return "!=";
-  } else {
-    must_not_happen("unsupported operator", __LINE__);
-    return NULL;
-  }
-}
-
 NodeItem* parse_factor() {
   Token* t;
   NodeItem* expr;
@@ -360,7 +345,7 @@ NodeItem* parse_expr() {
   expr = parse_factor();
 
   while (is_binary_op(peek(0))) {
-    op = convert_binary_op(peek(0)->str);
+    op = peek(0)->str;
     g_pos++;
 
     factor = parse_factor();
