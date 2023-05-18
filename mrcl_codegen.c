@@ -336,13 +336,13 @@ void gen_while(
   NodeList* stmt
 ) {
   NodeItem* cond_expr;
-  NodeList* body;
+  NodeList* stmts;
   int label_id;
 
   puts_fn("-->> gen_while");
 
   cond_expr = NodeList_get(stmt, 1);
-  body = NodeList_get(stmt, 2)->list;
+  stmts = NodeList_get(stmt, 2)->list;
 
   label_id = get_label_id();
 
@@ -356,7 +356,7 @@ void gen_while(
 
   printf("  jump_eq end_while_%d\n", label_id);
 
-  gen_stmts(fn_arg_names, lvar_names, body);
+  gen_stmts(fn_arg_names, lvar_names, stmts);
 
   printf("  jump while_%d\n", label_id);
 
@@ -374,7 +374,7 @@ void gen_case(
   NodeList* when_clauses;
   NodeList* when_clause;
   NodeItem* cond;
-  NodeList* rest;
+  NodeList* stmts;
   char cond_json[512];
 
   when_clauses = NodeList_rest(stmt);
@@ -389,7 +389,7 @@ void gen_case(
     when_idx++;
 
     cond = NodeList_head(when_clause);
-    rest = NodeList_rest(when_clause);
+    stmts = NodeList_rest(when_clause);
 
     to_json_line(cond_json, cond);
     printf("  # when_%d_%d: %s\n",
@@ -404,7 +404,7 @@ void gen_case(
     printf("  compare\n");
     printf("  jump_eq end_when_%d_%d\n", label_id, when_idx);
 
-    gen_stmts(fn_arg_names, lvar_names, rest);      
+    gen_stmts(fn_arg_names, lvar_names, stmts);      
 
     printf("  jump end_case_%d\n", label_id);
 
@@ -482,7 +482,7 @@ void gen_var(
 void gen_func_def(NodeList* func_def) {
   char* fn_name;
   Names* fn_arg_names;
-  NodeList* body;
+  NodeList* stmts;
   Names* lvar_names;
   NodeList* stmt;
   NodeItem* var_name;
@@ -491,7 +491,7 @@ void gen_func_def(NodeList* func_def) {
 
   fn_name = NodeList_get(func_def, 1)->str_val;
   fn_arg_names = Names_from_node_list(NodeList_get(func_def, 2)->list);
-  body = NodeList_get(func_def, 3)->list;
+  stmts = NodeList_get(func_def, 3)->list;
 
   if (g_is_debug) {
     fprintf(stderr, "fn_name (%s)", fn_name);
@@ -506,8 +506,8 @@ void gen_func_def(NodeList* func_def) {
 
   lvar_names = Names_new();
 
-  for (int i = 0; i < NodeList_len(body); i++) {
-    stmt = NodeList_get(body, i)->list;
+  for (int i = 0; i < NodeList_len(stmts); i++) {
+    stmt = NodeList_get(stmts, i)->list;
 
     if (
       str_eq(
