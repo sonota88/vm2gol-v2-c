@@ -529,17 +529,13 @@ void gen_func_def(NodeList* func_def) {
 }
 
 void gen_top_stmts(NodeList* list) {
-  NodeItem* item;
   NodeList* top_stmt;
   NodeItem* stmt_head;
-  NodeList* stmt_rest;
 
   for (int i = 0; i < NodeList_len(list); i++) {
-    item = NodeList_get(list, i);
-    top_stmt = item->list;
+    top_stmt = NodeList_get(list, i)->list;
 
-    stmt_head = NodeList_head(item->list);
-    stmt_rest = NodeList_rest(item->list);
+    stmt_head = NodeList_head(top_stmt);
 
     if (str_eq(stmt_head->str_val, "func")) {
       gen_func_def(top_stmt);
