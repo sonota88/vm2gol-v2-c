@@ -452,16 +452,16 @@ void gen_stmts(
 void gen_var(
   Names* fn_arg_names,
   Names* lvar_names,
-  NodeList* stmt_rest
+  NodeList* stmt
 ) {
   NodeItem* dest;
   NodeItem* expr;
 
   printf("  sub_sp 1\n");
 
-  if (NodeList_len(stmt_rest) == 2) {
-    dest = NodeList_get(stmt_rest, 0);
-    expr = NodeList_get(stmt_rest, 1);
+  if (NodeList_len(stmt) == 3) {
+    dest = NodeList_get(stmt, 1);
+    expr = NodeList_get(stmt, 2);
     _gen_set(fn_arg_names, lvar_names, dest, expr);
   }
 }
@@ -507,7 +507,7 @@ void gen_func_def(NodeList* rest) {
     ) {
       var_name = NodeList_head(stmt_rest);
       Names_add(lvar_names, var_name->str_val);
-      gen_var(fn_arg_names, lvar_names, stmt_rest);
+      gen_var(fn_arg_names, lvar_names, stmt);
     } else {
       gen_stmt(fn_arg_names, lvar_names, stmt);
     }
