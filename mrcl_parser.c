@@ -233,12 +233,12 @@ NodeList* parse_func() {
   return list;
 }
 
-NodeList* parse_var_declare() {
+NodeList* _parse_var_declare() {
   NodeList* list;
   char var_name[64];
   Token* t;
 
-  puts_fn("-->> parse_var_declare");
+  puts_fn("-->> _parse_var_declare");
 
   t = peek(0);
   g_pos++;
@@ -252,13 +252,13 @@ NodeList* parse_var_declare() {
   return list;
 }
 
-NodeList* parse_var_init() {
+NodeList* _parse_var_init() {
   NodeList* list;
   char var_name[64];
   Token* t;
   NodeItem* expr;
 
-  puts_fn("-->> parse_var_init");
+  puts_fn("-->> _parse_var_init");
 
   t = peek(0);
   g_pos++;
@@ -285,9 +285,9 @@ NodeList* parse_var() {
   t = peek(1);
 
   if (Token_str_eq(t, ";")) {
-    return parse_var_declare();
+    return _parse_var_declare();
   } else if (Token_str_eq(t, "=")) {
-    return parse_var_init();
+    return _parse_var_init();
   } else {
     parse_error("Unexpected token", __LINE__);
     exit(2);
