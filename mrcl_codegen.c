@@ -470,7 +470,7 @@ void gen_var(
   NodeItem* dest;
   NodeItem* expr;
 
-  printf("  sub_sp 1\n");
+  printf("  add_sp -1\n");
 
   if (NodeList_len(stmt) == 3) {
     dest = NodeList_get(stmt, 1);
