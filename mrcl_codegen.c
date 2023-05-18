@@ -423,7 +423,6 @@ void gen_stmt(
   NodeList* stmt
 ) {
   NodeItem* stmt_head = NodeList_head(stmt);
-  NodeList* stmt_rest = NodeList_rest(stmt);
 
   if (g_is_debug) {
     fprintf(stderr, "-->> gen_stmt (%s)\n", stmt_head->str_val);
