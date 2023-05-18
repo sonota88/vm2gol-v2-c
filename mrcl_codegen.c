@@ -296,10 +296,10 @@ void _gen_set(
 void gen_set(
   Names* fn_arg_names,
   Names* lvar_names,
-  NodeList* rest
+  NodeList* stmt
 ) {
-  NodeItem* dest = NodeList_get(rest, 0);
-  NodeItem* expr = NodeList_get(rest, 1);
+  NodeItem* dest = NodeList_get(stmt, 1);
+  NodeItem* expr = NodeList_get(stmt, 2);
 
   _gen_set(fn_arg_names, lvar_names, dest, expr);
 }
@@ -427,7 +427,7 @@ void gen_stmt(
   }
 
   if (str_eq(stmt_head->str_val, "set")) {
-    gen_set(fn_arg_names, lvar_names, stmt_rest);
+    gen_set(fn_arg_names, lvar_names, stmt);
   } else if (str_eq(stmt_head->str_val, "call")) {
     gen_call(fn_arg_names, lvar_names, stmt);
   } else if (str_eq(stmt_head->str_val, "call_set")) {
