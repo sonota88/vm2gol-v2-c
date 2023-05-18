@@ -333,7 +333,7 @@ void gen_vm_comment(
 void gen_while(
   Names* fn_arg_names,
   Names* lvar_names,
-  NodeList* stmt_rest
+  NodeList* stmt
 ) {
   NodeItem* cond_expr;
   NodeList* body;
@@ -341,8 +341,8 @@ void gen_while(
 
   puts_fn("-->> gen_while");
 
-  cond_expr = NodeList_head(stmt_rest);
-  body = NodeList_get(stmt_rest, 1)->list;
+  cond_expr = NodeList_get(stmt, 1);
+  body = NodeList_get(stmt, 2)->list;
 
   label_id = get_label_id();
 
@@ -438,7 +438,7 @@ void gen_stmt(
   } else if (str_eq(stmt_head->str_val, "return")) {
     gen_return(fn_arg_names, lvar_names, stmt);
   } else if (str_eq(stmt_head->str_val, "while")) {
-    gen_while(fn_arg_names, lvar_names, stmt_rest);
+    gen_while(fn_arg_names, lvar_names, stmt);
   } else if (str_eq(stmt_head->str_val, "case")) {
     gen_case(fn_arg_names, lvar_names, stmt);
   } else if (str_eq(stmt_head->str_val, "_cmt")) {
