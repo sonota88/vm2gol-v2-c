@@ -367,14 +367,17 @@ void gen_while(
 void gen_case(
   Names* fn_arg_names,
   Names* lvar_names,
-  NodeList* when_clauses
+  NodeList* stmt
 ) {
   int label_id;
   int when_idx = -1;
+  NodeList* when_clauses;
   NodeList* when_clause;
   NodeItem* cond;
   NodeList* rest;
   char cond_json[512];
+
+  when_clauses = NodeList_rest(stmt);
 
   label_id = get_label_id();
 
@@ -437,7 +440,7 @@ void gen_stmt(
   } else if (str_eq(stmt_head->str_val, "while")) {
     gen_while(fn_arg_names, lvar_names, stmt_rest);
   } else if (str_eq(stmt_head->str_val, "case")) {
-    gen_case(fn_arg_names, lvar_names, stmt_rest);
+    gen_case(fn_arg_names, lvar_names, stmt);
   } else if (str_eq(stmt_head->str_val, "_cmt")) {
     gen_vm_comment(NodeList_head(stmt_rest)->str_val);
   } else {
