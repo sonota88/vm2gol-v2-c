@@ -255,14 +255,14 @@ void gen_call(
 void gen_call_set(
   Names* fn_arg_names,
   Names* lvar_names,
-  NodeList* stmt_rest
+  NodeList* stmt
 ) {
   char lvar_name[64];
   NodeList* funcall;
   int disp;
   
-  strcpy(lvar_name, NodeList_head(stmt_rest)->str_val);
-  funcall = NodeList_get(stmt_rest, 1)->list ;
+  strcpy(lvar_name, NodeList_get(stmt, 1)->str_val);
+  funcall = NodeList_get(stmt, 2)->list ;
 
   _gen_funcall(fn_arg_names, lvar_names, funcall);
 
@@ -431,7 +431,7 @@ void gen_stmt(
   } else if (str_eq(stmt_head->str_val, "call")) {
     gen_call(fn_arg_names, lvar_names, stmt);
   } else if (str_eq(stmt_head->str_val, "call_set")) {
-    gen_call_set(fn_arg_names, lvar_names, stmt_rest);
+    gen_call_set(fn_arg_names, lvar_names, stmt);
   } else if (str_eq(stmt_head->str_val, "return")) {
     gen_return(fn_arg_names, lvar_names, stmt_rest);
   } else if (str_eq(stmt_head->str_val, "while")) {
