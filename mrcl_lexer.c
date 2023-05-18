@@ -51,6 +51,7 @@ int is_kw(char* str) {
     || str_eq(str, "return")
     || str_eq(str, "while")
     || str_eq(str, "case")
+    || str_eq(str, "when")
     || str_eq(str, "var")
     || str_eq(str, "func")
     || str_eq(str, "_cmt")

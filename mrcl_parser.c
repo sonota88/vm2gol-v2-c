@@ -497,6 +497,8 @@ NodeList* parse_when_clause() {
   NodeItem* expr;
   NodeList* stmts;
 
+  consume_kw("when");
+
   consume_sym("(");
   expr = parse_expr();
   consume_sym(")");
@@ -518,16 +520,12 @@ NodeList* parse_case() {
 
   consume_kw("case");
 
-  consume_sym("{");
-
   when_clauses = NodeList_new();
 
-  while (!Token_str_eq(peek(0), "}")) {
+  while (Token_str_eq(peek(0), "when")) {
     when_clause = parse_when_clause();
     NodeList_add_list(when_clauses, when_clause);
   }
-
-  consume_sym("}");
 
   list = NodeList_new();
   NodeList_add_str(list, "case");
