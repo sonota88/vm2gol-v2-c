@@ -289,26 +289,8 @@ void gen_set(
 ) {
   NodeItem* dest = NodeList_get(rest, 0);
   NodeItem* expr = NodeList_get(rest, 1);
-  char dest_str[64];
-  int disp;
 
-  // NodeList_dump(rest);
-
-  puts_fn("-->> gen_set");
-  // NodeItem_dump(expr);
-
-  // Names_dump(lvar_names);
-
-  gen_expr(fn_arg_names, lvar_names, expr);
-
-  strcpy(dest_str, dest->str_val);
-
-  if (Names_contains(lvar_names, dest_str)) {
-    disp = to_lvar_disp(lvar_names, dest_str);
-    printf("  cp reg_a [bp:%d]\n", disp);
-  } else {
-    not_yet_impl("gen_set", __LINE__);
-  }
+  _gen_set(fn_arg_names, lvar_names, dest, expr);
 }
 
 void gen_return(
@@ -472,10 +454,15 @@ void gen_var(
   Names* lvar_names,
   NodeList* stmt_rest
 ) {
+  NodeItem* dest;
+  NodeItem* expr;
+
   printf("  sub_sp 1\n");
 
   if (NodeList_len(stmt_rest) == 2) {
-    gen_set(fn_arg_names, lvar_names, stmt_rest);
+    dest = NodeList_get(stmt_rest, 0);
+    expr = NodeList_get(stmt_rest, 1);
+    _gen_set(fn_arg_names, lvar_names, dest, expr);
   }
 }
 
