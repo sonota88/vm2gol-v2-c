@@ -259,6 +259,29 @@ void gen_call_set(
   printf("  cp reg_a [bp:%d]\n", disp);
 }
 
+void _gen_set(
+  Names* fn_arg_names,
+  Names* lvar_names,
+  NodeItem* dest,
+  NodeItem* expr
+) {
+  char dest_str[64];
+  int disp;
+
+  puts_fn("-->> gen_set");
+
+  gen_expr(fn_arg_names, lvar_names, expr);
+
+  strcpy(dest_str, dest->str_val);
+
+  if (Names_contains(lvar_names, dest_str)) {
+    disp = to_lvar_disp(lvar_names, dest_str);
+    printf("  cp reg_a [bp:%d]\n", disp);
+  } else {
+    not_yet_impl("gen_set", __LINE__);
+  }
+}
+
 void gen_set(
   Names* fn_arg_names,
   Names* lvar_names,
