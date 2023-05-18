@@ -509,14 +509,8 @@ NodeList* parse_while() {
 
 NodeList* parse_when_clause() {
   NodeList* list;
-  Token* t;
   NodeItem* expr;
   NodeList* stmts;
-
-  t = peek(0);
-  if (Token_is(t, TOKEN_SYM, "}")) {
-    return NULL;
-  }
 
   consume_sym("(");
   expr = parse_expr();
