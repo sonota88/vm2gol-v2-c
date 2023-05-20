@@ -6,6 +6,10 @@ ERRS=""
 
 # --------------------------------
 
+build() {
+  bundle exec rake
+}
+
 postproc() {
   if [ "$ERRS" = "" ]; then
     echo "----"
@@ -82,6 +86,8 @@ main() {
   else
     cmd="show_tasks"
   fi
+
+  build
 
   case $cmd in
     json | j* )      #task: Run json tests
