@@ -9,7 +9,7 @@ export TEST_DIR="${PROJECT_DIR}/test"
 export TEST_COMMON_DIR="${PROJECT_DIR}/test_common"
 export TEMP_DIR="${PROJECT_DIR}/z_tmp"
 
-MAX_ID=3
+MAX_ID=4
 ERRS=""
 
 test_nn() {
