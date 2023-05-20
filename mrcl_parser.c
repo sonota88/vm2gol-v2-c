@@ -49,20 +49,6 @@ int get_line_size(char* text, int pos) {
   }
 }
 
-void chomp(char* str) {
-  int i = 0;
-
-  for (;; i++) {
-    if (str[i] == '\0') {
-      break;
-    }
-    if (str[i] == '\n') {
-      str[i] = '\0';
-      break;
-    }
-  }
-}
-
 void read_tokens(char* input) {
   int src_len;
   int pos = 0;
@@ -76,8 +62,6 @@ void read_tokens(char* input) {
   while (pos < src_len) {
     line_size = get_line_size(input, pos);
     substring(line, input, pos, pos + line_size);
-
-    chomp(line);
 
     token = parse_json(line);
 
