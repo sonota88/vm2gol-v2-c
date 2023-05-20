@@ -164,11 +164,11 @@ NodeList* parse_args() {
     return args;
   }
 
-  NodeList_add_item(args, parse_arg());
+  NodeList_add_node(args, parse_arg());
 
   while (Token_is(peek(0), TOKEN_SYM, ",")) {
     consume_sym(",");
-    NodeList_add_item(args, parse_arg());
+    NodeList_add_node(args, parse_arg());
   }
 
   return args;
@@ -257,7 +257,7 @@ NodeList* _parse_var_init() {
   list = NodeList_new();
   NodeList_add_str(list, "var");
   NodeList_add_str(list, var_name);
-  NodeList_add_item(list, expr);
+  NodeList_add_node(list, expr);
   return list;
 }
 
@@ -336,8 +336,8 @@ NodeItem* parse_expr() {
 
     new_expr = NodeList_new();
     NodeList_add_str(new_expr, op);
-    NodeList_add_item(new_expr, expr);
-    NodeList_add_item(new_expr, factor);
+    NodeList_add_node(new_expr, expr);
+    NodeList_add_node(new_expr, factor);
 
     expr = NodeItem_new_list(new_expr);
   }
@@ -368,7 +368,7 @@ NodeList* parse_set() {
   list = NodeList_new();
   NodeList_add_str(list, "set");
   NodeList_add_str(list, var_name);
-  NodeList_add_item(list, expr);
+  NodeList_add_node(list, expr);
   return list;
 }
 
@@ -450,7 +450,7 @@ NodeList* parse_return() {
 
   list = NodeList_new();
   NodeList_add_str(list, "return");
-  NodeList_add_item(list, expr);
+  NodeList_add_node(list, expr);
   return list;
 }
 
@@ -471,7 +471,7 @@ NodeList* parse_while() {
 
   list = NodeList_new();
   NodeList_add_str(list, "while");
-  NodeList_add_item(list, expr);
+  NodeList_add_node(list, expr);
   NodeList_add_list(list, stmts);
   return list;
 }
@@ -492,7 +492,7 @@ NodeList* parse_when_clause() {
   consume_sym("}");
 
   list = NodeList_new();
-  NodeList_add_item(list, expr);
+  NodeList_add_node(list, expr);
   NodeList_add_all(list, stmts);
   return list;
 }
@@ -571,7 +571,7 @@ NodeList* parse_stmts() {
 
     NodeItem* list_wrapper = NodeItem_new(NODE_LIST);
     list_wrapper->list = stmt;
-    NodeList_add_item(stmts, list_wrapper);
+    NodeList_add_node(stmts, list_wrapper);
   }
 
   return stmts;

@@ -133,7 +133,7 @@ int NodeList_len(NodeList* self) {
   return self->len;
 }
 
-void NodeList_add_item(NodeList* self, NodeItem* item) {
+void NodeList_add_node(NodeList* self, NodeItem* item) {
   int i = NodeList_len(self);
   self->items[i] = item;
   self->len++;
@@ -143,7 +143,7 @@ void NodeList_add_all(NodeList* self, NodeList* list) {
   NodeItem* item;
   for (int i = 0; i < NodeList_len(list); i++) {
     item = NodeList_get(list, i);
-    NodeList_add_item(self, item);
+    NodeList_add_node(self, item);
   }
 }
 
@@ -152,7 +152,7 @@ void NodeList_add_int(NodeList* self, int n) {
   item->kind = NODE_INT;
   NodeItem_set_int_val(item, n);
 
-  NodeList_add_item(self, item);
+  NodeList_add_node(self, item);
 }
 
 void NodeList_add_str(NodeList* self, char* str) {
@@ -160,14 +160,14 @@ void NodeList_add_str(NodeList* self, char* str) {
   item->kind = NODE_STR;
   NodeItem_set_str_val(item, str);
 
-  NodeList_add_item(self, item);
+  NodeList_add_node(self, item);
 }
 
 void NodeList_add_list(NodeList* self, NodeList* list) {
   NodeItem* item = NodeItem_new(NODE_LIST);
   NodeItem_set_list(item, list);
 
-  NodeList_add_item(self, item);
+  NodeList_add_node(self, item);
 }
 
 NodeItem* NodeList_head(NodeList* self) {
@@ -180,7 +180,7 @@ NodeList* NodeList_rest(NodeList* self) {
 
   for (int i = 1; i < NodeList_len(self); i++) {
     item = NodeList_get(self, i);
-    NodeList_add_item(new_list, item);
+    NodeList_add_node(new_list, item);
   }
 
   return new_list;
