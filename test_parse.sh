@@ -23,7 +23,7 @@ test_nn() {
   local local_errs=""
 
   echo "  tok" >&2
-  cat ${TEST_COMMON_DIR}/parse/${nn}.vg.txt | bin/lexer > $temp_tokens_file
+  cat ${TEST_COMMON_DIR}/parse/${nn}.mrcl | bin/lexer > $temp_tokens_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_lex"
     local_errs="${local_errs},${nn}_lex"

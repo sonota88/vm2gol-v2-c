@@ -20,7 +20,7 @@ test_nn() {
   local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
   local exp_tokens_file="${TEST_COMMON_DIR}/lex/exp_${nn}.txt"
 
-  cat ${TEST_COMMON_DIR}/lex/${nn}.vg.txt \
+  cat ${TEST_COMMON_DIR}/lex/${nn}.mrcl \
     | bin/lexer \
     > $temp_tokens_file
   if [ $? -ne 0 ]; then

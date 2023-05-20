@@ -23,7 +23,7 @@ test_nn() {
   local exp_vga_file="${TEST_COMMON_DIR}/compile/exp_${nn}.vga.txt"
 
   echo "  tok" >&2
-  cat ${TEST_COMMON_DIR}/compile/${nn}.vg.txt | bin/lexer > $temp_tokens_file
+  cat ${TEST_COMMON_DIR}/compile/${nn}.mrcl | bin/lexer > $temp_tokens_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},${nn}_lex"
     return
