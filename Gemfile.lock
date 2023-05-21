@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    lrama (0.5.1)
+    rake (13.0.6)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  lrama (= 0.5.1)
+  rake (~> 13.0)
+
+BUNDLED WITH
+   2.4.1

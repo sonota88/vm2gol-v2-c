@@ -1,3 +1,7 @@
 z_*
 /bin/
 /.rake_tasks~
+
+# Bundler
+/.bundle/
+/vendor/bundle/
