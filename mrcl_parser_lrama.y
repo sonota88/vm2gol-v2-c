@@ -102,12 +102,14 @@ args            :
                     {
                         NodeList* args = NodeList_new();
                         NodeList_add_node(args, $1);
+
                         $$ = args;
                     }
                 | args TS_SYM arg
                     {
                         NodeList* args = $1;
                         NodeList_add_node(args, $3);
+
                         $$ = args;
                     }
 
@@ -120,6 +122,7 @@ arg             : TS_IDENT
                     {
                         int n = s_to_i($1);
                         NodeItem* arg = NodeItem_new_int(n);
+
                         $$ = arg;
                     }
 
@@ -245,12 +248,14 @@ when_clauses    : when_clause
                     {
                         NodeList* when_clauses = NodeList_new();
                         NodeList_add_list(when_clauses, $1);
+
                         $$ = when_clauses;
                     }
                 | when_clauses when_clause
                     {
                         NodeList* when_clauses = $1;
                         NodeList_add_list(when_clauses, $2);
+
                         $$ = when_clauses;
                     }
 
@@ -260,6 +265,7 @@ when_clause     : TS_KW_WHEN TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM
                         NodeList* when_clause = NodeList_new();
                         NodeList_add_node(when_clause, $3);
                         NodeList_add_all(when_clause, $6);
+
                         $$ = when_clause;
                     }
 
