@@ -378,6 +378,12 @@ int token_to_symbol(Token* t) {
   char* str = t->str;
 
   switch (t->kind) {
+  case TOKEN_INT:
+    return TS_INT;
+  case TOKEN_IDENT:
+    return TS_IDENT;
+  case TOKEN_STR:
+    return TS_STR;
   case TOKEN_KW:
     if (str_eq(str, "func")) {
       return TS_KW_FUNC;
@@ -405,8 +411,6 @@ int token_to_symbol(Token* t) {
       fprintf(stderr, "unsupported keyword\n");
       exit(1);
     }
-  case TOKEN_IDENT:
-    return TS_IDENT;
   case TOKEN_SYM:
     if (str_eq(str, ";")) {
       return TS_SCOLON;
@@ -425,10 +429,6 @@ int token_to_symbol(Token* t) {
     } else {
       return TS_SYM; // 手抜き
     }
-  case TOKEN_INT:
-    return TS_INT;
-  case TOKEN_STR:
-    return TS_STR;
   default:
     fprintf(stderr, "unsupported token kind\n");
     exit(1);
