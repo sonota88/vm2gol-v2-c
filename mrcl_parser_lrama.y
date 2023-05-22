@@ -82,7 +82,7 @@ top_stmts       :
 top_stmt        : func_def
 
 func_def        : TS_KW_FUNC TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SYM stmts TS_SYM
-                // func      ident    (          args )          {      stmts }
+                // "func"    fn_name  "("        args ")"        "{"    stmts "}"
                     {
                         NodeList* func_def = NodeList_new();
                         NodeList_add_str(func_def, "func");
@@ -157,7 +157,7 @@ stmt            : stmt_return
                 | stmt_debug
 
 stmt_var        : TS_KW_VAR TS_IDENT TS_SCOLON
-                // var      a        ;
+                // "var"    var_name ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "var");
@@ -166,7 +166,7 @@ stmt_var        : TS_KW_VAR TS_IDENT TS_SCOLON
                         $$ = stmt;
                     }
                 | TS_KW_VAR TS_IDENT TS_SYM expr TS_SCOLON
-                // var      a        =      1    ;
+                // "var"    var_name "="    expr ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "var");
@@ -177,7 +177,7 @@ stmt_var        : TS_KW_VAR TS_IDENT TS_SCOLON
                     }
 
 stmt_set        : TS_KW_SET TS_IDENT TS_SYM expr TS_SCOLON
-                // set      a        =      1    ;
+                // "set"    var_name "="    expr ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "set");
@@ -188,7 +188,7 @@ stmt_set        : TS_KW_SET TS_IDENT TS_SYM expr TS_SCOLON
                     }
 
 stmt_return     : TS_KW_RETURN expr TS_SCOLON
-                // return      expr ;
+                // "return"    expr ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "return");
@@ -198,7 +198,7 @@ stmt_return     : TS_KW_RETURN expr TS_SCOLON
                     }
 
 stmt_call       : TS_KW_CALL TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON
-                // call      IDENT    (          args )          ;
+                // "call"    fn_name  "("        args ")"        ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "call");
@@ -209,7 +209,7 @@ stmt_call       : TS_KW_CALL TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON
                     }
 
 stmt_call_set   : TS_KW_CALL_SET TS_IDENT TS_SYM TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON
-                // call_set      a        =      f        (          args )          ;
+                // "call_set"    var_name "="    fn_name  "("        args ")"        ";"
                     {
                         NodeList* funcall = NodeList_new();
                         NodeList_add_str(funcall, $4);
@@ -224,7 +224,7 @@ stmt_call_set   : TS_KW_CALL_SET TS_IDENT TS_SYM TS_IDENT TS_PAREN_L args TS_PAR
                     }
 
 stmt_while      : TS_KW_WHILE TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM
-                // while      (          expr )          {      stmts }
+                // "while"    "("        expr ")"        "{"    stmts "}"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "while");
@@ -235,7 +235,7 @@ stmt_while      : TS_KW_WHILE TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM
                     }
 
 stmt_case       : TS_KW_CASE when_clauses
-                // case      when_clauses
+                // "case"    when_clauses
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "case");
@@ -260,7 +260,7 @@ when_clauses    : when_clause
                     }
 
 when_clause     : TS_KW_WHEN TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM
-                // when      (          expr )          {      stmts }
+                // "when"    "("        expr ")"        "{"    stmts "}"
                     {
                         NodeList* when_clause = NodeList_new();
                         NodeList_add_node(when_clause, $3);
@@ -270,7 +270,7 @@ when_clause     : TS_KW_WHEN TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM
                     }
 
 stmt_vm_comment : TS_KW_CMT TS_PAREN_L TS_STR TS_PAREN_R TS_SCOLON
-                // _cmt     (          "fdsa" )          ;
+                // "_cmt"   "("        str    ")"        ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "_cmt");
@@ -280,7 +280,7 @@ stmt_vm_comment : TS_KW_CMT TS_PAREN_L TS_STR TS_PAREN_R TS_SCOLON
                     }
 
 stmt_debug      : TS_KW_DEBUG TS_PAREN_L TS_PAREN_R TS_SCOLON
-                // _debug     (          )          ;
+                // "_debug"   "("        ")"        ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "_debug");
@@ -325,7 +325,7 @@ expr            : TS_INT
                         $$ = NodeItem_new_list(xs);
                     }
                 | TS_PAREN_L expr TS_PAREN_R
-                // (         expr )
+                // "("       expr ")"
                     {
                       $$ = $2;
                     }
