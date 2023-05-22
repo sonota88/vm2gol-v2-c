@@ -637,10 +637,10 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,    53,    53,    63,    67,    74,    82,    84,    97,   101,
-     107,   114,   119,   127,   131,   138,   146,   147,   148,   149,
-     150,   151,   152,   153,   154,   156,   165,   176,   187,   197,
-     208,   223,   234,   244,   250,   257,   266,   276,   285,   290,
-     294,   303,   312,   321
+     108,   116,   121,   130,   134,   141,   149,   150,   151,   152,
+     153,   154,   155,   156,   157,   159,   168,   179,   190,   200,
+     211,   226,   237,   247,   254,   262,   272,   282,   291,   296,
+     300,   309,   318,   327
 };
 #endif
 
@@ -1717,7 +1717,7 @@ yyreduce:
 
   case 7: /* func_def: TS_KW_FUNC TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SYM stmts TS_SYM  */
 #line 86 "mrcl_parser_lrama.y"
-                                                                                                    {
+                                                                                                      {
                         NodeList* func_def = NodeList_new();
                         NodeList_add_str(func_def, "func");
                         NodeList_add_str(func_def, (yyvsp[-6].union_str));
@@ -1743,86 +1743,89 @@ yyreduce:
                     {
                         NodeList* args = NodeList_new();
                         NodeList_add_node(args, (yyvsp[0].union_node));
+
                         (yyval.union_list) = args;
                     }
-#line 1749 "mrcl_parser_lrama.c"
+#line 1750 "mrcl_parser_lrama.c"
     break;
 
   case 10: /* args: args TS_SYM arg  */
-#line 108 "mrcl_parser_lrama.y"
+#line 109 "mrcl_parser_lrama.y"
                     {
                         NodeList* args = (yyvsp[-2].union_list);
                         NodeList_add_node(args, (yyvsp[0].union_node));
+
                         (yyval.union_list) = args;
                     }
-#line 1759 "mrcl_parser_lrama.c"
+#line 1761 "mrcl_parser_lrama.c"
     break;
 
   case 11: /* arg: TS_IDENT  */
-#line 115 "mrcl_parser_lrama.y"
+#line 117 "mrcl_parser_lrama.y"
                     {
                         NodeItem* arg = NodeItem_new_str((yyvsp[0].union_str));
                         (yyval.union_node) = arg;
                     }
-#line 1768 "mrcl_parser_lrama.c"
+#line 1770 "mrcl_parser_lrama.c"
     break;
 
   case 12: /* arg: TS_INT  */
-#line 120 "mrcl_parser_lrama.y"
+#line 122 "mrcl_parser_lrama.y"
                     {
                         int n = s_to_i((yyvsp[0].union_str));
                         NodeItem* arg = NodeItem_new_int(n);
+
                         (yyval.union_node) = arg;
                     }
-#line 1778 "mrcl_parser_lrama.c"
+#line 1781 "mrcl_parser_lrama.c"
     break;
 
   case 13: /* stmts: %empty  */
-#line 127 "mrcl_parser_lrama.y"
+#line 130 "mrcl_parser_lrama.y"
                     {
                         NodeList* stmts = NodeList_new();
                         (yyval.union_list) = stmts;
                     }
-#line 1787 "mrcl_parser_lrama.c"
+#line 1790 "mrcl_parser_lrama.c"
     break;
 
   case 14: /* stmts: stmt  */
-#line 132 "mrcl_parser_lrama.y"
+#line 135 "mrcl_parser_lrama.y"
                     {
                         NodeList* stmts = NodeList_new();
                         NodeList_add_list(stmts, (yyvsp[0].union_list));
 
                         (yyval.union_list) = stmts;
                     }
-#line 1798 "mrcl_parser_lrama.c"
+#line 1801 "mrcl_parser_lrama.c"
     break;
 
   case 15: /* stmts: stmts stmt  */
-#line 139 "mrcl_parser_lrama.y"
+#line 142 "mrcl_parser_lrama.y"
                     {
                         NodeList* stmts = (yyvsp[-1].union_list);
                         NodeList_add_list(stmts, (yyvsp[0].union_list));
 
                         (yyval.union_list) = stmts;
                     }
-#line 1809 "mrcl_parser_lrama.c"
+#line 1812 "mrcl_parser_lrama.c"
     break;
 
   case 25: /* stmt_var: TS_KW_VAR TS_IDENT TS_SCOLON  */
-#line 158 "mrcl_parser_lrama.y"
-                                                           {
+#line 161 "mrcl_parser_lrama.y"
+                                                             {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "var");
                         NodeList_add_str(stmt, (yyvsp[-1].union_str));
 
                         (yyval.union_list) = stmt;
                     }
-#line 1821 "mrcl_parser_lrama.c"
+#line 1824 "mrcl_parser_lrama.c"
     break;
 
   case 26: /* stmt_var: TS_KW_VAR TS_IDENT TS_SYM expr TS_SCOLON  */
-#line 167 "mrcl_parser_lrama.y"
-                                                                       {
+#line 170 "mrcl_parser_lrama.y"
+                                                                         {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "var");
                         NodeList_add_str(stmt, (yyvsp[-3].union_str));
@@ -1830,12 +1833,12 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1834 "mrcl_parser_lrama.c"
+#line 1837 "mrcl_parser_lrama.c"
     break;
 
   case 27: /* stmt_set: TS_KW_SET TS_IDENT TS_SYM expr TS_SCOLON  */
-#line 178 "mrcl_parser_lrama.y"
-                                                                       {
+#line 181 "mrcl_parser_lrama.y"
+                                                                         {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "set");
                         NodeList_add_str(stmt, (yyvsp[-3].union_str));
@@ -1843,24 +1846,24 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1847 "mrcl_parser_lrama.c"
+#line 1850 "mrcl_parser_lrama.c"
     break;
 
   case 28: /* stmt_return: TS_KW_RETURN expr TS_SCOLON  */
-#line 189 "mrcl_parser_lrama.y"
-                                                          {
+#line 192 "mrcl_parser_lrama.y"
+                                                            {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "return");
                         NodeList_add_node(stmt, (yyvsp[-1].union_node));
 
                         (yyval.union_list) = stmt;
                     }
-#line 1859 "mrcl_parser_lrama.c"
+#line 1862 "mrcl_parser_lrama.c"
     break;
 
   case 29: /* stmt_call: TS_KW_CALL TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON  */
-#line 199 "mrcl_parser_lrama.y"
-                                                                                       {
+#line 202 "mrcl_parser_lrama.y"
+                                                                                         {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "call");
                         NodeList_add_str(stmt, (yyvsp[-4].union_str));
@@ -1868,12 +1871,12 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1872 "mrcl_parser_lrama.c"
+#line 1875 "mrcl_parser_lrama.c"
     break;
 
   case 30: /* stmt_call_set: TS_KW_CALL_SET TS_IDENT TS_SYM TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON  */
-#line 210 "mrcl_parser_lrama.y"
-                                                                                                           {
+#line 213 "mrcl_parser_lrama.y"
+                                                                                                             {
                         NodeList* funcall = NodeList_new();
                         NodeList_add_str(funcall, (yyvsp[-4].union_str));
                         NodeList_add_all(funcall, (yyvsp[-2].union_list));
@@ -1885,12 +1888,12 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1889 "mrcl_parser_lrama.c"
+#line 1892 "mrcl_parser_lrama.c"
     break;
 
   case 31: /* stmt_while: TS_KW_WHILE TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM  */
-#line 225 "mrcl_parser_lrama.y"
-                                                                                            {
+#line 228 "mrcl_parser_lrama.y"
+                                                                                              {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "while");
                         NodeList_add_node(stmt, (yyvsp[-4].union_node));
@@ -1898,11 +1901,11 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1902 "mrcl_parser_lrama.c"
+#line 1905 "mrcl_parser_lrama.c"
     break;
 
   case 32: /* stmt_case: TS_KW_CASE when_clauses  */
-#line 236 "mrcl_parser_lrama.y"
+#line 239 "mrcl_parser_lrama.y"
                                                               {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "case");
@@ -1910,82 +1913,85 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1914 "mrcl_parser_lrama.c"
+#line 1917 "mrcl_parser_lrama.c"
     break;
 
   case 33: /* when_clauses: when_clause  */
-#line 245 "mrcl_parser_lrama.y"
+#line 248 "mrcl_parser_lrama.y"
                     {
                         NodeList* when_clauses = NodeList_new();
                         NodeList_add_list(when_clauses, (yyvsp[0].union_list));
+
                         (yyval.union_list) = when_clauses;
                     }
-#line 1924 "mrcl_parser_lrama.c"
+#line 1928 "mrcl_parser_lrama.c"
     break;
 
   case 34: /* when_clauses: when_clauses when_clause  */
-#line 251 "mrcl_parser_lrama.y"
+#line 255 "mrcl_parser_lrama.y"
                     {
                         NodeList* when_clauses = (yyvsp[-1].union_list);
                         NodeList_add_list(when_clauses, (yyvsp[0].union_list));
+
                         (yyval.union_list) = when_clauses;
                     }
-#line 1934 "mrcl_parser_lrama.c"
+#line 1939 "mrcl_parser_lrama.c"
     break;
 
   case 35: /* when_clause: TS_KW_WHEN TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM  */
-#line 259 "mrcl_parser_lrama.y"
-                                                                                           {
+#line 264 "mrcl_parser_lrama.y"
+                                                                                             {
                         NodeList* when_clause = NodeList_new();
                         NodeList_add_node(when_clause, (yyvsp[-4].union_node));
                         NodeList_add_all(when_clause, (yyvsp[-1].union_list));
+
                         (yyval.union_list) = when_clause;
                     }
-#line 1945 "mrcl_parser_lrama.c"
+#line 1951 "mrcl_parser_lrama.c"
     break;
 
   case 36: /* stmt_vm_comment: TS_KW_CMT TS_PAREN_L TS_STR TS_PAREN_R TS_SCOLON  */
-#line 268 "mrcl_parser_lrama.y"
-                                                                               {
+#line 274 "mrcl_parser_lrama.y"
+                                                                                 {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "_cmt");
                         NodeList_add_str(stmt, (yyvsp[-2].union_str));
 
                         (yyval.union_list) = stmt;
                     }
-#line 1957 "mrcl_parser_lrama.c"
+#line 1963 "mrcl_parser_lrama.c"
     break;
 
   case 37: /* stmt_debug: TS_KW_DEBUG TS_PAREN_L TS_PAREN_R TS_SCOLON  */
-#line 278 "mrcl_parser_lrama.y"
-                                                                          {
+#line 284 "mrcl_parser_lrama.y"
+                                                                            {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "_debug");
 
                         (yyval.union_list) = stmt;
                     }
-#line 1968 "mrcl_parser_lrama.c"
+#line 1974 "mrcl_parser_lrama.c"
     break;
 
   case 38: /* expr: TS_INT  */
-#line 286 "mrcl_parser_lrama.y"
+#line 292 "mrcl_parser_lrama.y"
                     {
                         int n = s_to_i((yyvsp[0].union_str));
                         (yyval.union_node) = NodeItem_new_int(n);
                     }
-#line 1977 "mrcl_parser_lrama.c"
+#line 1983 "mrcl_parser_lrama.c"
     break;
 
   case 39: /* expr: TS_IDENT  */
-#line 291 "mrcl_parser_lrama.y"
+#line 297 "mrcl_parser_lrama.y"
                     {
                         (yyval.union_node) = NodeItem_new_str((yyvsp[0].union_str));
                     }
-#line 1985 "mrcl_parser_lrama.c"
+#line 1991 "mrcl_parser_lrama.c"
     break;
 
   case 40: /* expr: expr TS_PLUS expr  */
-#line 295 "mrcl_parser_lrama.y"
+#line 301 "mrcl_parser_lrama.y"
                     {
                         NodeList* xs = NodeList_new();
                         NodeList_add_str(xs, "+");
@@ -1994,11 +2000,11 @@ yyreduce:
 
                         (yyval.union_node) = NodeItem_new_list(xs);
                     }
-#line 1998 "mrcl_parser_lrama.c"
+#line 2004 "mrcl_parser_lrama.c"
     break;
 
   case 41: /* expr: expr TS_MULT expr  */
-#line 304 "mrcl_parser_lrama.y"
+#line 310 "mrcl_parser_lrama.y"
                     {
                         NodeList* xs = NodeList_new();
                         NodeList_add_str(xs, "*");
@@ -2007,11 +2013,11 @@ yyreduce:
 
                         (yyval.union_node) = NodeItem_new_list(xs);
                     }
-#line 2011 "mrcl_parser_lrama.c"
+#line 2017 "mrcl_parser_lrama.c"
     break;
 
   case 42: /* expr: expr TS_BIN_OP expr  */
-#line 313 "mrcl_parser_lrama.y"
+#line 319 "mrcl_parser_lrama.y"
                     {
                         NodeList* xs = NodeList_new();
                         NodeList_add_str(xs, (yyvsp[-1].union_str)); // ==, !=
@@ -2020,19 +2026,19 @@ yyreduce:
 
                         (yyval.union_node) = NodeItem_new_list(xs);
                     }
-#line 2024 "mrcl_parser_lrama.c"
+#line 2030 "mrcl_parser_lrama.c"
     break;
 
   case 43: /* expr: TS_PAREN_L expr TS_PAREN_R  */
-#line 323 "mrcl_parser_lrama.y"
-                                                        {
+#line 329 "mrcl_parser_lrama.y"
+                                                          {
                       (yyval.union_node) = (yyvsp[-1].union_node);
                     }
-#line 2032 "mrcl_parser_lrama.c"
+#line 2038 "mrcl_parser_lrama.c"
     break;
 
 
-#line 2036 "mrcl_parser_lrama.c"
+#line 2042 "mrcl_parser_lrama.c"
 
       default: break;
     }
@@ -2261,7 +2267,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 327 "mrcl_parser_lrama.y"
+#line 333 "mrcl_parser_lrama.y"
 
 
 // Epilogue
@@ -2310,6 +2316,12 @@ int token_to_symbol(Token* t) {
   char* str = t->str;
 
   switch (t->kind) {
+  case TOKEN_INT:
+    return TS_INT;
+  case TOKEN_IDENT:
+    return TS_IDENT;
+  case TOKEN_STR:
+    return TS_STR;
   case TOKEN_KW:
     if (str_eq(str, "func")) {
       return TS_KW_FUNC;
@@ -2337,8 +2349,6 @@ int token_to_symbol(Token* t) {
       fprintf(stderr, "unsupported keyword\n");
       exit(1);
     }
-  case TOKEN_IDENT:
-    return TS_IDENT;
   case TOKEN_SYM:
     if (str_eq(str, ";")) {
       return TS_SCOLON;
@@ -2357,10 +2367,6 @@ int token_to_symbol(Token* t) {
     } else {
       return TS_SYM; // 手抜き
     }
-  case TOKEN_INT:
-    return TS_INT;
-  case TOKEN_STR:
-    return TS_STR;
   default:
     fprintf(stderr, "unsupported token kind\n");
     exit(1);
