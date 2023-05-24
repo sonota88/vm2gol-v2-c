@@ -612,14 +612,6 @@ NodeList* parse() {
   return parse_top_stmts();
 }
 
-void print_node_item(NodeItem* item, int lv);
-
-void print_indent_space(int lv) {
-  for (int i = 0; i < lv; i++) {
-    printf("  ");
-  }
-}
-
 int main(void) {
   char input[INPUT_SIZE];
   NodeList* tree;
