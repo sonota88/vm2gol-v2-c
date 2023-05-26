@@ -375,7 +375,6 @@ void gen_case(
   NodeList* when_clause;
   NodeItem* cond;
   NodeList* stmts;
-  char cond_json[512];
 
   when_clauses = NodeList_rest(stmt);
 
@@ -391,10 +390,7 @@ void gen_case(
     cond = NodeList_head(when_clause);
     stmts = NodeList_rest(when_clause);
 
-    to_json_line(cond_json, cond);
-    printf("  # when_%d_%d: %s\n",
-           label_id, when_idx, cond_json
-           );
+    printf("  # when_%d_%d\n", label_id, when_idx);
 
     printf("  # -->> expr\n");
     gen_expr(fn_arg_names, lvar_names, cond);
