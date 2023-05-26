@@ -139,33 +139,3 @@ void Json_print(NodeList* list, int pretty) {
   _print_as_json(list, 0, pretty);
   printf("\n");
 }
-
-void list_to_json_line (char* dest, NodeList* list) {
-  NodeItem* item;
-  char temp[64];
-  int i = 0;
-  dest[i] = '[';
-  i++;
-
-  for (int li = 0; li < NodeList_len(list); li++) {
-    item = NodeList_get(list, li);
-
-    if (1 <= li) {
-      dest[i] = ',';
-      i++;
-      dest[i] = ' ';
-      i++;
-    }
-
-    to_json_line(temp, item);
-    for (int ci = 0; ci < strlen(temp); ci++) {
-      dest[i] = temp[ci];
-      i++;
-    }
-  }
-
-  dest[i] = ']';
-  i++;
-  dest[i] = '\0'; // TODO
-  i++;
-}
