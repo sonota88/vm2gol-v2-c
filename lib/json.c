@@ -81,7 +81,7 @@ ParseRetval* parse_array(char* rest) {
   return pr;
 }
 
-NodeList* parse_json(char* json) {
+NodeList* Json_parse(char* json) {
   ParseRetval* pr;
   if (json[0] == '[') {
     pr = parse_array(json);

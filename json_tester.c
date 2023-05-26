@@ -10,7 +10,7 @@ int main(void) {
 
   read_stdin_all(input, INPUT_SIZE);
 
-  NodeList* list = parse_json(input);
+  NodeList* list = Json_parse(input);
 
   print_as_json(list, 1);
 

@@ -575,7 +575,7 @@ int main(void) {
 
   read_stdin_all(input, INPUT_SIZE);
 
-  NodeList* tree = parse_json(input);
+  NodeList* tree = Json_parse(input);
 
   printf("  call main\n");
   printf("  exit\n");
