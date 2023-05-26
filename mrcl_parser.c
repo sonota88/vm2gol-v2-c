@@ -622,7 +622,7 @@ int main(void) {
 
   tree = parse();
 
-  print_as_json(tree, 1);
+  Json_print(tree, 1);
 
   return 0;
 }

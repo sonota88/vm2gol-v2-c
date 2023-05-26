@@ -109,7 +109,7 @@ void print_token(char* kind, char* value, int lineno) {
   NodeList_add_int(token, lineno);
   NodeList_add_str(token, kind);
   NodeList_add_str(token, value);
-  print_as_json(token, 0);
+  Json_print(token, 0);
 }
 
 int main(void) {

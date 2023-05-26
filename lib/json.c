@@ -137,7 +137,7 @@ void _print_as_json(NodeList* list, int lv, int pretty) {
   printf("]");
 }
 
-void print_as_json(NodeList* list, int pretty) {
+void Json_print(NodeList* list, int pretty) {
   _print_as_json(list, 0, pretty);
   printf("\n");
 }

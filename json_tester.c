@@ -12,7 +12,7 @@ int main(void) {
 
   NodeList* list = Json_parse(input);
 
-  print_as_json(list, 1);
+  Json_print(list, 1);
 
   return 0;
 }
