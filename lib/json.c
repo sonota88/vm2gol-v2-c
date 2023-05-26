@@ -6,8 +6,6 @@
 
 #define INPUT_MAX (1024 * 20)
 
-void to_json_line(char* dest, NodeItem* item);
-
 // --------------------------------
 
 typedef struct {
@@ -170,16 +168,4 @@ void list_to_json_line (char* dest, NodeList* list) {
   i++;
   dest[i] = '\0'; // TODO
   i++;
-}
-
-void to_json_line(char* dest, NodeItem* item) {
-  if (item->kind == NODE_INT) {
-    sprintf(dest, "%d", item->int_val);
-  } else if (item->kind == NODE_STR) {
-    sprintf(dest, "\"%s\"", item->str_val);
-  } else if (item->kind == NODE_LIST) {
-    list_to_json_line(dest, item->list);
-  } else {
-    must_not_happen("Invalid type", __LINE__);
-  }
 }
