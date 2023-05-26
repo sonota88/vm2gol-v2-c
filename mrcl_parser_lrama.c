@@ -2295,7 +2295,7 @@ void read_tokens(char* input) {
     line_size = get_line_size(input, pos);
     substring(line, input, pos, pos + line_size);
 
-    token = parse_json(line);
+    token = Json_parse(line);
 
     g_tokens[ti].lineno = NodeList_get(token, 0)->int_val;
     g_tokens[ti].kind = TokenKind_from_str(NodeList_get(token, 1)->str_val);
@@ -2409,7 +2409,7 @@ int main() {
   // fprintf(stderr, "-->> yyparse\n");
   yyparse();
 
-  print_as_json(g_ast, 1);
+  Json_print(g_ast, 1);
 
   return 0;
 }
