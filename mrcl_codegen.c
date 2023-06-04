@@ -96,7 +96,7 @@ void gen_expr_mult() {
   printf("  mult_ab\n");
 }
 
-void gen_expr_eq() {
+void gen_expr_eq_neq(char* name, int then_val, int else_val) {
   int label_id;
   char then_label[16];
   char end_label[16];
@@ -104,7 +104,7 @@ void gen_expr_eq() {
   label_id = get_label_id();
 
   sprintf(then_label, "then_%d", label_id);
-  sprintf(end_label, "end_eq_%d", label_id);
+  sprintf(end_label, "end_%s_%d", name, label_id);
 
   printf("  pop reg_b\n");
   printf("  pop reg_a\n");
@@ -112,36 +112,20 @@ void gen_expr_eq() {
   printf("  compare\n");
   printf("  jump_eq %s\n", then_label);
 
-  printf("  cp 0 reg_a\n");
+  printf("  cp %d reg_a\n", else_val);
   printf("  jump %s\n", end_label);
 
   printf("label %s\n", then_label);
-  printf("  cp 1 reg_a\n");
+  printf("  cp %d reg_a\n", then_val);
   printf("label %s\n", end_label);
 }
 
+void gen_expr_eq() {
+  gen_expr_eq_neq("eq", 1, 0);
+}
+
 void gen_expr_neq() {
-  int label_id;
-  char then_label[16];
-  char end_label[16];
-
-  label_id = get_label_id();
-
-  sprintf(then_label, "then_%d", label_id);
-  sprintf(end_label, "end_neq_%d", label_id);
-
-  printf("  pop reg_b\n");
-  printf("  pop reg_a\n");
-
-  printf("  compare\n");
-  printf("  jump_eq %s\n", then_label);
-
-  printf("  cp 1 reg_a\n");
-  printf("  jump %s\n", end_label);
-
-  printf("label %s\n", then_label);
-  printf("  cp 0 reg_a\n");
-  printf("label %s\n", end_label);
+  gen_expr_eq_neq("neq", 0, 1);
 }
 
 void _gen_expr_binary(
