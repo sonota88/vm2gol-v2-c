@@ -31,7 +31,7 @@ NodeList* g_ast;
 
 // terminal symbols
 %token<union_str> TS_IDENT TS_INT TS_STR
-%token<union_str> TS_SYM TS_SCOLON TS_PAREN_L TS_PAREN_R
+%token<union_str> TS_SCOLON TS_PAREN_L TS_PAREN_R TS_BRACE_L TS_BRACE_R TS_EQ TS_COMMA
 %token<union_str> TS_BIN_OP
 %token<union_str> TS_PLUS TS_MULT
 %token<union_str> TS_KW_FUNC
@@ -81,8 +81,8 @@ top_stmts       :
 
 top_stmt        : func_def
 
-func_def        : TS_KW_FUNC TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SYM stmts TS_SYM
-                // "func"    fn_name  "("        args ")"        "{"    stmts "}"
+func_def        : TS_KW_FUNC TS_IDENT TS_PAREN_L args TS_PAREN_R TS_BRACE_L stmts TS_BRACE_R
+                // "func"    fn_name  "("        args ")"        "{"        stmts "}"
                     {
                         NodeList* func_def = NodeList_new();
                         NodeList_add_str(func_def, "func");
@@ -105,7 +105,7 @@ args            :
 
                         $$ = args;
                     }
-                | args TS_SYM arg
+                | args TS_COMMA arg
                     {
                         NodeList* args = $1;
                         NodeList_add_node(args, $3);
@@ -165,8 +165,8 @@ stmt_var        : TS_KW_VAR TS_IDENT TS_SCOLON
 
                         $$ = stmt;
                     }
-                | TS_KW_VAR TS_IDENT TS_SYM expr TS_SCOLON
-                // "var"    var_name "="    expr ";"
+                | TS_KW_VAR TS_IDENT TS_EQ expr TS_SCOLON
+                // "var"    var_name "="   expr ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "var");
@@ -176,8 +176,8 @@ stmt_var        : TS_KW_VAR TS_IDENT TS_SCOLON
                         $$ = stmt;
                     }
 
-stmt_set        : TS_KW_SET TS_IDENT TS_SYM expr TS_SCOLON
-                // "set"    var_name "="    expr ";"
+stmt_set        : TS_KW_SET TS_IDENT TS_EQ expr TS_SCOLON
+                // "set"    var_name "="   expr ";"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "set");
@@ -208,8 +208,8 @@ stmt_call       : TS_KW_CALL TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON
                         $$ = stmt;
                     }
 
-stmt_call_set   : TS_KW_CALL_SET TS_IDENT TS_SYM TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON
-                // "call_set"    var_name "="    fn_name  "("        args ")"        ";"
+stmt_call_set   : TS_KW_CALL_SET TS_IDENT TS_EQ TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON
+                // "call_set"    var_name "="   fn_name  "("        args ")"        ";"
                     {
                         NodeList* funcall = NodeList_new();
                         NodeList_add_str(funcall, $4);
@@ -223,8 +223,8 @@ stmt_call_set   : TS_KW_CALL_SET TS_IDENT TS_SYM TS_IDENT TS_PAREN_L args TS_PAR
                         $$ = stmt;
                     }
 
-stmt_while      : TS_KW_WHILE TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM
-                // "while"    "("        expr ")"        "{"    stmts "}"
+stmt_while      : TS_KW_WHILE TS_PAREN_L expr TS_PAREN_R TS_BRACE_L stmts TS_BRACE_R
+                // "while"    "("        expr ")"        "{"        stmts "}"
                     {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "while");
@@ -259,8 +259,8 @@ when_clauses    : when_clause
                         $$ = when_clauses;
                     }
 
-when_clause     : TS_KW_WHEN TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM
-                // "when"    "("        expr ")"        "{"    stmts "}"
+when_clause     : TS_KW_WHEN TS_PAREN_L expr TS_PAREN_R TS_BRACE_L stmts TS_BRACE_R
+                // "when"    "("        expr ")"        "{"        stmts "}"
                     {
                         NodeList* when_clause = NodeList_new();
                         NodeList_add_node(when_clause, $3);
@@ -418,6 +418,12 @@ int token_to_symbol(Token* t) {
       return TS_PAREN_L;
     } else if (str_eq(str, ")")) {
       return TS_PAREN_R;
+    } else if (str_eq(str, "{")) {
+      return TS_BRACE_L;
+    } else if (str_eq(str, "}")) {
+      return TS_BRACE_R;
+    } else if (str_eq(str, "=")) {
+      return TS_EQ;
     } else if (str_eq(str, "+")) {
       return TS_PLUS;
     } else if (str_eq(str, "*")) {
@@ -426,8 +432,11 @@ int token_to_symbol(Token* t) {
       return TS_BIN_OP;
     } else if (str_eq(str, "!=")) {
       return TS_BIN_OP;
+    } else if (str_eq(str, ",")) {
+      return TS_COMMA;
     } else {
-      return TS_SYM; // 手抜き
+      fprintf(stderr, "unsupported symbol\n");
+      exit(1);
     }
   default:
     fprintf(stderr, "unsupported token kind\n");
