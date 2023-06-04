@@ -137,24 +137,27 @@ extern int yydebug;
     TS_IDENT = 258,                /* TS_IDENT  */
     TS_INT = 259,                  /* TS_INT  */
     TS_STR = 260,                  /* TS_STR  */
-    TS_SYM = 261,                  /* TS_SYM  */
-    TS_SCOLON = 262,               /* TS_SCOLON  */
-    TS_PAREN_L = 263,              /* TS_PAREN_L  */
-    TS_PAREN_R = 264,              /* TS_PAREN_R  */
-    TS_BIN_OP = 265,               /* TS_BIN_OP  */
-    TS_PLUS = 266,                 /* TS_PLUS  */
-    TS_MULT = 267,                 /* TS_MULT  */
-    TS_KW_FUNC = 268,              /* TS_KW_FUNC  */
-    TS_KW_VAR = 269,               /* TS_KW_VAR  */
-    TS_KW_SET = 270,               /* TS_KW_SET  */
-    TS_KW_CALL = 271,              /* TS_KW_CALL  */
-    TS_KW_CALL_SET = 272,          /* TS_KW_CALL_SET  */
-    TS_KW_RETURN = 273,            /* TS_KW_RETURN  */
-    TS_KW_WHILE = 274,             /* TS_KW_WHILE  */
-    TS_KW_CASE = 275,              /* TS_KW_CASE  */
-    TS_KW_WHEN = 276,              /* TS_KW_WHEN  */
-    TS_KW_CMT = 277,               /* TS_KW_CMT  */
-    TS_KW_DEBUG = 278              /* TS_KW_DEBUG  */
+    TS_SCOLON = 261,               /* TS_SCOLON  */
+    TS_PAREN_L = 262,              /* TS_PAREN_L  */
+    TS_PAREN_R = 263,              /* TS_PAREN_R  */
+    TS_BRACE_L = 264,              /* TS_BRACE_L  */
+    TS_BRACE_R = 265,              /* TS_BRACE_R  */
+    TS_EQ = 266,                   /* TS_EQ  */
+    TS_COMMA = 267,                /* TS_COMMA  */
+    TS_BIN_OP = 268,               /* TS_BIN_OP  */
+    TS_PLUS = 269,                 /* TS_PLUS  */
+    TS_MULT = 270,                 /* TS_MULT  */
+    TS_KW_FUNC = 271,              /* TS_KW_FUNC  */
+    TS_KW_VAR = 272,               /* TS_KW_VAR  */
+    TS_KW_SET = 273,               /* TS_KW_SET  */
+    TS_KW_CALL = 274,              /* TS_KW_CALL  */
+    TS_KW_CALL_SET = 275,          /* TS_KW_CALL_SET  */
+    TS_KW_RETURN = 276,            /* TS_KW_RETURN  */
+    TS_KW_WHILE = 277,             /* TS_KW_WHILE  */
+    TS_KW_CASE = 278,              /* TS_KW_CASE  */
+    TS_KW_WHEN = 279,              /* TS_KW_WHEN  */
+    TS_KW_CMT = 280,               /* TS_KW_CMT  */
+    TS_KW_DEBUG = 281              /* TS_KW_DEBUG  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -169,7 +172,7 @@ union YYSTYPE
   NodeItem* union_node;
   char* union_str;
 
-#line 173 "mrcl_parser_lrama.c"
+#line 176 "mrcl_parser_lrama.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -207,45 +210,48 @@ enum yysymbol_kind_t
   YYSYMBOL_TS_IDENT = 3,                   /* TS_IDENT  */
   YYSYMBOL_TS_INT = 4,                     /* TS_INT  */
   YYSYMBOL_TS_STR = 5,                     /* TS_STR  */
-  YYSYMBOL_TS_SYM = 6,                     /* TS_SYM  */
-  YYSYMBOL_TS_SCOLON = 7,                  /* TS_SCOLON  */
-  YYSYMBOL_TS_PAREN_L = 8,                 /* TS_PAREN_L  */
-  YYSYMBOL_TS_PAREN_R = 9,                 /* TS_PAREN_R  */
-  YYSYMBOL_TS_BIN_OP = 10,                 /* TS_BIN_OP  */
-  YYSYMBOL_TS_PLUS = 11,                   /* TS_PLUS  */
-  YYSYMBOL_TS_MULT = 12,                   /* TS_MULT  */
-  YYSYMBOL_TS_KW_FUNC = 13,                /* TS_KW_FUNC  */
-  YYSYMBOL_TS_KW_VAR = 14,                 /* TS_KW_VAR  */
-  YYSYMBOL_TS_KW_SET = 15,                 /* TS_KW_SET  */
-  YYSYMBOL_TS_KW_CALL = 16,                /* TS_KW_CALL  */
-  YYSYMBOL_TS_KW_CALL_SET = 17,            /* TS_KW_CALL_SET  */
-  YYSYMBOL_TS_KW_RETURN = 18,              /* TS_KW_RETURN  */
-  YYSYMBOL_TS_KW_WHILE = 19,               /* TS_KW_WHILE  */
-  YYSYMBOL_TS_KW_CASE = 20,                /* TS_KW_CASE  */
-  YYSYMBOL_TS_KW_WHEN = 21,                /* TS_KW_WHEN  */
-  YYSYMBOL_TS_KW_CMT = 22,                 /* TS_KW_CMT  */
-  YYSYMBOL_TS_KW_DEBUG = 23,               /* TS_KW_DEBUG  */
-  YYSYMBOL_YYACCEPT = 24,                  /* $accept  */
-  YYSYMBOL_program = 25,                   /* program  */
-  YYSYMBOL_top_stmts = 26,                 /* top_stmts  */
-  YYSYMBOL_top_stmt = 27,                  /* top_stmt  */
-  YYSYMBOL_func_def = 28,                  /* func_def  */
-  YYSYMBOL_args = 29,                      /* args  */
-  YYSYMBOL_arg = 30,                       /* arg  */
-  YYSYMBOL_stmts = 31,                     /* stmts  */
-  YYSYMBOL_stmt = 32,                      /* stmt  */
-  YYSYMBOL_stmt_var = 33,                  /* stmt_var  */
-  YYSYMBOL_stmt_set = 34,                  /* stmt_set  */
-  YYSYMBOL_stmt_return = 35,               /* stmt_return  */
-  YYSYMBOL_stmt_call = 36,                 /* stmt_call  */
-  YYSYMBOL_stmt_call_set = 37,             /* stmt_call_set  */
-  YYSYMBOL_stmt_while = 38,                /* stmt_while  */
-  YYSYMBOL_stmt_case = 39,                 /* stmt_case  */
-  YYSYMBOL_when_clauses = 40,              /* when_clauses  */
-  YYSYMBOL_when_clause = 41,               /* when_clause  */
-  YYSYMBOL_stmt_vm_comment = 42,           /* stmt_vm_comment  */
-  YYSYMBOL_stmt_debug = 43,                /* stmt_debug  */
-  YYSYMBOL_expr = 44                       /* expr  */
+  YYSYMBOL_TS_SCOLON = 6,                  /* TS_SCOLON  */
+  YYSYMBOL_TS_PAREN_L = 7,                 /* TS_PAREN_L  */
+  YYSYMBOL_TS_PAREN_R = 8,                 /* TS_PAREN_R  */
+  YYSYMBOL_TS_BRACE_L = 9,                 /* TS_BRACE_L  */
+  YYSYMBOL_TS_BRACE_R = 10,                /* TS_BRACE_R  */
+  YYSYMBOL_TS_EQ = 11,                     /* TS_EQ  */
+  YYSYMBOL_TS_COMMA = 12,                  /* TS_COMMA  */
+  YYSYMBOL_TS_BIN_OP = 13,                 /* TS_BIN_OP  */
+  YYSYMBOL_TS_PLUS = 14,                   /* TS_PLUS  */
+  YYSYMBOL_TS_MULT = 15,                   /* TS_MULT  */
+  YYSYMBOL_TS_KW_FUNC = 16,                /* TS_KW_FUNC  */
+  YYSYMBOL_TS_KW_VAR = 17,                 /* TS_KW_VAR  */
+  YYSYMBOL_TS_KW_SET = 18,                 /* TS_KW_SET  */
+  YYSYMBOL_TS_KW_CALL = 19,                /* TS_KW_CALL  */
+  YYSYMBOL_TS_KW_CALL_SET = 20,            /* TS_KW_CALL_SET  */
+  YYSYMBOL_TS_KW_RETURN = 21,              /* TS_KW_RETURN  */
+  YYSYMBOL_TS_KW_WHILE = 22,               /* TS_KW_WHILE  */
+  YYSYMBOL_TS_KW_CASE = 23,                /* TS_KW_CASE  */
+  YYSYMBOL_TS_KW_WHEN = 24,                /* TS_KW_WHEN  */
+  YYSYMBOL_TS_KW_CMT = 25,                 /* TS_KW_CMT  */
+  YYSYMBOL_TS_KW_DEBUG = 26,               /* TS_KW_DEBUG  */
+  YYSYMBOL_YYACCEPT = 27,                  /* $accept  */
+  YYSYMBOL_program = 28,                   /* program  */
+  YYSYMBOL_top_stmts = 29,                 /* top_stmts  */
+  YYSYMBOL_top_stmt = 30,                  /* top_stmt  */
+  YYSYMBOL_func_def = 31,                  /* func_def  */
+  YYSYMBOL_args = 32,                      /* args  */
+  YYSYMBOL_arg = 33,                       /* arg  */
+  YYSYMBOL_stmts = 34,                     /* stmts  */
+  YYSYMBOL_stmt = 35,                      /* stmt  */
+  YYSYMBOL_stmt_var = 36,                  /* stmt_var  */
+  YYSYMBOL_stmt_set = 37,                  /* stmt_set  */
+  YYSYMBOL_stmt_return = 38,               /* stmt_return  */
+  YYSYMBOL_stmt_call = 39,                 /* stmt_call  */
+  YYSYMBOL_stmt_call_set = 40,             /* stmt_call_set  */
+  YYSYMBOL_stmt_while = 41,                /* stmt_while  */
+  YYSYMBOL_stmt_case = 42,                 /* stmt_case  */
+  YYSYMBOL_when_clauses = 43,              /* when_clauses  */
+  YYSYMBOL_when_clause = 44,               /* when_clause  */
+  YYSYMBOL_stmt_vm_comment = 45,           /* stmt_vm_comment  */
+  YYSYMBOL_stmt_debug = 46,                /* stmt_debug  */
+  YYSYMBOL_expr = 47                       /* expr  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -576,10 +582,10 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   143
+#define YYLAST   141
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  24
+#define YYNTOKENS  27
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  21
 /* YYNRULES -- Number of rules.  */
@@ -588,7 +594,7 @@ union yyalloc
 #define YYNSTATES  97
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   278
+#define YYMAXUTOK   281
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -629,7 +635,8 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26
 };
 
 #if YYDEBUG
@@ -657,13 +664,13 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "TS_IDENT", "TS_INT",
-  "TS_STR", "TS_SYM", "TS_SCOLON", "TS_PAREN_L", "TS_PAREN_R", "TS_BIN_OP",
-  "TS_PLUS", "TS_MULT", "TS_KW_FUNC", "TS_KW_VAR", "TS_KW_SET",
-  "TS_KW_CALL", "TS_KW_CALL_SET", "TS_KW_RETURN", "TS_KW_WHILE",
-  "TS_KW_CASE", "TS_KW_WHEN", "TS_KW_CMT", "TS_KW_DEBUG", "$accept",
-  "program", "top_stmts", "top_stmt", "func_def", "args", "arg", "stmts",
-  "stmt", "stmt_var", "stmt_set", "stmt_return", "stmt_call",
-  "stmt_call_set", "stmt_while", "stmt_case", "when_clauses",
+  "TS_STR", "TS_SCOLON", "TS_PAREN_L", "TS_PAREN_R", "TS_BRACE_L",
+  "TS_BRACE_R", "TS_EQ", "TS_COMMA", "TS_BIN_OP", "TS_PLUS", "TS_MULT",
+  "TS_KW_FUNC", "TS_KW_VAR", "TS_KW_SET", "TS_KW_CALL", "TS_KW_CALL_SET",
+  "TS_KW_RETURN", "TS_KW_WHILE", "TS_KW_CASE", "TS_KW_WHEN", "TS_KW_CMT",
+  "TS_KW_DEBUG", "$accept", "program", "top_stmts", "top_stmt", "func_def",
+  "args", "arg", "stmts", "stmt", "stmt_var", "stmt_set", "stmt_return",
+  "stmt_call", "stmt_call_set", "stmt_while", "stmt_case", "when_clauses",
   "when_clause", "stmt_vm_comment", "stmt_debug", "expr", YY_NULLPTR
 };
 
@@ -674,7 +681,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-81)
+#define YYPACT_NINF (-57)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -688,16 +695,16 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-       3,    14,     6,    27,   -81,   -81,    21,   -81,   -81,    61,
-     -81,   -81,     1,   -81,    61,    53,   -81,    16,    59,    63,
-      75,    87,     5,   111,    73,   115,   116,    31,   -81,   -81,
-     -81,   -81,   -81,   -81,   -81,   -81,   -81,   -81,   106,    94,
-     117,   100,   -81,   -81,     5,    45,     5,   118,    73,   -81,
-     113,   119,   -81,   -81,     5,   -81,     5,    61,   124,    15,
-     -81,     5,     5,     5,    32,     5,   -81,   120,   123,   104,
-     110,     9,   125,   -81,    86,    92,    98,   126,    70,   127,
-     -81,   -81,   -81,   128,    61,    16,   130,   -81,   -81,    52,
-      54,    16,   131,   -81,    69,   -81,   -81
+       8,     4,     6,    -1,   -57,   -57,    20,   -57,   -57,    22,
+     -57,   -57,    54,   -57,    30,    22,    12,   -57,    37,    38,
+      39,    50,   125,    48,    32,    57,    58,    26,   -57,   -57,
+     -57,   -57,   -57,   -57,   -57,   -57,   -57,   -57,   116,    67,
+      72,    69,   -57,   -57,   125,     3,   125,    74,    32,   -57,
+      91,   101,   -57,   -57,   -57,   125,   125,    22,   107,   100,
+     -57,   125,   125,   125,   103,   125,   -57,   104,   114,    44,
+      92,    81,   124,   -57,    -3,    86,    89,   112,   111,   117,
+     -57,   -57,   -57,   127,    22,    12,   126,   -57,   -57,   122,
+      51,    12,   130,   -57,    65,   -57,   -57
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -706,11 +713,11 @@ static const yytype_int16 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     2,     4,     6,     0,     1,     5,     8,
-      11,    12,     0,     9,     0,     0,    10,     0,     0,     0,
+      11,    12,     0,     9,     0,     0,     0,    10,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,    14,    17,
       18,    16,    19,    20,    21,    22,    23,    24,     0,     0,
        0,     0,    39,    38,     0,     0,     0,     0,    32,    33,
-       0,     0,     7,    15,     0,    25,     0,     8,     0,     0,
+       0,     0,     7,    15,    25,     0,     0,     8,     0,     0,
       28,     0,     0,     0,     0,     0,    34,     0,     0,     0,
        0,     0,     0,    43,     0,     0,     0,     0,     0,     0,
       37,    26,    27,     0,     8,     0,     0,    36,    29,     0,
@@ -720,8 +727,8 @@ static const yytype_int8 yydefact[] =
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -81,   -81,   -81,   134,   -81,   -56,   129,   -80,   -27,   -81,
-     -81,   -81,   -81,   -81,   -81,   -81,   -81,    83,   -81,   -81,
+     -57,   -57,   -57,   134,   -57,   -56,   123,   -31,   -27,   -57,
+     -57,   -57,   -57,   -57,   -57,   -57,   -57,    93,   -57,   -57,
      -42
 };
 
@@ -738,66 +745,66 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      53,    71,    59,    -3,    64,    90,     7,    14,    42,    43,
-      15,    94,    69,    44,    70,    14,     1,     6,    83,    74,
-      75,    76,   -13,    78,    73,    61,    62,    63,    89,     9,
-      18,    19,    20,    21,    22,    23,    24,    52,    25,    26,
-       1,    77,    61,    62,    63,    18,    19,    20,    21,    22,
-      23,    24,    60,    25,    26,    61,    62,    63,    14,    17,
-      93,    92,    38,    53,    10,    11,    39,    53,    18,    19,
-      20,    21,    22,    23,    24,    96,    25,    26,    40,    86,
-      61,    62,    63,    18,    19,    20,    21,    22,    23,    24,
-      41,    25,    26,   -42,    47,   -42,    61,    62,    63,   -40,
-      56,   -40,    61,   -40,   -40,   -41,    58,   -41,    61,   -41,
-     -41,    81,    54,    55,    61,    62,    63,    82,    67,    46,
-      61,    62,    63,    50,    51,    57,    65,    72,    68,    79,
-      80,    66,    85,    84,    87,    88,    91,     8,    95,     0,
-       0,     0,     0,    16
+      53,    71,    59,   -42,    64,   -42,     7,     6,    -3,    60,
+      61,    62,    63,    69,    70,     1,    61,    62,    63,    74,
+      75,    76,   -13,    78,     1,    10,    11,     9,    89,    18,
+      19,    20,    21,    22,    23,    24,    52,    25,    26,    16,
+      38,    39,    40,    18,    19,    20,    21,    22,    23,    24,
+      81,    25,    26,    41,    90,    46,    47,    61,    62,    63,
+      94,    93,    14,    53,    50,    51,    15,    53,    18,    19,
+      20,    21,    22,    23,    24,    96,    25,    26,    56,    57,
+      58,    65,    18,    19,    20,    21,    22,    23,    24,    83,
+      25,    26,   -40,    15,   -40,   -41,    67,   -41,    82,    61,
+     -40,   -40,    61,   -41,   -41,    61,    62,    63,    73,    68,
+      72,    77,    79,    61,    62,    63,    61,    62,    63,    86,
+      80,    85,    54,    87,    61,    62,    63,    55,    42,    43,
+      92,    84,    44,    88,    15,    91,    95,     8,    17,     0,
+       0,    66
 };
 
 static const yytype_int8 yycheck[] =
 {
-      27,    57,    44,     0,    46,    85,     0,     6,     3,     4,
-       9,    91,    54,     8,    56,     6,    13,     3,     9,    61,
-      62,    63,     6,    65,     9,    10,    11,    12,    84,     8,
-      14,    15,    16,    17,    18,    19,    20,     6,    22,    23,
-      13,     9,    10,    11,    12,    14,    15,    16,    17,    18,
-      19,    20,     7,    22,    23,    10,    11,    12,     6,     6,
-       6,     9,     3,    90,     3,     4,     3,    94,    14,    15,
-      16,    17,    18,    19,    20,     6,    22,    23,     3,     9,
-      10,    11,    12,    14,    15,    16,    17,    18,    19,    20,
-       3,    22,    23,     7,    21,     9,    10,    11,    12,     7,
-       6,     9,    10,    11,    12,     7,     6,     9,    10,    11,
-      12,     7,     6,     7,    10,    11,    12,     7,     5,     8,
-      10,    11,    12,     8,     8,     8,     8,     3,     9,     9,
-       7,    48,     6,     8,     7,     7,     6,     3,     7,    -1,
-      -1,    -1,    -1,    14
+      27,    57,    44,     6,    46,     8,     0,     3,     0,     6,
+      13,    14,    15,    55,    56,    16,    13,    14,    15,    61,
+      62,    63,    10,    65,    16,     3,     4,     7,    84,    17,
+      18,    19,    20,    21,    22,    23,    10,    25,    26,     9,
+       3,     3,     3,    17,    18,    19,    20,    21,    22,    23,
+       6,    25,    26,     3,    85,     7,    24,    13,    14,    15,
+      91,    10,     8,    90,     7,     7,    12,    94,    17,    18,
+      19,    20,    21,    22,    23,    10,    25,    26,    11,     7,
+      11,     7,    17,    18,    19,    20,    21,    22,    23,     8,
+      25,    26,     6,    12,     8,     6,     5,     8,     6,    13,
+      14,    15,    13,    14,    15,    13,    14,    15,     8,     8,
+       3,     8,     8,    13,    14,    15,    13,    14,    15,     8,
+       6,     9,     6,     6,    13,    14,    15,    11,     3,     4,
+       8,     7,     7,     6,    12,     9,     6,     3,    15,    -1,
+      -1,    48
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    13,    25,    26,    27,    28,     3,     0,    27,     8,
-       3,     4,    29,    30,     6,     9,    30,     6,    14,    15,
-      16,    17,    18,    19,    20,    22,    23,    31,    32,    33,
-      34,    35,    36,    37,    38,    39,    42,    43,     3,     3,
-       3,     3,     3,     4,     8,    44,     8,    21,    40,    41,
-       8,     8,     6,    32,     6,     7,     6,     8,     6,    44,
-       7,    10,    11,    12,    44,     8,    41,     5,     9,    44,
-      44,    29,     3,     9,    44,    44,    44,     9,    44,     9,
-       7,     7,     7,     9,     8,     6,     9,     7,     7,    29,
-      31,     6,     9,     6,    31,     7,     6
+       0,    16,    28,    29,    30,    31,     3,     0,    30,     7,
+       3,     4,    32,    33,     8,    12,     9,    33,    17,    18,
+      19,    20,    21,    22,    23,    25,    26,    34,    35,    36,
+      37,    38,    39,    40,    41,    42,    45,    46,     3,     3,
+       3,     3,     3,     4,     7,    47,     7,    24,    43,    44,
+       7,     7,    10,    35,     6,    11,    11,     7,    11,    47,
+       6,    13,    14,    15,    47,     7,    44,     5,     8,    47,
+      47,    32,     3,     8,    47,    47,    47,     8,    47,     8,
+       6,     6,     6,     8,     7,     9,     8,     6,     6,    32,
+      34,     9,     8,    10,    34,     6,    10
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    24,    25,    26,    26,    26,    27,    28,    29,    29,
-      29,    30,    30,    31,    31,    31,    32,    32,    32,    32,
-      32,    32,    32,    32,    32,    33,    33,    34,    35,    36,
-      37,    38,    39,    40,    40,    41,    42,    43,    44,    44,
-      44,    44,    44,    44
+       0,    27,    28,    29,    29,    29,    30,    31,    32,    32,
+      32,    33,    33,    34,    34,    34,    35,    35,    35,    35,
+      35,    35,    35,    35,    35,    36,    36,    37,    38,    39,
+      40,    41,    42,    43,    43,    44,    45,    46,    47,    47,
+      47,    47,    47,    47
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -1462,7 +1469,7 @@ YYLTYPE yylloc = yyloc_default;
 
 
 
-#line 1466 "mrcl_parser_lrama.c"
+#line 1473 "mrcl_parser_lrama.c"
 
   yylsp[0] = yylloc;
   goto yysetstate;
@@ -1681,7 +1688,7 @@ yyreduce:
 
                         g_ast = ast;
                     }
-#line 1685 "mrcl_parser_lrama.c"
+#line 1692 "mrcl_parser_lrama.c"
     break;
 
   case 3: /* top_stmts: %empty  */
@@ -1690,7 +1697,7 @@ yyreduce:
                         NodeList* top_stmts = NodeList_new();
                         (yyval.union_list) = top_stmts;
                     }
-#line 1694 "mrcl_parser_lrama.c"
+#line 1701 "mrcl_parser_lrama.c"
     break;
 
   case 4: /* top_stmts: top_stmt  */
@@ -1701,7 +1708,7 @@ yyreduce:
 
                         (yyval.union_list) = top_stmts;
                     }
-#line 1705 "mrcl_parser_lrama.c"
+#line 1712 "mrcl_parser_lrama.c"
     break;
 
   case 5: /* top_stmts: top_stmts top_stmt  */
@@ -1712,12 +1719,12 @@ yyreduce:
 
                         (yyval.union_list) = top_stmts;
                     }
-#line 1716 "mrcl_parser_lrama.c"
+#line 1723 "mrcl_parser_lrama.c"
     break;
 
-  case 7: /* func_def: TS_KW_FUNC TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SYM stmts TS_SYM  */
+  case 7: /* func_def: TS_KW_FUNC TS_IDENT TS_PAREN_L args TS_PAREN_R TS_BRACE_L stmts TS_BRACE_R  */
 #line 86 "mrcl_parser_lrama.y"
-                                                                                                      {
+                                                                                                          {
                         NodeList* func_def = NodeList_new();
                         NodeList_add_str(func_def, "func");
                         NodeList_add_str(func_def, (yyvsp[-6].union_str));
@@ -1726,7 +1733,7 @@ yyreduce:
 
                         (yyval.union_list) = func_def;
                     }
-#line 1730 "mrcl_parser_lrama.c"
+#line 1737 "mrcl_parser_lrama.c"
     break;
 
   case 8: /* args: %empty  */
@@ -1735,7 +1742,7 @@ yyreduce:
                         NodeList* args = NodeList_new();
                         (yyval.union_list) = args;
                     }
-#line 1739 "mrcl_parser_lrama.c"
+#line 1746 "mrcl_parser_lrama.c"
     break;
 
   case 9: /* args: arg  */
@@ -1746,10 +1753,10 @@ yyreduce:
 
                         (yyval.union_list) = args;
                     }
-#line 1750 "mrcl_parser_lrama.c"
+#line 1757 "mrcl_parser_lrama.c"
     break;
 
-  case 10: /* args: args TS_SYM arg  */
+  case 10: /* args: args TS_COMMA arg  */
 #line 109 "mrcl_parser_lrama.y"
                     {
                         NodeList* args = (yyvsp[-2].union_list);
@@ -1757,7 +1764,7 @@ yyreduce:
 
                         (yyval.union_list) = args;
                     }
-#line 1761 "mrcl_parser_lrama.c"
+#line 1768 "mrcl_parser_lrama.c"
     break;
 
   case 11: /* arg: TS_IDENT  */
@@ -1766,7 +1773,7 @@ yyreduce:
                         NodeItem* arg = NodeItem_new_str((yyvsp[0].union_str));
                         (yyval.union_node) = arg;
                     }
-#line 1770 "mrcl_parser_lrama.c"
+#line 1777 "mrcl_parser_lrama.c"
     break;
 
   case 12: /* arg: TS_INT  */
@@ -1777,7 +1784,7 @@ yyreduce:
 
                         (yyval.union_node) = arg;
                     }
-#line 1781 "mrcl_parser_lrama.c"
+#line 1788 "mrcl_parser_lrama.c"
     break;
 
   case 13: /* stmts: %empty  */
@@ -1786,7 +1793,7 @@ yyreduce:
                         NodeList* stmts = NodeList_new();
                         (yyval.union_list) = stmts;
                     }
-#line 1790 "mrcl_parser_lrama.c"
+#line 1797 "mrcl_parser_lrama.c"
     break;
 
   case 14: /* stmts: stmt  */
@@ -1797,7 +1804,7 @@ yyreduce:
 
                         (yyval.union_list) = stmts;
                     }
-#line 1801 "mrcl_parser_lrama.c"
+#line 1808 "mrcl_parser_lrama.c"
     break;
 
   case 15: /* stmts: stmts stmt  */
@@ -1808,7 +1815,7 @@ yyreduce:
 
                         (yyval.union_list) = stmts;
                     }
-#line 1812 "mrcl_parser_lrama.c"
+#line 1819 "mrcl_parser_lrama.c"
     break;
 
   case 25: /* stmt_var: TS_KW_VAR TS_IDENT TS_SCOLON  */
@@ -1820,12 +1827,12 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1824 "mrcl_parser_lrama.c"
+#line 1831 "mrcl_parser_lrama.c"
     break;
 
-  case 26: /* stmt_var: TS_KW_VAR TS_IDENT TS_SYM expr TS_SCOLON  */
+  case 26: /* stmt_var: TS_KW_VAR TS_IDENT TS_EQ expr TS_SCOLON  */
 #line 170 "mrcl_parser_lrama.y"
-                                                                         {
+                                                                        {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "var");
                         NodeList_add_str(stmt, (yyvsp[-3].union_str));
@@ -1833,12 +1840,12 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1837 "mrcl_parser_lrama.c"
+#line 1844 "mrcl_parser_lrama.c"
     break;
 
-  case 27: /* stmt_set: TS_KW_SET TS_IDENT TS_SYM expr TS_SCOLON  */
+  case 27: /* stmt_set: TS_KW_SET TS_IDENT TS_EQ expr TS_SCOLON  */
 #line 181 "mrcl_parser_lrama.y"
-                                                                         {
+                                                                        {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "set");
                         NodeList_add_str(stmt, (yyvsp[-3].union_str));
@@ -1846,7 +1853,7 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1850 "mrcl_parser_lrama.c"
+#line 1857 "mrcl_parser_lrama.c"
     break;
 
   case 28: /* stmt_return: TS_KW_RETURN expr TS_SCOLON  */
@@ -1858,7 +1865,7 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1862 "mrcl_parser_lrama.c"
+#line 1869 "mrcl_parser_lrama.c"
     break;
 
   case 29: /* stmt_call: TS_KW_CALL TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON  */
@@ -1871,12 +1878,12 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1875 "mrcl_parser_lrama.c"
+#line 1882 "mrcl_parser_lrama.c"
     break;
 
-  case 30: /* stmt_call_set: TS_KW_CALL_SET TS_IDENT TS_SYM TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON  */
+  case 30: /* stmt_call_set: TS_KW_CALL_SET TS_IDENT TS_EQ TS_IDENT TS_PAREN_L args TS_PAREN_R TS_SCOLON  */
 #line 213 "mrcl_parser_lrama.y"
-                                                                                                             {
+                                                                                                            {
                         NodeList* funcall = NodeList_new();
                         NodeList_add_str(funcall, (yyvsp[-4].union_str));
                         NodeList_add_all(funcall, (yyvsp[-2].union_list));
@@ -1888,12 +1895,12 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1892 "mrcl_parser_lrama.c"
+#line 1899 "mrcl_parser_lrama.c"
     break;
 
-  case 31: /* stmt_while: TS_KW_WHILE TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM  */
+  case 31: /* stmt_while: TS_KW_WHILE TS_PAREN_L expr TS_PAREN_R TS_BRACE_L stmts TS_BRACE_R  */
 #line 228 "mrcl_parser_lrama.y"
-                                                                                              {
+                                                                                                  {
                         NodeList* stmt = NodeList_new();
                         NodeList_add_str(stmt, "while");
                         NodeList_add_node(stmt, (yyvsp[-4].union_node));
@@ -1901,7 +1908,7 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1905 "mrcl_parser_lrama.c"
+#line 1912 "mrcl_parser_lrama.c"
     break;
 
   case 32: /* stmt_case: TS_KW_CASE when_clauses  */
@@ -1913,7 +1920,7 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1917 "mrcl_parser_lrama.c"
+#line 1924 "mrcl_parser_lrama.c"
     break;
 
   case 33: /* when_clauses: when_clause  */
@@ -1924,7 +1931,7 @@ yyreduce:
 
                         (yyval.union_list) = when_clauses;
                     }
-#line 1928 "mrcl_parser_lrama.c"
+#line 1935 "mrcl_parser_lrama.c"
     break;
 
   case 34: /* when_clauses: when_clauses when_clause  */
@@ -1935,19 +1942,19 @@ yyreduce:
 
                         (yyval.union_list) = when_clauses;
                     }
-#line 1939 "mrcl_parser_lrama.c"
+#line 1946 "mrcl_parser_lrama.c"
     break;
 
-  case 35: /* when_clause: TS_KW_WHEN TS_PAREN_L expr TS_PAREN_R TS_SYM stmts TS_SYM  */
+  case 35: /* when_clause: TS_KW_WHEN TS_PAREN_L expr TS_PAREN_R TS_BRACE_L stmts TS_BRACE_R  */
 #line 264 "mrcl_parser_lrama.y"
-                                                                                             {
+                                                                                                 {
                         NodeList* when_clause = NodeList_new();
                         NodeList_add_node(when_clause, (yyvsp[-4].union_node));
                         NodeList_add_all(when_clause, (yyvsp[-1].union_list));
 
                         (yyval.union_list) = when_clause;
                     }
-#line 1951 "mrcl_parser_lrama.c"
+#line 1958 "mrcl_parser_lrama.c"
     break;
 
   case 36: /* stmt_vm_comment: TS_KW_CMT TS_PAREN_L TS_STR TS_PAREN_R TS_SCOLON  */
@@ -1959,7 +1966,7 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1963 "mrcl_parser_lrama.c"
+#line 1970 "mrcl_parser_lrama.c"
     break;
 
   case 37: /* stmt_debug: TS_KW_DEBUG TS_PAREN_L TS_PAREN_R TS_SCOLON  */
@@ -1970,7 +1977,7 @@ yyreduce:
 
                         (yyval.union_list) = stmt;
                     }
-#line 1974 "mrcl_parser_lrama.c"
+#line 1981 "mrcl_parser_lrama.c"
     break;
 
   case 38: /* expr: TS_INT  */
@@ -1979,7 +1986,7 @@ yyreduce:
                         int n = s_to_i((yyvsp[0].union_str));
                         (yyval.union_node) = NodeItem_new_int(n);
                     }
-#line 1983 "mrcl_parser_lrama.c"
+#line 1990 "mrcl_parser_lrama.c"
     break;
 
   case 39: /* expr: TS_IDENT  */
@@ -1987,7 +1994,7 @@ yyreduce:
                     {
                         (yyval.union_node) = NodeItem_new_str((yyvsp[0].union_str));
                     }
-#line 1991 "mrcl_parser_lrama.c"
+#line 1998 "mrcl_parser_lrama.c"
     break;
 
   case 40: /* expr: expr TS_PLUS expr  */
@@ -2000,7 +2007,7 @@ yyreduce:
 
                         (yyval.union_node) = NodeItem_new_list(xs);
                     }
-#line 2004 "mrcl_parser_lrama.c"
+#line 2011 "mrcl_parser_lrama.c"
     break;
 
   case 41: /* expr: expr TS_MULT expr  */
@@ -2013,7 +2020,7 @@ yyreduce:
 
                         (yyval.union_node) = NodeItem_new_list(xs);
                     }
-#line 2017 "mrcl_parser_lrama.c"
+#line 2024 "mrcl_parser_lrama.c"
     break;
 
   case 42: /* expr: expr TS_BIN_OP expr  */
@@ -2026,7 +2033,7 @@ yyreduce:
 
                         (yyval.union_node) = NodeItem_new_list(xs);
                     }
-#line 2030 "mrcl_parser_lrama.c"
+#line 2037 "mrcl_parser_lrama.c"
     break;
 
   case 43: /* expr: TS_PAREN_L expr TS_PAREN_R  */
@@ -2034,11 +2041,11 @@ yyreduce:
                                                           {
                       (yyval.union_node) = (yyvsp[-1].union_node);
                     }
-#line 2038 "mrcl_parser_lrama.c"
+#line 2045 "mrcl_parser_lrama.c"
     break;
 
 
-#line 2042 "mrcl_parser_lrama.c"
+#line 2049 "mrcl_parser_lrama.c"
 
       default: break;
     }
@@ -2356,6 +2363,12 @@ int token_to_symbol(Token* t) {
       return TS_PAREN_L;
     } else if (str_eq(str, ")")) {
       return TS_PAREN_R;
+    } else if (str_eq(str, "{")) {
+      return TS_BRACE_L;
+    } else if (str_eq(str, "}")) {
+      return TS_BRACE_R;
+    } else if (str_eq(str, "=")) {
+      return TS_EQ;
     } else if (str_eq(str, "+")) {
       return TS_PLUS;
     } else if (str_eq(str, "*")) {
@@ -2364,8 +2377,11 @@ int token_to_symbol(Token* t) {
       return TS_BIN_OP;
     } else if (str_eq(str, "!=")) {
       return TS_BIN_OP;
+    } else if (str_eq(str, ",")) {
+      return TS_COMMA;
     } else {
-      return TS_SYM; // 手抜き
+      fprintf(stderr, "unsupported symbol\n");
+      exit(1);
     }
   default:
     fprintf(stderr, "unsupported token kind\n");
